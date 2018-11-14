@@ -5,7 +5,7 @@ using System.Windows.Forms.Design;
 namespace Manina.Windows.Forms
 {
     [Designer(typeof(HorizontalLineDesigner))]
-    public class HorizontalLine : Control
+    internal class HorizontalLine : Control
     {
         #region Properties
         /// <summary>
