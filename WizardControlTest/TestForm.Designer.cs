@@ -38,7 +38,6 @@
             this.Name = "TestForm";
             this.Text = "Test Form";
             this.ResumeLayout(false);
-
         }
 
         #endregion
