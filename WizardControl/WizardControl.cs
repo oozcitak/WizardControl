@@ -7,7 +7,6 @@ using System.ComponentModel.Design;
 using System.ComponentModel.Design.Serialization;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
 
@@ -20,6 +19,16 @@ namespace Manina.Windows.Forms
     public class WizardControl : Control
     {
         #region Events
+        public class ButtonClickEventArgs : EventArgs
+        {
+            public bool Cancel { get; set; }
+
+            public ButtonClickEventArgs()
+            {
+                Cancel = false;
+            }
+        }
+
         public class PageEventArgs : EventArgs
         {
             public WizardPage Page { get; private set; }
@@ -57,15 +66,22 @@ namespace Manina.Windows.Forms
             }
         }
 
+        public delegate void ButtonClickEventHandler(object sender, ButtonClickEventArgs e);
         public delegate void PageEventHandler(object sender, PageEventArgs e);
         public delegate void PageChangingEventHandler(object sender, PageChangingEventArgs e);
         public delegate void PageChangedEventHandler(object sender, PageChangedEventArgs e);
 
+        protected internal virtual void OnBackButtonClicked(ButtonClickEventArgs e) { BackButtonClicked?.Invoke(this, e); }
+        protected internal virtual void OnNextButtonClicked(ButtonClickEventArgs e) { NextButtonClicked?.Invoke(this, e); }
+        protected internal virtual void OnCloseButtonClicked(ButtonClickEventArgs e) { CloseButtonClicked?.Invoke(this, e); }
         protected internal virtual void OnPageAdded(PageEventArgs e) { PageAdded?.Invoke(this, e); }
         protected internal virtual void OnPageRemoved(PageEventArgs e) { PageRemoved?.Invoke(this, e); }
         protected internal virtual void OnCurrentPageChanging(PageChangingEventArgs e) { CurrentPageChanging?.Invoke(this, e); }
         protected internal virtual void OnCurrentPageChanged(PageChangedEventArgs e) { CurrentPageChanged?.Invoke(this, e); }
 
+        public event ButtonClickEventHandler BackButtonClicked;
+        public event ButtonClickEventHandler NextButtonClicked;
+        public event ButtonClickEventHandler CloseButtonClicked;
         public event PageEventHandler PageAdded;
         public event PageEventHandler PageRemoved;
         public event PageChangingEventHandler CurrentPageChanging;
@@ -78,6 +94,10 @@ namespace Manina.Windows.Forms
         private Button backButton;
         private Button nextButton;
         private Button closeButton;
+
+        private bool backButtonEnabled = true;
+        private bool nextButtonEnabled = true;
+        private bool closeButtonEnabled = true;
 
         private readonly WizardPageCollection pages;
         #endregion
@@ -158,6 +178,27 @@ namespace Manina.Windows.Forms
         [Category("Appearance"), Localizable(true)]
         [Description("Gets or sets the text of the close button.")]
         public string CloseButtonText { get => closeButton.Text; set => closeButton.Text = value; }
+
+        /// <summary>
+        /// Gets or sets whether the back button is enabled by user code.
+        /// </summary>
+        [Category("Behavior"), Localizable(true)]
+        [Description("Gets or sets whether the back button is enabled by user code.")]
+        public bool BackButtonEnabled { get => backButtonEnabled; set { backButtonEnabled = value; UpdateNavigationControls(); } }
+
+        /// <summary>
+        /// Gets or sets whether the next button is enabled by user code.
+        /// </summary>
+        [Category("Behavior"), Localizable(true)]
+        [Description("Gets or sets whether the next button is enabled by user code.")]
+        public bool NextButtonEnabled { get => nextButtonEnabled; set { nextButtonEnabled = value; UpdateNavigationControls(); } }
+
+        /// <summary>
+        /// Gets or sets whether the close button is enabled by user code.
+        /// </summary>
+        [Category("Behavior"), Localizable(true)]
+        [Description("Gets or sets whether the close button is enabled by user code.")]
+        public bool CloseButtonEnabled { get => closeButtonEnabled; set { closeButtonEnabled = value; UpdateNavigationControls(); } }
 
         /// <summary>
         /// Determines whether the wizard can navigate to the previous page.
@@ -248,16 +289,18 @@ namespace Manina.Windows.Forms
             backButton = new Button();
             backButton.Text = "< Back";
             backButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            backButton.Click += BackButton_Click;
             Controls.Add(backButton);
 
             nextButton = new Button();
             nextButton.Text = "Next >";
-            nextButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            nextButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom; nextButton.Click += NextButton_Click;
             Controls.Add(nextButton);
 
             closeButton = new Button();
             closeButton.Text = "Close";
             closeButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            closeButton.Click += CloseButton_Click;
             Controls.Add(closeButton);
 
             ResizeControls();
@@ -282,8 +325,30 @@ namespace Manina.Windows.Forms
 
         internal void UpdateNavigationControls()
         {
-            backButton.Enabled = CanGoBack;
-            nextButton.Enabled = CanGoNext;
+            backButton.Enabled = backButtonEnabled && CanGoBack;
+            nextButton.Enabled = nextButtonEnabled && CanGoNext;
+            closeButton.Enabled = closeButtonEnabled;
+        }
+
+        private void BackButton_Click(object sender, EventArgs e)
+        {
+            ButtonClickEventArgs be = new ButtonClickEventArgs();
+            OnBackButtonClicked(be);
+            if (!be.Cancel) GoBack();
+        }
+
+        private void NextButton_Click(object sender, EventArgs e)
+        {
+            ButtonClickEventArgs be = new ButtonClickEventArgs();
+            OnNextButtonClicked(be);
+            if (!be.Cancel) GoNext();
+        }
+
+        private void CloseButton_Click(object sender, EventArgs e)
+        {
+            ButtonClickEventArgs be = new ButtonClickEventArgs();
+            OnCloseButtonClicked(be);
+            if (!be.Cancel) FindForm().Close();
         }
         #endregion
 
@@ -293,6 +358,18 @@ namespace Manina.Windows.Forms
             base.OnResize(e);
 
             ResizeControls();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                backButton.Click -= BackButton_Click;
+                nextButton.Click -= NextButton_Click;
+                closeButton.Click -= CloseButton_Click;
+            }
+
+            base.Dispose(disposing);
         }
         #endregion
 
