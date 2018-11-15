@@ -12,6 +12,7 @@ using System.Windows.Forms;
 
 namespace Manina.Windows.Forms
 {
+    [ToolboxBitmap(typeof(WizardControl))]
     [ToolboxItem(typeof(WizardControlToolboxItem))]
     [Designer(typeof(WizardControlDesigner))]
     [DesignerSerializer(typeof(WizardControlSerializer), typeof(CodeDomSerializer))]
