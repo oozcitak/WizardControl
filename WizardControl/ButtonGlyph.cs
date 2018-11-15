@@ -22,7 +22,8 @@ namespace Manina.Windows.Forms
             {
                 ButtonGlyph glyph = (ButtonGlyph)g;
 
-                designer.OnGlyphClick(glyph.Key);
+                if (glyph.Enabled)
+                    glyph.OnClick(new EventArgs());
 
                 return true;
             }
@@ -36,19 +37,24 @@ namespace Manina.Windows.Forms
         private readonly BehaviorService behaviorService;
         private readonly ISelectionService selectionService;
         private readonly WizardControl control;
-        private readonly IDesigner designer;
+        private readonly WizardControlDesigner designer;
         private readonly Adorner adorner;
 
-        private readonly string key;
         private readonly PointF[] path;
         private readonly int size;
         private readonly AnchorStyles anchor;
         private readonly Padding margins;
         private bool isHot;
 
-        public string Key => key;
+        public bool Enabled { get; set; }
 
-        public ButtonGlyph(BehaviorService behaviorService, ISelectionService selectionService, WizardControlDesigner designer, Adorner adorner, string key, PointF[] path, int left, int top, int size, AnchorStyles anchor = AnchorStyles.Left | AnchorStyles.Top)
+        public Color BackColor => SystemColors.Window;
+        public Color ForeColor => SystemColors.WindowText;
+        public Color HotBackColor => Color.FromArgb(205, 229, 247);
+        public Color DisabledBackColor => SystemColors.Control;
+        public Color DisabledForeColor => SystemColors.GrayText;
+
+        public ButtonGlyph(BehaviorService behaviorService, ISelectionService selectionService, WizardControlDesigner designer, Adorner adorner, PointF[] path, int left, int top, int size, AnchorStyles anchor = AnchorStyles.Left | AnchorStyles.Top)
             : base(new ButtonGlyphBehavior(designer))
         {
             this.behaviorService = behaviorService;
@@ -57,10 +63,11 @@ namespace Manina.Windows.Forms
             this.control = (WizardControl)designer.Component;
             this.adorner = adorner;
 
-            this.key = key;
             this.path = path;
             this.size = size;
             this.anchor = anchor;
+
+            Enabled = true;
 
             margins = new Padding(left, top, control.Width - left - size, control.Height - top - size);
 
@@ -87,6 +94,8 @@ namespace Manina.Windows.Forms
 
         public override Cursor GetHitTest(Point p)
         {
+            if (!Enabled) return null;
+
             bool newIshot = Bounds.Contains(p);
             if (isHot != newIshot)
             {
@@ -102,8 +111,8 @@ namespace Manina.Windows.Forms
 
             Rectangle bounds = Bounds;
 
-            using (Brush brush = new SolidBrush(isHot ? Color.FromArgb(205, 229, 247) : SystemColors.Window))
-            using (Pen pen = new Pen(SystemColors.WindowText))
+            using (Brush brush = new SolidBrush(!Enabled ? DisabledBackColor : isHot ? HotBackColor : BackColor))
+            using (Pen pen = new Pen(!Enabled ? DisabledForeColor : ForeColor))
             {
                 var oldTrans = pe.Graphics.Transform;
                 pe.Graphics.TranslateTransform(bounds.Left, bounds.Top);
@@ -111,6 +120,13 @@ namespace Manina.Windows.Forms
                 pe.Graphics.DrawPolygon(pen, path);
                 pe.Graphics.Transform = oldTrans;
             }
+        }
+
+        public event EventHandler Click;
+
+        internal virtual void OnClick(EventArgs e)
+        {
+            Click?.Invoke(this, e);
         }
     }
 }

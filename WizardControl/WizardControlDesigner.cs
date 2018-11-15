@@ -20,6 +20,11 @@ namespace Manina.Windows.Forms
         private DesignerVerb navigateNextVerb;
         private DesignerVerbCollection verbs;
 
+        private ButtonGlyph addPageButton;
+        private ButtonGlyph removePageButton;
+        private ButtonGlyph navigateBackButton;
+        private ButtonGlyph navigateNextButton;
+
         private Adorner buttonAdorner;
         #endregion
 
@@ -121,16 +126,71 @@ namespace Manina.Windows.Forms
             int glyphXOffset = glyphSize + 8;
             int glyphX = 8;
             int glyphY = Control.UIArea.Top + (Control.UIArea.Height - glyphSize) / 2;
-            buttonAdorner.Glyphs.Add(new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, "prev_page", GetLeftArrowSign(glyphSize), glyphX, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom));
-            buttonAdorner.Glyphs.Add(new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, "next_page", GetRightArrowSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom));
-            buttonAdorner.Glyphs.Add(new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, "add_page", GetPlusSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom));
-            buttonAdorner.Glyphs.Add(new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, "remove_page", GetMinusSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom));
+
+            navigateBackButton = new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, GetLeftArrowSign(glyphSize), glyphX, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
+            navigateNextButton = new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, GetRightArrowSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
+            addPageButton = new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, GetPlusSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
+            removePageButton = new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, GetMinusSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
+
+            navigateBackButton.Click += NavigateBackButton_Click;
+            navigateNextButton.Click += NavigateNextButton_Click;
+            addPageButton.Click += AddPageButton_Click;
+            removePageButton.Click += RemovePageButton_Click;
+
+            buttonAdorner.Glyphs.Add(navigateBackButton);
+            buttonAdorner.Glyphs.Add(navigateNextButton);
+            buttonAdorner.Glyphs.Add(addPageButton);
+            buttonAdorner.Glyphs.Add(removePageButton);
+
+            Control.CurrentPageChanged += Control_CurrentPageChanged;
+            Control.PageAdded += Control_PageAdded;
+            Control.PageRemoved += Control_PageRemoved;
+        }
+
+        private void Control_CurrentPageChanged(object sender, WizardControl.PageChangedEventArgs e)
+        {
+            UpdateGlyphs();
+        }
+
+        private void Control_PageAdded(object sender, WizardControl.PageEventArgs e)
+        {
+            UpdateGlyphs();
+        }
+
+        private void Control_PageRemoved(object sender, WizardControl.PageEventArgs e)
+        {
+            UpdateGlyphs();
+        }
+
+        private void NavigateBackButton_Click(object sender, EventArgs e)
+        {
+            NavigateBackHandler(null, null);
+        }
+
+        private void NavigateNextButton_Click(object sender, EventArgs e)
+        {
+            NavigateNextHandler(null, null);
+        }
+
+        private void AddPageButton_Click(object sender, EventArgs e)
+        {
+            AddPageHandler(null, null);
+        }
+
+        private void RemovePageButton_Click(object sender, EventArgs e)
+        {
+            RemovePageHandler(null, null);
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
+                navigateBackButton.Click -= NavigateBackButton_Click;
+                navigateNextButton.Click -= NavigateNextButton_Click;
+                addPageButton.Click -= AddPageButton_Click;
+                removePageButton.Click -= RemovePageButton_Click;
+
                 if (behaviorService != null)
                     behaviorService.Adorners.Remove(buttonAdorner);
             }
@@ -153,6 +213,18 @@ namespace Manina.Windows.Forms
                     return (WizardPage.WizardPageDesigner)host.GetDesigner(page);
             }
             return null;
+        }
+
+        /// <summary>
+        /// Updates the visual states of glyphs.
+        /// </summary>
+        private void UpdateGlyphs()
+        {
+            removePageButton.Enabled = (Control.Pages.Count > 1);
+            navigateBackButton.Enabled = (Control.CurrentPageIndex > 0);
+            navigateNextButton.Enabled = (Control.CurrentPageIndex < Control.Pages.Count - 1);
+
+            buttonAdorner.Invalidate();
         }
         #endregion
 
@@ -190,7 +262,7 @@ namespace Manina.Windows.Forms
                     host.DestroyComponent(page);
                     if (index == Control.Pages.Count)
                         index = Control.Pages.Count - 1;
-                    Control.CurrentPage = (WizardPage)Control.Pages[index];
+                    Control.CurrentPage = Control.Pages[index];
 
                     selectionService.SetSelectedComponents(new Component[] { Control });
                 }
@@ -221,31 +293,6 @@ namespace Manina.Windows.Forms
                 control.GoNext();
 
             selectionService.SetSelectedComponents(new Component[] { Control });
-        }
-
-        /// <summary>
-        /// Occurs when a glyph is clicked on the designer surface.
-        /// </summary>
-        /// <param name="key">Glyph key.</param>
-        public void OnGlyphClick(string key)
-        {
-            WizardControl control = Control;
-
-            switch (key)
-            {
-                case "prev_page":
-                    NavigateBackHandler(null, null);
-                    break;
-                case "next_page":
-                    NavigateNextHandler(null, null);
-                    break;
-                case "add_page":
-                    AddPageHandler(null, null);
-                    break;
-                case "remove_page":
-                    RemovePageHandler(null, null);
-                    break;
-            }
         }
         #endregion
 
