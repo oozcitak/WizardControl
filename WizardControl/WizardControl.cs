@@ -73,11 +73,11 @@ namespace Manina.Windows.Forms
         #endregion
 
         #region Member Variables
-        internal PageContainer pageContainer;
-        internal HorizontalLine separator;
-        internal Button backButton;
-        internal Button nextButton;
-        internal Button closeButton;
+        private PageContainer pageContainer;
+        private HorizontalLine separator;
+        private Button backButton;
+        private Button nextButton;
+        private Button closeButton;
 
         private readonly WizardPageCollection pages;
         #endregion
@@ -118,11 +118,12 @@ namespace Manina.Windows.Forms
         [Description("Gets or sets the zero-based index of the current page of the wizard.")]
         public int CurrentPageIndex
         {
-            get => Pages.IndexOf(pageContainer.CurrentPage);
+            get => Pages.Count == 0 ? -1 : Pages.IndexOf(pageContainer.CurrentPage);
             set
             {
-                int index = Pages.IndexOf(pageContainer.CurrentPage);
-                if (index == value)
+                if (Pages.Count == 0) return;
+
+                if (Pages.IndexOf(pageContainer.CurrentPage) == value)
                     return;
 
                 CurrentPage = Pages[value];
@@ -162,13 +163,13 @@ namespace Manina.Windows.Forms
         /// Determines whether the wizard can navigate to the previous page.
         /// </summary>
         [Browsable(false)]
-        public bool CanGoBack => !(ReferenceEquals(CurrentPage, pageContainer.Controls[0]));
+        public bool CanGoBack => (Pages.Count != 0) && !(ReferenceEquals(CurrentPage, Pages[0]));
 
         /// <summary>
         /// Determines whether the wizard can navigate to the next page.
         /// </summary>
         [Browsable(false)]
-        public bool CanGoNext => !(ReferenceEquals(CurrentPage, pageContainer.Controls[pageContainer.Controls.Count - 1]));
+        public bool CanGoNext => (Pages.Count != 0) && !(ReferenceEquals(CurrentPage, Pages[Pages.Count - 1]));
 
         /// <summary>
         /// Gets the client rectangle where user interface controls are located.
@@ -200,11 +201,13 @@ namespace Manina.Windows.Forms
         /// </summary>
         public void GoBack()
         {
-            if (!CanGoBack)
-                return;
+            if (Pages.Count == 0) return;
+            if (!CanGoBack) return;
 
-            int index = pageContainer.Controls.IndexOf(CurrentPage);
-            CurrentPage = (WizardPage)pageContainer.Controls[index - 1];
+            int index = CurrentPageIndex;
+            if (index == -1) return;
+
+            CurrentPageIndex = index - 1;
 
             UpdateNavigationControls();
         }
@@ -214,11 +217,13 @@ namespace Manina.Windows.Forms
         /// </summary>
         public void GoNext()
         {
-            if (!CanGoNext)
-                return;
+            if (Pages.Count == 0) return;
+            if (!CanGoNext) return;
 
-            int index = pageContainer.Controls.IndexOf(CurrentPage);
-            CurrentPage = (WizardPage)pageContainer.Controls[index + 1];
+            int index = CurrentPageIndex;
+            if (index == -1) return;
+
+            CurrentPageIndex = index + 1;
 
             UpdateNavigationControls();
         }
@@ -323,11 +328,7 @@ namespace Manina.Windows.Forms
 
             public void Clear()
             {
-                controls.Add(new WizardPage());
-                for (int i = controls.Count - 2; i >= 0; i--)
-                {
-                    controls.RemoveAt(i);
-                }
+                controls.Clear();
                 owner.UpdateNavigationControls();
             }
 
@@ -365,9 +366,9 @@ namespace Manina.Windows.Forms
                     removed.Add(controls[i]);
                     controls.RemoveAt(i);
                 }
-                foreach (Control control in removed)
+                for (int i = removed.Count - 1; i >= 0; i--)
                 {
-                    controls.Add(control);
+                    controls.Add(removed[i]);
                 }
 
                 owner.UpdateNavigationControls();
@@ -376,9 +377,6 @@ namespace Manina.Windows.Forms
             public bool Remove(WizardPage item)
             {
                 bool exists = controls.Contains(item);
-
-                if (controls.Count == 1)
-                    controls.Add(new WizardPage());
 
                 controls.Remove(item);
 
@@ -409,7 +407,7 @@ namespace Manina.Windows.Forms
 
                 WizardControl control = (WizardControl)context.Instance;
 
-                foreach (WizardPage page in control.pageContainer.Controls.Cast<WizardPage>())
+                foreach (var page in control.Pages)
                 {
                     SelectorNode node = new SelectorNode(page.Name, page);
                     selector.Nodes.Add(node);
@@ -437,9 +435,7 @@ namespace Manina.Windows.Forms
             {
                 WizardControl control = (WizardControl)host.CreateComponent(typeof(WizardControl));
                 WizardPage page = (WizardPage)host.CreateComponent(typeof(WizardPage));
-                Control oldPage = control.pageContainer.Controls[0];
-                control.pageContainer.Controls.Add(page);
-                control.pageContainer.Controls.Remove(oldPage);
+                control.Pages.Add(page);
 
                 return new IComponent[] { control };
             }

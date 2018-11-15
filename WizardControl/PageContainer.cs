@@ -42,9 +42,7 @@ namespace Manina.Windows.Forms
         /// </summary>
         public PageContainer()
         {
-            // Default page
-            WizardPage page = new WizardPage();
-            Controls.Add(page);
+
         }
         #endregion
 
@@ -75,15 +73,12 @@ namespace Manina.Windows.Forms
 
             if (e.Control is WizardPage page)
             {
-                if (Controls.Count == 0)
+                if (ReferenceEquals(currentPage, page))
                 {
-                    var defaultPage = new WizardPage();
-                    Controls.Add(defaultPage);
-                    CurrentPage = defaultPage;
-                }
-                else if (ReferenceEquals(currentPage, page))
-                {
-                    CurrentPage = (WizardPage)Controls[0];
+                    if (Controls.Count != 0)
+                        CurrentPage = (WizardPage)Controls[0];
+                    else
+                        CurrentPage = null;
                 }
 
                 if (Parent != null)
