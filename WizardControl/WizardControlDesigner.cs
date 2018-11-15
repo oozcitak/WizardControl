@@ -45,14 +45,14 @@ namespace Manina.Windows.Forms
                 float arrowTailLength = size - arrowHeadLength;
 
                 return new PointF[] {
-                new PointF(0, size / 2f),
-                new PointF(arrowHeadLength, size / 2f - arrowHeadThickness / 2f),
-                new PointF(arrowHeadLength, size / 2f - arrowTailThickness / 2f),
-                new PointF(arrowHeadLength + arrowTailLength, size / 2f - arrowTailThickness / 2f),
-                new PointF(arrowHeadLength + arrowTailLength, size / 2f + arrowTailThickness / 2f),
-                new PointF(arrowHeadLength, size / 2f + arrowTailThickness / 2f),
-                new PointF(arrowHeadLength, size / 2f + arrowHeadThickness / 2f),
-            };
+                    new PointF(0, size / 2f),
+                    new PointF(arrowHeadLength, size / 2f - arrowHeadThickness / 2f),
+                    new PointF(arrowHeadLength, size / 2f - arrowTailThickness / 2f),
+                    new PointF(arrowHeadLength + arrowTailLength, size / 2f - arrowTailThickness / 2f),
+                    new PointF(arrowHeadLength + arrowTailLength, size / 2f + arrowTailThickness / 2f),
+                    new PointF(arrowHeadLength, size / 2f + arrowTailThickness / 2f),
+                    new PointF(arrowHeadLength, size / 2f + arrowHeadThickness / 2f),
+                };
             }
 
             private static PointF[] GetRightArrowSign(float size)
@@ -63,14 +63,14 @@ namespace Manina.Windows.Forms
                 float arrowTailLength = size - arrowHeadLength;
 
                 return new PointF[] {
-                new PointF(size, size / 2f),
-                new PointF(size - arrowHeadLength, size / 2f - arrowHeadThickness / 2f),
-                new PointF(size - arrowHeadLength, size / 2f - arrowTailThickness / 2f),
-                new PointF(size - arrowHeadLength - arrowTailLength, size / 2f - arrowTailThickness / 2f),
-                new PointF(size - arrowHeadLength - arrowTailLength, size / 2f + arrowTailThickness / 2f),
-                new PointF(size - arrowHeadLength, size / 2f + arrowTailThickness / 2f),
-                new PointF(size - arrowHeadLength, size / 2f + arrowHeadThickness / 2f),
-            };
+                    new PointF(size, size / 2f),
+                    new PointF(size - arrowHeadLength, size / 2f - arrowHeadThickness / 2f),
+                    new PointF(size - arrowHeadLength, size / 2f - arrowTailThickness / 2f),
+                    new PointF(size - arrowHeadLength - arrowTailLength, size / 2f - arrowTailThickness / 2f),
+                    new PointF(size - arrowHeadLength - arrowTailLength, size / 2f + arrowTailThickness / 2f),
+                    new PointF(size - arrowHeadLength, size / 2f + arrowTailThickness / 2f),
+                    new PointF(size - arrowHeadLength, size / 2f + arrowHeadThickness / 2f),
+                };
             }
 
             private static PointF[] GetPlusSign(float size)
@@ -78,19 +78,19 @@ namespace Manina.Windows.Forms
                 float thickness = 0.375f * size;
 
                 return new PointF[] {
-                new PointF(0, size / 2f - thickness / 2f),
-                new PointF(size / 2f - thickness / 2f, size / 2f - thickness / 2f),
-                new PointF(size / 2f - thickness / 2f, 0),
-                new PointF(size / 2f + thickness / 2f, 0),
-                new PointF(size / 2f + thickness / 2f, size / 2f - thickness / 2f),
-                new PointF(size, size / 2f - thickness / 2f),
-                new PointF(size, size / 2f + thickness / 2f),
-                new PointF(size / 2f + thickness / 2f, size / 2f + thickness / 2f),
-                new PointF(size / 2f + thickness / 2f, size),
-                new PointF(size / 2f - thickness / 2f, size),
-                new PointF(size / 2f - thickness / 2f, size / 2f + thickness / 2f),
-                new PointF(0, size / 2f + thickness / 2f),
-            };
+                    new PointF(0, size / 2f - thickness / 2f),
+                    new PointF(size / 2f - thickness / 2f, size / 2f - thickness / 2f),
+                    new PointF(size / 2f - thickness / 2f, 0),
+                    new PointF(size / 2f + thickness / 2f, 0),
+                    new PointF(size / 2f + thickness / 2f, size / 2f - thickness / 2f),
+                    new PointF(size, size / 2f - thickness / 2f),
+                    new PointF(size, size / 2f + thickness / 2f),
+                    new PointF(size / 2f + thickness / 2f, size / 2f + thickness / 2f),
+                    new PointF(size / 2f + thickness / 2f, size),
+                    new PointF(size / 2f - thickness / 2f, size),
+                    new PointF(size / 2f - thickness / 2f, size / 2f + thickness / 2f),
+                    new PointF(0, size / 2f + thickness / 2f),
+                };
             }
 
             private static PointF[] GetMinusSign(float size)
@@ -98,11 +98,11 @@ namespace Manina.Windows.Forms
                 float thickness = 0.375f * size;
 
                 return new PointF[] {
-                new PointF(0, size / 2f - thickness / 2f),
-                new PointF(size, size / 2f - thickness / 2f),
-                new PointF(size, size / 2f + thickness / 2f),
-                new PointF(0, size / 2f + thickness / 2f),
-            };
+                    new PointF(0, size / 2f - thickness / 2f),
+                    new PointF(size, size / 2f - thickness / 2f),
+                    new PointF(size, size / 2f + thickness / 2f),
+                    new PointF(0, size / 2f + thickness / 2f),
+                };
             }
             #endregion
 
@@ -122,17 +122,46 @@ namespace Manina.Windows.Forms
                 behaviorService = (BehaviorService)GetService(typeof(BehaviorService));
                 selectionService = (ISelectionService)GetService(typeof(ISelectionService));
 
-                buttonAdorner = new Adorner();
-                behaviorService.Adorners.Add(buttonAdorner);
+                CreateGlyphs();
+
+                Control.PageChanged += Control_CurrentPageChanged;
+                Control.PageAdded += Control_PageAdded;
+                Control.PageRemoved += Control_PageRemoved;
+            }
+
+            private void CreateGlyphs()
+            {
                 int glyphSize = 16;
                 int glyphXOffset = glyphSize + 8;
                 int glyphX = 8;
                 int glyphY = Control.UIArea.Top + (Control.UIArea.Height - glyphSize) / 2;
 
-                navigateBackButton = new ButtonGlyph(behaviorService, this, buttonAdorner, GetLeftArrowSign(glyphSize), glyphX, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
-                navigateNextButton = new ButtonGlyph(behaviorService, this, buttonAdorner, GetRightArrowSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
-                addPageButton = new ButtonGlyph(behaviorService, this, buttonAdorner, GetPlusSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
-                removePageButton = new ButtonGlyph(behaviorService, this, buttonAdorner, GetMinusSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
+                buttonAdorner = new Adorner();
+                behaviorService.Adorners.Add(buttonAdorner);
+
+                navigateBackButton = new ButtonGlyph(behaviorService, this, buttonAdorner);
+                navigateBackButton.Path = GetLeftArrowSign(glyphSize);
+                navigateBackButton.Location = new Point(glyphX, glyphY);
+                navigateBackButton.Size = new Size(16, 16);
+                navigateBackButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+
+                navigateNextButton = new ButtonGlyph(behaviorService, this, buttonAdorner);
+                navigateNextButton.Path = GetRightArrowSign(glyphSize);
+                navigateNextButton.Location = new Point(glyphX + glyphXOffset, glyphY);
+                navigateNextButton.Size = new Size(16, 16);
+                navigateNextButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+
+                addPageButton = new ButtonGlyph(behaviorService, this, buttonAdorner);
+                addPageButton.Path = GetPlusSign(glyphSize);
+                addPageButton.Location = new Point(glyphX + 2 * glyphXOffset, glyphY);
+                addPageButton.Size = new Size(16, 16);
+                addPageButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+
+                removePageButton = new ButtonGlyph(behaviorService, this, buttonAdorner);
+                removePageButton.Path = GetMinusSign(glyphSize);
+                removePageButton.Location = new Point(glyphX + 3 * glyphXOffset, glyphY);
+                removePageButton.Size = new Size(16, 16);
+                removePageButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 
                 navigateBackButton.Click += NavigateBackButton_Click;
                 navigateNextButton.Click += NavigateNextButton_Click;
@@ -143,10 +172,6 @@ namespace Manina.Windows.Forms
                 buttonAdorner.Glyphs.Add(navigateNextButton);
                 buttonAdorner.Glyphs.Add(addPageButton);
                 buttonAdorner.Glyphs.Add(removePageButton);
-
-                Control.PageChanged += Control_CurrentPageChanged;
-                Control.PageAdded += Control_PageAdded;
-                Control.PageRemoved += Control_PageRemoved;
             }
 
             private void Control_CurrentPageChanged(object sender, WizardControl.PageChangedEventArgs e)

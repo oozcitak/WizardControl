@@ -8,61 +8,67 @@ namespace Manina.Windows.Forms
 {
     public partial class WizardControl
     {
-        internal class ButtonGlyphBehavior : Behavior
-        {
-            public override bool OnMouseDown(Glyph g, MouseButtons button, Point mouseLoc)
-            {
-                if (g.Bounds.Contains(mouseLoc))
-                {
-                    ButtonGlyph glyph = (ButtonGlyph)g;
-
-                    if (glyph.Enabled)
-                        glyph.OnClick(new EventArgs());
-
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
         internal class ButtonGlyph : Glyph
         {
+            #region Member Variables
             private readonly BehaviorService behaviorService;
             private readonly WizardControl control;
             private readonly WizardControlDesigner designer;
             private readonly Adorner adorner;
 
-            private readonly PointF[] path;
-            private readonly int size;
-            private readonly AnchorStyles anchor;
-            private readonly Padding margins;
             private bool isHot;
 
-            public bool Enabled { get; set; }
+            private Point location = new Point(0, 0);
+            private Size size = new Size(16, 16);
+            private Padding margins = new Padding();
+            #endregion
 
-            public Color BackColor => SystemColors.Window;
-            public Color ForeColor => SystemColors.WindowText;
-            public Color HotBackColor => Color.FromArgb(205, 229, 247);
-            public Color DisabledBackColor => SystemColors.Control;
-            public Color DisabledForeColor => SystemColors.GrayText;
-
-            public ButtonGlyph(BehaviorService behaviorService, WizardControlDesigner designer, Adorner adorner, PointF[] path, int left, int top, int size, AnchorStyles anchor = AnchorStyles.Left | AnchorStyles.Top)
-                : base(new ButtonGlyphBehavior())
+            #region Properties
+            public Point Location
             {
-                this.behaviorService = behaviorService;
-                this.designer = designer;
-                this.control = (WizardControl)designer.Component;
-                this.adorner = adorner;
+                get => location;
+                set
+                {
+                    var oldLocation = location;
+                    location = value;
 
-                this.path = path;
-                this.size = size;
-                this.anchor = anchor;
-
-                Enabled = true;
-
-                margins = new Padding(left, top, control.Width - left - size, control.Height - top - size);
+                    margins.Left += location.X - oldLocation.X;
+                    margins.Right -= location.X - oldLocation.X;
+                    margins.Top += location.Y - oldLocation.Y;
+                    margins.Bottom -= location.Y - oldLocation.Y;
+                }
             }
+            public Size Size
+            {
+                get => size;
+                set
+                {
+                    var oldSize = size;
+                    size = value;
+
+                    if ((Anchor & AnchorStyles.Left) != AnchorStyles.None)
+                        margins.Right -= size.Width - oldSize.Width;
+                    else
+                        margins.Left -= size.Width - oldSize.Width;
+
+                    if ((Anchor & AnchorStyles.Top) != AnchorStyles.None)
+                        margins.Bottom -= size.Height - oldSize.Height;
+                    else
+                        margins.Top -= size.Height - oldSize.Height;
+
+                }
+            }
+            public AnchorStyles Anchor { get; set; } = AnchorStyles.Left | AnchorStyles.Top;
+
+            public bool Enabled { get; set; } = true;
+
+            public PointF[] Path { get; set; } = new PointF[0];
+
+            public Color BackColor { get; set; } = SystemColors.Window;
+            public Color ForeColor { get; set; } = SystemColors.WindowText;
+            public Color HotBackColor { get; set; } = Color.FromArgb(205, 229, 247);
+            public Color DisabledBackColor { get; set; } = SystemColors.Control;
+            public Color DisabledForeColor { get; set; } = SystemColors.GrayText;
 
             public override Rectangle Bounds
             {
@@ -70,13 +76,51 @@ namespace Manina.Windows.Forms
                 {
                     Point pt = behaviorService.ControlToAdornerWindow(control);
 
-                    int left = ((anchor & AnchorStyles.Left) != AnchorStyles.None) ? pt.X + margins.Left : pt.X + control.Width - margins.Right - size;
-                    int top = ((anchor & AnchorStyles.Top) != AnchorStyles.None) ? pt.Y + margins.Top : pt.Y + control.Height - margins.Bottom - size;
+                    var margins = Margins;
+                    int left = ((Anchor & AnchorStyles.Left) != AnchorStyles.None) ? pt.X + margins.Left : pt.X + control.Width - margins.Right - Size.Width;
+                    int top = ((Anchor & AnchorStyles.Top) != AnchorStyles.None) ? pt.Y + margins.Top : pt.Y + control.Height - margins.Bottom - Size.Height;
 
-                    return new Rectangle(left, top, size, size);
+                    return new Rectangle(left, top, Size.Width, Size.Height);
                 }
             }
 
+            public Padding Margins => margins;
+
+            public static PointF[] GetDefaultPath(float size)
+            {
+                return new PointF[]
+                {
+                    new PointF(0, 0),
+                    new PointF(size, 0),
+                    new PointF(size, size),
+                    new PointF(0,size),
+                };
+            }
+            #endregion
+
+            #region Events
+            public event EventHandler Click;
+
+            protected internal virtual void OnClick(EventArgs e)
+            {
+                Click?.Invoke(this, e);
+            }
+            #endregion
+
+            #region Constructor
+            public ButtonGlyph(BehaviorService behaviorService, WizardControlDesigner designer, Adorner adorner)
+                : base(new ButtonGlyphBehavior())
+            {
+                this.behaviorService = behaviorService;
+                this.designer = designer;
+                this.control = (WizardControl)designer.Component;
+                this.adorner = adorner;
+
+                margins = new Padding(Location.X, Location.Y, control.Width - Location.X - Size.Width, control.Height - Location.Y - Size.Height);
+            }
+            #endregion
+
+            #region Overriden Methods
             public override Cursor GetHitTest(Point p)
             {
                 if (!Enabled) return null;
@@ -92,6 +136,9 @@ namespace Manina.Windows.Forms
 
             public override void Paint(PaintEventArgs pe)
             {
+                var path = Path;
+                if (path == null || path.Length == 0) path = GetDefaultPath(Size.Width);
+
                 pe.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
                 Rectangle bounds = Bounds;
@@ -106,13 +153,27 @@ namespace Manina.Windows.Forms
                     pe.Graphics.Transform = oldTrans;
                 }
             }
+            #endregion
 
-            public event EventHandler Click;
-
-            internal virtual void OnClick(EventArgs e)
+            #region Behavior
+            internal class ButtonGlyphBehavior : Behavior
             {
-                Click?.Invoke(this, e);
+                public override bool OnMouseDown(Glyph g, MouseButtons button, Point mouseLoc)
+                {
+                    if (g.Bounds.Contains(mouseLoc))
+                    {
+                        ButtonGlyph glyph = (ButtonGlyph)g;
+
+                        if (glyph.Enabled)
+                            glyph.OnClick(new EventArgs());
+
+                        return true;
+                    }
+
+                    return false;
+                }
             }
+            #endregion
         }
     }
 }
