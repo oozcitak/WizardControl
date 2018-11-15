@@ -54,13 +54,20 @@ namespace Manina.Windows.Forms
         public new int TabIndex { get => base.TabIndex; set => base.TabIndex = value; }
         #endregion
 
+        #region Overriden Methods
+#if DEBUG
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
 
-            int index = Parent.Controls.IndexOf(this);
-            e.Graphics.DrawString(string.Format("{0}: {1}", index, this.Name), Font, SystemBrushes.GrayText, 5, 5);
+            if (DesignMode)
+            {
+                int index = Parent.Controls.IndexOf(this);
+                e.Graphics.DrawString(string.Format("{0}: {1}", index, this.Name), Font, SystemBrushes.GrayText, 5, 5);
+            }
         }
+#endif
+        #endregion
 
         #region Constructor
         /// <summary>

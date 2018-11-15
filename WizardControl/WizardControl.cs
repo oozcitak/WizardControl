@@ -134,7 +134,7 @@ namespace Manina.Windows.Forms
         /// <summary>
         /// Gets or sets the zero-based index of the current page of the wizard.
         /// </summary>
-        [Category("Behavior")]
+        [Category("Behavior"), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Description("Gets or sets the zero-based index of the current page of the wizard.")]
         public int CurrentPageIndex
         {
@@ -161,44 +161,52 @@ namespace Manina.Windows.Forms
         /// <summary>
         /// Gets or sets the text of the back button.
         /// </summary>
-        [Category("Appearance"), Localizable(true)]
+        [Category("Appearance"), Localizable(true), DefaultValue("< Back")]
         [Description("Gets or sets the text of the back button.")]
         public string BackButtonText { get => backButton.Text; set => backButton.Text = value; }
 
         /// <summary>
         /// Gets or sets the text of the next button.
         /// </summary>
-        [Category("Appearance"), Localizable(true)]
+        [Category("Appearance"), Localizable(true), DefaultValue("Next >")]
         [Description("Gets or sets the text of the next button.")]
         public string NextButtonText { get => nextButton.Text; set => nextButton.Text = value; }
 
         /// <summary>
         /// Gets or sets the text of the close button.
         /// </summary>
-        [Category("Appearance"), Localizable(true)]
+        [Category("Appearance"), Localizable(true), DefaultValue("Close")]
         [Description("Gets or sets the text of the close button.")]
         public string CloseButtonText { get => closeButton.Text; set => closeButton.Text = value; }
 
         /// <summary>
         /// Gets or sets whether the back button is enabled by user code.
         /// </summary>
-        [Category("Behavior"), Localizable(true)]
+        [Category("Behavior"), Localizable(true), DefaultValue(true)]
         [Description("Gets or sets whether the back button is enabled by user code.")]
         public bool BackButtonEnabled { get => backButtonEnabled; set { backButtonEnabled = value; UpdateNavigationControls(); } }
 
         /// <summary>
         /// Gets or sets whether the next button is enabled by user code.
         /// </summary>
-        [Category("Behavior"), Localizable(true)]
+        [Category("Behavior"), Localizable(true), DefaultValue(true)]
         [Description("Gets or sets whether the next button is enabled by user code.")]
         public bool NextButtonEnabled { get => nextButtonEnabled; set { nextButtonEnabled = value; UpdateNavigationControls(); } }
 
         /// <summary>
         /// Gets or sets whether the close button is enabled by user code.
         /// </summary>
-        [Category("Behavior"), Localizable(true)]
+        [Category("Behavior"), Localizable(true), DefaultValue(true)]
         [Description("Gets or sets whether the close button is enabled by user code.")]
         public bool CloseButtonEnabled { get => closeButtonEnabled; set { closeButtonEnabled = value; UpdateNavigationControls(); } }
+
+        /// <summary>
+        /// Gets or sets which control borders are docked to its parent control and 
+        /// determines how a control is resized with its parent.
+        /// </summary>
+        [Category("Layout"), Localizable(true), DefaultValue(DockStyle.Fill)]
+        [Description("Gets or sets which control borders are docked to its parent control and determines how a control is resized with its parent.")]
+        public override DockStyle Dock { get => base.Dock; set => base.Dock = value; }
 
         /// <summary>
         /// Determines whether the wizard can navigate to the previous page.
