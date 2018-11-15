@@ -201,14 +201,6 @@ namespace Manina.Windows.Forms
         public bool CloseButtonEnabled { get => closeButtonEnabled; set { closeButtonEnabled = value; UpdateNavigationControls(); } }
 
         /// <summary>
-        /// Gets or sets which control borders are docked to its parent control and 
-        /// determines how a control is resized with its parent.
-        /// </summary>
-        [Category("Layout"), Localizable(true), DefaultValue(DockStyle.Fill)]
-        [Description("Gets or sets which control borders are docked to its parent control and determines how a control is resized with its parent.")]
-        public override DockStyle Dock { get => base.Dock; set => base.Dock = value; }
-
-        /// <summary>
         /// Determines whether the wizard can navigate to the previous page.
         /// </summary>
         [Browsable(false)]
@@ -340,7 +332,7 @@ namespace Manina.Windows.Forms
             pageContainer.SetBounds(pageBounds.Left, pageBounds.Top, pageBounds.Width, pageBounds.Height);
             separator.SetBounds(uiBounds.Left, uiBounds.Top, uiBounds.Width, 2);
             backButton.SetBounds(buttonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
-            nextButton.SetBounds(buttonLeft + backButton.Width, buttonTop, 0, 0, BoundsSpecified.Location);
+            nextButton.SetBounds(buttonLeft + buttonWidth, buttonTop, 0, 0, BoundsSpecified.Location);
             closeButton.SetBounds(buttonLeft + backButton.Width + nextButton.Width + 12, buttonTop, 0, 0, BoundsSpecified.Location);
         }
 
