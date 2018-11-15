@@ -211,6 +211,27 @@ namespace Manina.Windows.Forms
         public bool CloseButtonEnabled { get => closeButtonEnabled; set { closeButtonEnabled = value; UpdateNavigationControls(); } }
 
         /// <summary>
+        /// Gets or sets whether the back button is visible.
+        /// </summary>
+        [Category("Appearance"), DefaultValue(true)]
+        [Description("Gets or sets whether the back button is visible.")]
+        public bool BackButtonVisible { get => backButton.Visible; set { backButton.Visible = value; } }
+
+        /// <summary>
+        /// Gets or sets whether the next button is visible.
+        /// </summary>
+        [Category("Appearance"), DefaultValue(true)]
+        [Description("Gets or sets whether the next button is visible.")]
+        public bool NextButtonVisible { get => nextButton.Visible; set { nextButton.Visible = value; } }
+
+        /// <summary>
+        /// Gets or sets whether the close button is visible.
+        /// </summary>
+        [Category("Appearance"), DefaultValue(true)]
+        [Description("Gets or sets whether the close button is visible.")]
+        public bool CloseButtonVisible { get => closeButton.Visible; set { closeButton.Visible = value; } }
+
+        /// <summary>
         /// Determines whether the wizard can navigate to the previous page.
         /// </summary>
         [Browsable(false)]
