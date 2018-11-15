@@ -16,6 +16,8 @@ namespace Manina.Windows.Forms
     [Designer(typeof(WizardControlDesigner))]
     [DesignerSerializer(typeof(WizardControlSerializer), typeof(CodeDomSerializer))]
     [Docking(DockingBehavior.AutoDock)]
+    [DefaultEvent("CurrentPageChanged")]
+    [DefaultProperty("CurrentPage")]
     public class WizardControl : Control
     {
         #region Events
