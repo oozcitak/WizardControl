@@ -37,7 +37,7 @@
             // 
             // wizardControl1
             // 
-            this.wizardControl1.CurrentPage = this.wizardPage4;
+            this.wizardControl1.SelectedPage = this.wizardPage4;
             this.wizardControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.wizardControl1.Location = new System.Drawing.Point(0, 0);
             this.wizardControl1.Name = "wizardControl1";

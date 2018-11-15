@@ -142,7 +142,7 @@ namespace Manina.Windows.Forms
             buttonAdorner.Glyphs.Add(addPageButton);
             buttonAdorner.Glyphs.Add(removePageButton);
 
-            Control.CurrentPageChanged += Control_CurrentPageChanged;
+            Control.PageChanged += Control_CurrentPageChanged;
             Control.PageAdded += Control_PageAdded;
             Control.PageRemoved += Control_PageRemoved;
         }
@@ -205,7 +205,7 @@ namespace Manina.Windows.Forms
         /// <returns>The designer of the wizard page currently active in the designer.</returns>
         private WizardPage.WizardPageDesigner GetCurrentPageDesigner()
         {
-            var page = Control.CurrentPage;
+            var page = Control.SelectedPage;
             if (page != null)
             {
                 IDesignerHost host = (IDesignerHost)GetService(typeof(IDesignerHost));
@@ -221,8 +221,8 @@ namespace Manina.Windows.Forms
         private void UpdateGlyphs()
         {
             removePageVerb.Enabled = removePageButton.Enabled = (Control.Pages.Count > 1);
-            navigateBackVerb.Enabled = navigateBackButton.Enabled = (Control.CurrentPageIndex > 0);
-            navigateNextVerb.Enabled = navigateNextButton.Enabled = (Control.CurrentPageIndex < Control.Pages.Count - 1);
+            navigateBackVerb.Enabled = navigateBackButton.Enabled = (Control.SelectedIndex > 0);
+            navigateNextVerb.Enabled = navigateNextButton.Enabled = (Control.SelectedIndex < Control.Pages.Count - 1);
 
             buttonAdorner.Invalidate();
         }
@@ -240,7 +240,7 @@ namespace Manina.Windows.Forms
             {
                 WizardPage page = (WizardPage)host.CreateComponent(typeof(WizardPage));
                 Control.Pages.Add(page);
-                Control.CurrentPage = page;
+                Control.SelectedPage = page;
 
                 selectionService.SetSelectedComponents(new Component[] { Control });
             }
@@ -257,12 +257,12 @@ namespace Manina.Windows.Forms
             {
                 if (Control.Pages.Count > 1)
                 {
-                    WizardPage page = Control.CurrentPage;
-                    int index = Control.CurrentPageIndex;
+                    WizardPage page = Control.SelectedPage;
+                    int index = Control.SelectedIndex;
                     host.DestroyComponent(page);
                     if (index == Control.Pages.Count)
                         index = Control.Pages.Count - 1;
-                    Control.CurrentPage = Control.Pages[index];
+                    Control.SelectedPage = Control.Pages[index];
 
                     selectionService.SetSelectedComponents(new Component[] { Control });
                 }

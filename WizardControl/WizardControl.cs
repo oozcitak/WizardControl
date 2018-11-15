@@ -79,16 +79,23 @@ namespace Manina.Windows.Forms
         protected internal virtual void OnCloseButtonClicked(ButtonClickEventArgs e) { CloseButtonClicked?.Invoke(this, e); }
         protected internal virtual void OnPageAdded(PageEventArgs e) { PageAdded?.Invoke(this, e); }
         protected internal virtual void OnPageRemoved(PageEventArgs e) { PageRemoved?.Invoke(this, e); }
-        protected internal virtual void OnCurrentPageChanging(PageChangingEventArgs e) { CurrentPageChanging?.Invoke(this, e); }
-        protected internal virtual void OnCurrentPageChanged(PageChangedEventArgs e) { CurrentPageChanged?.Invoke(this, e); }
+        protected internal virtual void OnCurrentPageChanging(PageChangingEventArgs e) { PageChanging?.Invoke(this, e); }
+        protected internal virtual void OnCurrentPageChanged(PageChangedEventArgs e) { PageChanged?.Invoke(this, e); }
 
+        [Category("Behavior")]
         public event ButtonClickEventHandler BackButtonClicked;
+        [Category("Behavior")]
         public event ButtonClickEventHandler NextButtonClicked;
+        [Category("Behavior")]
         public event ButtonClickEventHandler CloseButtonClicked;
+        [Category("Behavior")]
         public event PageEventHandler PageAdded;
+        [Category("Behavior")]
         public event PageEventHandler PageRemoved;
-        public event PageChangingEventHandler CurrentPageChanging;
-        public event PageChangedEventHandler CurrentPageChanged;
+        [Category("Behavior")]
+        public event PageChangingEventHandler PageChanging;
+        [Category("Behavior")]
+        public event PageChangedEventHandler PageChanged;
         #endregion
 
         #region Member Variables
@@ -112,24 +119,24 @@ namespace Manina.Windows.Forms
         [Editor(typeof(WizardControlUITypeEditor), typeof(UITypeEditor))]
         [Category("Behavior")]
         [Description("Gets or sets the current page of the wizard.")]
-        public WizardPage CurrentPage
+        public WizardPage SelectedPage
         {
-            get => pageContainer.CurrentPage;
+            get => pageContainer.SelectedPage;
             set
             {
-                if (pageContainer.CurrentPage == value)
+                if (pageContainer.SelectedPage == value)
                     return;
 
-                PageChangingEventArgs e = new PageChangingEventArgs(pageContainer.CurrentPage, value);
+                PageChangingEventArgs e = new PageChangingEventArgs(pageContainer.SelectedPage, value);
                 OnCurrentPageChanging(e);
                 if (!e.Cancel)
                 {
-                    var oldPage = pageContainer.CurrentPage;
-                    pageContainer.CurrentPage = value;
+                    var oldPage = pageContainer.SelectedPage;
+                    pageContainer.SelectedPage = value;
 
                     UpdateNavigationControls();
 
-                    OnCurrentPageChanged(new PageChangedEventArgs(oldPage, pageContainer.CurrentPage));
+                    OnCurrentPageChanged(new PageChangedEventArgs(oldPage, pageContainer.SelectedPage));
                 }
             }
         }
@@ -139,17 +146,17 @@ namespace Manina.Windows.Forms
         /// </summary>
         [Category("Behavior"), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Description("Gets or sets the zero-based index of the current page of the wizard.")]
-        public int CurrentPageIndex
+        public int SelectedIndex
         {
-            get => Pages.Count == 0 ? -1 : Pages.IndexOf(pageContainer.CurrentPage);
+            get => Pages.Count == 0 ? -1 : Pages.IndexOf(pageContainer.SelectedPage);
             set
             {
                 if (Pages.Count == 0) return;
 
-                if (Pages.IndexOf(pageContainer.CurrentPage) == value)
+                if (Pages.IndexOf(pageContainer.SelectedPage) == value)
                     return;
 
-                CurrentPage = Pages[value];
+                SelectedPage = Pages[value];
             }
         }
 
@@ -207,13 +214,13 @@ namespace Manina.Windows.Forms
         /// Determines whether the wizard can navigate to the previous page.
         /// </summary>
         [Browsable(false)]
-        public bool CanGoBack => (Pages.Count != 0) && !(ReferenceEquals(CurrentPage, Pages[0]));
+        public bool CanGoBack => (Pages.Count != 0) && !(ReferenceEquals(SelectedPage, Pages[0]));
 
         /// <summary>
         /// Determines whether the wizard can navigate to the next page.
         /// </summary>
         [Browsable(false)]
-        public bool CanGoNext => (Pages.Count != 0) && !(ReferenceEquals(CurrentPage, Pages[Pages.Count - 1]));
+        public bool CanGoNext => (Pages.Count != 0) && !(ReferenceEquals(SelectedPage, Pages[Pages.Count - 1]));
 
         /// <summary>
         /// Gets the height of the area where user interface controls are located.
@@ -260,10 +267,10 @@ namespace Manina.Windows.Forms
             if (Pages.Count == 0) return;
             if (!CanGoBack) return;
 
-            int index = CurrentPageIndex;
+            int index = SelectedIndex;
             if (index == -1) return;
 
-            CurrentPageIndex = index - 1;
+            SelectedIndex = index - 1;
 
             UpdateNavigationControls();
         }
@@ -276,10 +283,10 @@ namespace Manina.Windows.Forms
             if (Pages.Count == 0) return;
             if (!CanGoNext) return;
 
-            int index = CurrentPageIndex;
+            int index = SelectedIndex;
             if (index == -1) return;
 
-            CurrentPageIndex = index + 1;
+            SelectedIndex = index + 1;
 
             UpdateNavigationControls();
         }
@@ -505,7 +512,7 @@ namespace Manina.Windows.Forms
                     SelectorNode node = new SelectorNode(page.Name, page);
                     selector.Nodes.Add(node);
 
-                    if (page == control.CurrentPage)
+                    if (page == control.SelectedPage)
                         selector.SelectedNode = node;
                 }
             }

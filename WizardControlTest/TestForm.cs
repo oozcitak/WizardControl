@@ -7,7 +7,6 @@ namespace WizardControlTest
         public TestForm()
         {
             InitializeComponent();
-            TabControl x;
         }
     }
 }

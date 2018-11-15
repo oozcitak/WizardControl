@@ -13,25 +13,25 @@ namespace Manina.Windows.Forms
     internal class PageContainer : Panel
     {
         #region Member Variables
-        private WizardPage currentPage;
+        private WizardPage selectedPage;
         #endregion
 
         #region Properties
-        public WizardPage CurrentPage
+        public WizardPage SelectedPage
         {
-            get => currentPage;
+            get => selectedPage;
             set
             {
-                if (currentPage == value)
+                if (selectedPage == value)
                     return;
 
-                if (currentPage != null)
-                    currentPage.Visible = false;
+                if (selectedPage != null)
+                    selectedPage.Visible = false;
 
-                currentPage = value;
+                selectedPage = value;
 
-                if (currentPage != null)
-                    currentPage.Visible = true;
+                if (selectedPage != null)
+                    selectedPage.Visible = true;
             }
         }
         #endregion
@@ -58,7 +58,7 @@ namespace Manina.Windows.Forms
                 base.OnControlAdded(e);
 
                 if (Controls.Count == 1)
-                    CurrentPage = page;
+                    SelectedPage = page;
                 else
                     page.Visible = false;
 
@@ -73,12 +73,12 @@ namespace Manina.Windows.Forms
 
             if (e.Control is WizardPage page)
             {
-                if (ReferenceEquals(currentPage, page))
+                if (ReferenceEquals(selectedPage, page))
                 {
                     if (Controls.Count != 0)
-                        CurrentPage = (WizardPage)Controls[0];
+                        SelectedPage = (WizardPage)Controls[0];
                     else
-                        CurrentPage = null;
+                        SelectedPage = null;
                 }
 
                 if (Parent != null)
@@ -97,7 +97,7 @@ namespace Manina.Windows.Forms
             /// <returns>The wizard page currently active in the designer.</returns>
             private WizardPage GetCurrentPage()
             {
-                return ((PageContainer)Control).CurrentPage;
+                return ((PageContainer)Control).SelectedPage;
             }
 
             /// <summary>
