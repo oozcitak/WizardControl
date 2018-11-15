@@ -220,9 +220,9 @@ namespace Manina.Windows.Forms
         /// </summary>
         private void UpdateGlyphs()
         {
-            removePageButton.Enabled = (Control.Pages.Count > 1);
-            navigateBackButton.Enabled = (Control.CurrentPageIndex > 0);
-            navigateNextButton.Enabled = (Control.CurrentPageIndex < Control.Pages.Count - 1);
+            removePageVerb.Enabled = removePageButton.Enabled = (Control.Pages.Count > 1);
+            navigateBackVerb.Enabled = navigateBackButton.Enabled = (Control.CurrentPageIndex > 0);
+            navigateNextVerb.Enabled = navigateNextButton.Enabled = (Control.CurrentPageIndex < Control.Pages.Count - 1);
 
             buttonAdorner.Invalidate();
         }
