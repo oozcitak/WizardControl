@@ -1,7 +1,5 @@
 ﻿using System;
 using System.CodeDom;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.ComponentModel.Design.Serialization;
@@ -17,9 +15,9 @@ namespace Manina.Windows.Forms
     [Designer(typeof(WizardControlDesigner))]
     [DesignerSerializer(typeof(WizardControlSerializer), typeof(CodeDomSerializer))]
     [Docking(DockingBehavior.AutoDock)]
-    [DefaultEvent("CurrentPageChanged")]
-    [DefaultProperty("CurrentPage")]
-    public class WizardControl : Control
+    [DefaultEvent("PageChanged")]
+    [DefaultProperty("SelectedPage")]
+    public partial class WizardControl : Control
     {
         #region Events
         public class ButtonClickEventArgs : EventArgs
@@ -414,108 +412,6 @@ namespace Manina.Windows.Forms
             }
 
             base.Dispose(disposing);
-        }
-        #endregion
-
-        #region PageCollection
-        public class WizardPageCollection : IList<WizardPage>
-        {
-            private WizardControl owner;
-            private ControlCollection controls;
-
-            public WizardPage this[int index]
-            {
-                get => (WizardPage)controls[index];
-                set
-                {
-                    Insert(index, value);
-                    RemoveAt(index + 1);
-                }
-            }
-            public int Count => controls.Count;
-            public bool IsReadOnly => controls.IsReadOnly;
-
-            public WizardPageCollection(WizardControl control)
-            {
-                owner = control;
-                controls = control.pageContainer.Controls;
-            }
-
-            public void Add(WizardPage item)
-            {
-                controls.Add(item);
-                owner.UpdateNavigationControls();
-            }
-
-            public void Clear()
-            {
-                controls.Clear();
-                owner.UpdateNavigationControls();
-            }
-
-            public bool Contains(WizardPage item)
-            {
-                return controls.Contains(item);
-            }
-
-            public void CopyTo(WizardPage[] array, int arrayIndex)
-            {
-                controls.CopyTo(array, arrayIndex);
-            }
-
-            public IEnumerator<WizardPage> GetEnumerator()
-            {
-                var iterator = controls.GetEnumerator();
-                while (iterator.MoveNext())
-                {
-                    yield return (WizardPage)iterator.Current;
-                }
-            }
-
-            public int IndexOf(WizardPage item)
-            {
-                return controls.IndexOf(item);
-            }
-
-            public void Insert(int index, WizardPage item)
-            {
-                controls.Add(item);
-
-                List<Control> removed = new List<Control>();
-                for (int i = controls.Count - 2; i >= index; i--)
-                {
-                    removed.Add(controls[i]);
-                    controls.RemoveAt(i);
-                }
-                for (int i = removed.Count - 1; i >= 0; i--)
-                {
-                    controls.Add(removed[i]);
-                }
-
-                owner.UpdateNavigationControls();
-            }
-
-            public bool Remove(WizardPage item)
-            {
-                bool exists = controls.Contains(item);
-
-                controls.Remove(item);
-
-                owner.UpdateNavigationControls();
-
-                return exists;
-            }
-
-            public void RemoveAt(int index)
-            {
-                controls.RemoveAt(index);
-                owner.UpdateNavigationControls();
-            }
-
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
         }
         #endregion
 
