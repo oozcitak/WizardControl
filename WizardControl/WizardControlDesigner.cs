@@ -127,10 +127,10 @@ namespace Manina.Windows.Forms
             int glyphX = 8;
             int glyphY = Control.UIArea.Top + (Control.UIArea.Height - glyphSize) / 2;
 
-            navigateBackButton = new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, GetLeftArrowSign(glyphSize), glyphX, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
-            navigateNextButton = new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, GetRightArrowSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
-            addPageButton = new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, GetPlusSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
-            removePageButton = new ButtonGlyph(behaviorService, selectionService, this, buttonAdorner, GetMinusSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
+            navigateBackButton = new ButtonGlyph(behaviorService, this, buttonAdorner, GetLeftArrowSign(glyphSize), glyphX, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
+            navigateNextButton = new ButtonGlyph(behaviorService, this, buttonAdorner, GetRightArrowSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
+            addPageButton = new ButtonGlyph(behaviorService, this, buttonAdorner, GetPlusSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
+            removePageButton = new ButtonGlyph(behaviorService, this, buttonAdorner, GetMinusSign(glyphSize), glyphX += glyphXOffset, glyphY, glyphSize, AnchorStyles.Left | AnchorStyles.Bottom);
 
             navigateBackButton.Click += NavigateBackButton_Click;
             navigateNextButton.Click += NavigateNextButton_Click;

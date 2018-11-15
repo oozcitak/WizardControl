@@ -9,13 +9,6 @@ namespace Manina.Windows.Forms
 {
     internal class ButtonGlyphBehavior : Behavior
     {
-        private readonly WizardControlDesigner designer;
-
-        public ButtonGlyphBehavior(WizardControlDesigner designer)
-        {
-            this.designer = designer;
-        }
-
         public override bool OnMouseDown(Glyph g, MouseButtons button, Point mouseLoc)
         {
             if (g.Bounds.Contains(mouseLoc))
@@ -35,7 +28,6 @@ namespace Manina.Windows.Forms
     internal class ButtonGlyph : Glyph
     {
         private readonly BehaviorService behaviorService;
-        private readonly ISelectionService selectionService;
         private readonly WizardControl control;
         private readonly WizardControlDesigner designer;
         private readonly Adorner adorner;
@@ -54,11 +46,10 @@ namespace Manina.Windows.Forms
         public Color DisabledBackColor => SystemColors.Control;
         public Color DisabledForeColor => SystemColors.GrayText;
 
-        public ButtonGlyph(BehaviorService behaviorService, ISelectionService selectionService, WizardControlDesigner designer, Adorner adorner, PointF[] path, int left, int top, int size, AnchorStyles anchor = AnchorStyles.Left | AnchorStyles.Top)
-            : base(new ButtonGlyphBehavior(designer))
+        public ButtonGlyph(BehaviorService behaviorService, WizardControlDesigner designer, Adorner adorner, PointF[] path, int left, int top, int size, AnchorStyles anchor = AnchorStyles.Left | AnchorStyles.Top)
+            : base(new ButtonGlyphBehavior())
         {
             this.behaviorService = behaviorService;
-            this.selectionService = selectionService;
             this.designer = designer;
             this.control = (WizardControl)designer.Component;
             this.adorner = adorner;
@@ -70,13 +61,6 @@ namespace Manina.Windows.Forms
             Enabled = true;
 
             margins = new Padding(left, top, control.Width - left - size, control.Height - top - size);
-
-            selectionService.SelectionChanged += SelectionService_SelectionChanged;
-        }
-
-        private void SelectionService_SelectionChanged(object sender, EventArgs e)
-        {
-            adorner.Enabled = ReferenceEquals(selectionService.PrimarySelection, control);
         }
 
         public override Rectangle Bounds
