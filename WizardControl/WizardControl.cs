@@ -213,10 +213,22 @@ namespace Manina.Windows.Forms
         public bool CanGoNext => (Pages.Count != 0) && !(ReferenceEquals(CurrentPage, Pages[Pages.Count - 1]));
 
         /// <summary>
+        /// Gets the height of the area where user interface controls are located.
+        /// </summary>
+        [Browsable(false)]
+        internal int UIAreaHeight => 2 + 12 + 23 + 12;
+
+        /// <summary>
+        /// Gets the client rectangle where wizard are located.
+        /// </summary>
+        [Browsable(false)]
+        public Rectangle PageArea => new Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height - UIAreaHeight);
+
+        /// <summary>
         /// Gets the client rectangle where user interface controls are located.
         /// </summary>
         [Browsable(false)]
-        public Rectangle UIArea => new Rectangle(ClientRectangle.Left, separator.Top, ClientRectangle.Width, ClientRectangle.Height - separator.Bottom);
+        public Rectangle UIArea => new Rectangle(ClientRectangle.Left, ClientRectangle.Height - UIAreaHeight, ClientRectangle.Width, UIAreaHeight);
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public override string Text { get => base.Text; set => base.Text = value; }
@@ -308,19 +320,20 @@ namespace Manina.Windows.Forms
 
         private void ResizeControls()
         {
-            var bounds = ClientRectangle;
+            var pageBounds = PageArea;
+            var uiBounds = UIArea;
+
             int buttonWidth = 75;
             int buttonHeight = 23;
 
-            int separatorTop = bounds.Bottom - (2 + 12 + buttonHeight + 12);
-            int buttonLeft = bounds.Right - (buttonWidth + buttonWidth + 12 + buttonWidth + 12);
-            int buttonTop = bounds.Bottom - (buttonHeight + 12);
+            int buttonLeft = uiBounds.Right - (buttonWidth + buttonWidth + 12 + buttonWidth + 12);
+            int buttonTop = uiBounds.Bottom - (buttonHeight + 12);
 
-            pageContainer.SetBounds(bounds.Left, bounds.Top, bounds.Width, bounds.Height - (2 + 12 + buttonHeight + 12));
-            separator.SetBounds(bounds.Left, separatorTop, bounds.Width, 2);
-            backButton.SetBounds(buttonLeft, buttonTop, backButton.Width, backButton.Height);
-            nextButton.SetBounds(buttonLeft + backButton.Width, buttonTop, nextButton.Width, nextButton.Height);
-            closeButton.SetBounds(buttonLeft + backButton.Width + nextButton.Width + 12, buttonTop, closeButton.Width, closeButton.Height);
+            pageContainer.SetBounds(pageBounds.Left, pageBounds.Top, pageBounds.Width, pageBounds.Height);
+            separator.SetBounds(uiBounds.Left, uiBounds.Top, uiBounds.Width, 2);
+            backButton.SetBounds(buttonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
+            nextButton.SetBounds(buttonLeft + backButton.Width, buttonTop, 0, 0, BoundsSpecified.Location);
+            closeButton.SetBounds(buttonLeft + backButton.Width + nextButton.Width + 12, buttonTop, 0, 0, BoundsSpecified.Location);
         }
 
         internal void UpdateNavigationControls()
