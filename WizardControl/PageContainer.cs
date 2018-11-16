@@ -10,7 +10,7 @@ namespace Manina.Windows.Forms
 {
     [ToolboxItem(false)]
     [Designer(typeof(PageContainerDesigner))]
-    internal class PageContainer : Panel
+    internal class PageContainer : Control
     {
         #region Member Variables
         private WizardPage selectedPage;

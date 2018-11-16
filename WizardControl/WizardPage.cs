@@ -10,7 +10,7 @@ namespace Manina.Windows.Forms
     [ToolboxItem(false)]
     [Designer(typeof(WizardPageDesigner))]
     [Docking(DockingBehavior.Never)]
-    public class WizardPage : Panel
+    public class WizardPage : Control
     {
         #region Properties
         /// <summary>
