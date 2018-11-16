@@ -49,9 +49,6 @@
     <Compile Include="ButtonGlyph.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="PageContainer.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="WizardControlDesigner.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -65,6 +62,9 @@
     <Compile Include="WizardPageCollection.cs">
       <SubType>Component</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="WizardControl.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
