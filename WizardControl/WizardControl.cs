@@ -309,8 +309,6 @@ namespace Manina.Windows.Forms
             if (index == -1) return;
 
             SelectedIndex = index - 1;
-
-            UpdateNavigationControls();
         }
 
         /// <summary>
@@ -325,18 +323,6 @@ namespace Manina.Windows.Forms
             if (index == -1) return;
 
             SelectedIndex = index + 1;
-
-            UpdateNavigationControls();
-        }
-
-        /// <summary>
-        /// Navigates to the given page.
-        /// </summary>
-        public void Go(WizardPage page)
-        {
-            SelectedPage = page;
-
-            UpdateNavigationControls();
         }
         #endregion
 
