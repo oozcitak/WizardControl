@@ -75,6 +75,7 @@ namespace Manina.Windows.Forms
         protected internal virtual void OnBackButtonClicked(ButtonClickEventArgs e) { BackButtonClicked?.Invoke(this, e); }
         protected internal virtual void OnNextButtonClicked(ButtonClickEventArgs e) { NextButtonClicked?.Invoke(this, e); }
         protected internal virtual void OnCloseButtonClicked(ButtonClickEventArgs e) { CloseButtonClicked?.Invoke(this, e); }
+        protected internal virtual void OnHelpButtonClicked(EventArgs e) { HelpButtonClicked?.Invoke(this, e); }
         protected internal virtual void OnPageAdded(PageEventArgs e) { PageAdded?.Invoke(this, e); }
         protected internal virtual void OnPageRemoved(PageEventArgs e) { PageRemoved?.Invoke(this, e); }
         protected internal virtual void OnCurrentPageChanging(PageChangingEventArgs e) { PageChanging?.Invoke(this, e); }
@@ -86,6 +87,8 @@ namespace Manina.Windows.Forms
         public event ButtonClickEventHandler NextButtonClicked;
         [Category("Behavior")]
         public event ButtonClickEventHandler CloseButtonClicked;
+        [Category("Behavior")]
+        public event EventHandler HelpButtonClicked;
         [Category("Behavior")]
         public event PageEventHandler PageAdded;
         [Category("Behavior")]
@@ -102,10 +105,12 @@ namespace Manina.Windows.Forms
         private Button backButton;
         private Button nextButton;
         private Button closeButton;
+        private Button helpButton;
 
         private bool backButtonEnabled = true;
         private bool nextButtonEnabled = true;
         private bool closeButtonEnabled = true;
+        private bool helpButtonEnabled = true;
 
         private readonly WizardPageCollection pages;
         #endregion
@@ -209,6 +214,13 @@ namespace Manina.Windows.Forms
         public bool CloseButtonEnabled { get => closeButtonEnabled; set { closeButtonEnabled = value; UpdateNavigationControls(); } }
 
         /// <summary>
+        /// Gets or sets whether the help button is enabled by user code.
+        /// </summary>
+        [Category("Behavior"), Localizable(true), DefaultValue(true)]
+        [Description("Gets or sets whether the help button is enabled by user code.")]
+        public bool HelpButtonEnabled { get => helpButtonEnabled; set { helpButtonEnabled = value; UpdateNavigationControls(); } }
+
+        /// <summary>
         /// Gets or sets whether the back button is visible.
         /// </summary>
         [Category("Appearance"), DefaultValue(true)]
@@ -228,6 +240,13 @@ namespace Manina.Windows.Forms
         [Category("Appearance"), DefaultValue(true)]
         [Description("Gets or sets whether the close button is visible.")]
         public bool CloseButtonVisible { get => closeButton.Visible; set { closeButton.Visible = value; } }
+
+        /// <summary>
+        /// Gets or sets whether the help button is visible.
+        /// </summary>
+        [Category("Appearance"), DefaultValue(false)]
+        [Description("Gets or sets whether the help button is visible.")]
+        public bool HelpButtonVisible { get => helpButton.Visible; set { helpButton.Visible = value; } }
 
         /// <summary>
         /// Determines whether the wizard can navigate to the previous page.
@@ -338,6 +357,13 @@ namespace Manina.Windows.Forms
             separator.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
             Controls.Add(separator);
 
+            helpButton = new Button();
+            helpButton.Text = "Help";
+            helpButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+            helpButton.Click += HelpButton_Click;
+            helpButton.Visible = false;
+            Controls.Add(helpButton);
+
             backButton = new Button();
             backButton.Text = "Back";
             backButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
@@ -368,9 +394,11 @@ namespace Manina.Windows.Forms
 
             int buttonLeft = uiBounds.Right - (buttonWidth + buttonWidth + 12 + buttonWidth + 12);
             int buttonTop = uiBounds.Bottom - (buttonHeight + 12);
+            int helpButtonLeft = uiBounds.Left + 12;
 
             pageContainer.SetBounds(pageBounds.Left, pageBounds.Top, pageBounds.Width, pageBounds.Height);
             separator.SetBounds(uiBounds.Left, uiBounds.Top, uiBounds.Width, 2);
+            helpButton.SetBounds(helpButtonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
             backButton.SetBounds(buttonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
             nextButton.SetBounds(buttonLeft + buttonWidth, buttonTop, 0, 0, BoundsSpecified.Location);
             closeButton.SetBounds(buttonLeft + backButton.Width + nextButton.Width + 12, buttonTop, 0, 0, BoundsSpecified.Location);
@@ -381,6 +409,11 @@ namespace Manina.Windows.Forms
             backButton.Enabled = backButtonEnabled && CanGoBack;
             nextButton.Enabled = nextButtonEnabled && CanGoNext;
             closeButton.Enabled = closeButtonEnabled;
+        }
+
+        private void HelpButton_Click(object sender, EventArgs e)
+        {
+            OnHelpButtonClicked(new EventArgs());
         }
 
         private void BackButton_Click(object sender, EventArgs e)
