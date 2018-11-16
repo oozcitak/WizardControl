@@ -13,7 +13,6 @@ namespace Manina.Windows.Forms
     [ToolboxBitmap(typeof(WizardControl))]
     [ToolboxItem(typeof(WizardControlToolboxItem))]
     [Designer(typeof(WizardControlDesigner))]
-    [DesignerSerializer(typeof(WizardControlSerializer), typeof(CodeDomSerializer))]
     [Docking(DockingBehavior.AutoDock)]
     [DefaultEvent("PageChanged")]
     [DefaultProperty("SelectedPage")]
@@ -514,53 +513,6 @@ namespace Manina.Windows.Forms
                 control.Pages.Add(page);
 
                 return new IComponent[] { control };
-            }
-        }
-        #endregion
-
-        #region CodeDomSerializer
-        internal class WizardControlSerializer : CodeDomSerializer
-        {
-            public override object Serialize(IDesignerSerializationManager manager, object value)
-            {
-                CodeDomSerializer baseSerializer = (CodeDomSerializer)manager.GetSerializer(
-                            typeof(WizardControl).BaseType,
-                            typeof(CodeDomSerializer));
-                // Let the base class do its work first.
-                object codeObject = baseSerializer.Serialize(manager, value);
-
-                // Let us now add our own initialization code.
-                if (codeObject is CodeStatementCollection)
-                {
-                    CodeStatementCollection statements = (CodeStatementCollection)codeObject;
-                    // This is the code reference to our ImageListView instance.
-                    CodeExpression codeControl = base.SerializeToExpression(manager, value);
-                    if (codeControl != null && value is WizardControl wizardControl)
-                    {
-                        // Walk through pages
-                        foreach (var page in wizardControl.Pages)
-                        {
-                            // Create a line of code that will invoke Pages.Add(page);
-                            var codeGetPages = new CodePropertyReferenceExpression(codeControl, "Pages");
-                            var codeAddToPages = new CodeMethodInvokeExpression(codeGetPages, "Add", new CodeVariableReferenceExpression(page.Name));
-                            // Add to the list of code statements.
-                            statements.Add(codeAddToPages);
-                        }
-                    }
-                    return codeObject;
-                }
-
-                return base.Serialize(manager, value);
-            }
-
-            public override object Deserialize(IDesignerSerializationManager manager, object codeObject)
-            {
-                // Let the base class handle deserialization.
-                CodeDomSerializer baseSerializer = (CodeDomSerializer)manager.GetSerializer(
-                    typeof(WizardControl).BaseType,
-                    typeof(CodeDomSerializer));
-
-                return baseSerializer.Deserialize(manager, codeObject);
             }
         }
         #endregion
