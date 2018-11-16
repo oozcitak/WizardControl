@@ -67,10 +67,23 @@ namespace Manina.Windows.Forms
             }
         }
 
+        public class PageValidatingEventArgs : EventArgs
+        {
+            public WizardPage Page { get; private set; }
+            public bool Cancel { get; set; }
+
+            public PageValidatingEventArgs(WizardPage page)
+            {
+                Page = page;
+                Cancel = false;
+            }
+        }
+
         public delegate void ButtonClickEventHandler(object sender, ButtonClickEventArgs e);
         public delegate void PageEventHandler(object sender, PageEventArgs e);
         public delegate void PageChangingEventHandler(object sender, PageChangingEventArgs e);
         public delegate void PageChangedEventHandler(object sender, PageChangedEventArgs e);
+        public delegate void PageValidatingEventHandler(object sender, PageValidatingEventArgs e);
 
         protected internal virtual void OnBackButtonClicked(ButtonClickEventArgs e) { BackButtonClicked?.Invoke(this, e); }
         protected internal virtual void OnNextButtonClicked(ButtonClickEventArgs e) { NextButtonClicked?.Invoke(this, e); }
@@ -80,6 +93,9 @@ namespace Manina.Windows.Forms
         protected internal virtual void OnPageRemoved(PageEventArgs e) { PageRemoved?.Invoke(this, e); }
         protected internal virtual void OnCurrentPageChanging(PageChangingEventArgs e) { PageChanging?.Invoke(this, e); }
         protected internal virtual void OnCurrentPageChanged(PageChangedEventArgs e) { PageChanged?.Invoke(this, e); }
+        protected internal virtual void OnPageValidating(PageValidatingEventArgs e) { PageValidating?.Invoke(this, e); }
+        protected internal virtual void OnPageValidated(PageEventArgs e) { PageValidated?.Invoke(this, e); }
+        protected internal virtual void OnPageShown(PageEventArgs e) { PageShown?.Invoke(this, e); }
 
         [Category("Behavior")]
         public event ButtonClickEventHandler BackButtonClicked;
@@ -97,6 +113,12 @@ namespace Manina.Windows.Forms
         public event PageChangingEventHandler PageChanging;
         [Category("Behavior")]
         public event PageChangedEventHandler PageChanged;
+        [Category("Behavior")]
+        public event PageValidatingEventHandler PageValidating;
+        [Category("Behavior")]
+        public event PageEventHandler PageValidated;
+        [Category("Behavior")]
+        public event PageEventHandler PageShown;
         #endregion
 
         #region Member Variables
@@ -130,17 +152,24 @@ namespace Manina.Windows.Forms
                 if (pageContainer.SelectedPage == value)
                     return;
 
-                PageChangingEventArgs e = new PageChangingEventArgs(pageContainer.SelectedPage, value);
-                OnCurrentPageChanging(e);
-                if (!e.Cancel)
-                {
-                    var oldPage = pageContainer.SelectedPage;
-                    pageContainer.SelectedPage = value;
+                PageValidatingEventArgs pve = new PageValidatingEventArgs(pageContainer.SelectedPage);
+                OnPageValidating(pve);
+                if (pve.Cancel) return;
 
-                    UpdateNavigationControls();
+                OnPageValidated(new PageEventArgs(pageContainer.SelectedPage));
 
-                    OnCurrentPageChanged(new PageChangedEventArgs(oldPage, pageContainer.SelectedPage));
-                }
+                PageChangingEventArgs pce = new PageChangingEventArgs(pageContainer.SelectedPage, value);
+                OnCurrentPageChanging(pce);
+                if (pce.Cancel) return;
+
+                var oldPage = pageContainer.SelectedPage;
+                pageContainer.SelectedPage = value;
+
+                UpdateNavigationControls();
+
+                OnCurrentPageChanged(new PageChangedEventArgs(oldPage, pageContainer.SelectedPage));
+
+                OnPageShown(new PageEventArgs(pageContainer.SelectedPage));
             }
         }
 
