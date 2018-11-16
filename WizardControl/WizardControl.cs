@@ -461,7 +461,6 @@ namespace Manina.Windows.Forms
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-
             using (Pen pen = new Pen(Color.FromArgb(223, 223, 223)))
             {
                 var uiBounds = UIArea;
@@ -479,6 +478,13 @@ namespace Manina.Windows.Forms
             }
 
             base.Dispose(disposing);
+        }
+
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+
+            Invalidate();
         }
         #endregion
 
