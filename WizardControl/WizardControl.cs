@@ -43,7 +43,7 @@ namespace Manina.Windows.Forms
         public class PageChangingEventArgs : EventArgs
         {
             public WizardPage CurrentPage { get; private set; }
-            public WizardPage NewPage { get; private set; }
+            public WizardPage NewPage { get; set; }
             public bool Cancel { get; set; }
 
             public PageChangingEventArgs(WizardPage currentPage, WizardPage newPage)
@@ -163,7 +163,7 @@ namespace Manina.Windows.Forms
                 if (pce.Cancel) return;
 
                 var oldPage = pageContainer.SelectedPage;
-                pageContainer.SelectedPage = value;
+                pageContainer.SelectedPage = pce.NewPage;
 
                 UpdateNavigationControls();
 
