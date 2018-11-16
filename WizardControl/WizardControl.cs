@@ -119,7 +119,7 @@ namespace Manina.Windows.Forms
         #endregion
 
         #region Member Variables
-        private PageContainer pageContainer;
+        private TabControl pageContainer;
         private Button backButton;
         private Button nextButton;
         private Button closeButton;
@@ -142,30 +142,33 @@ namespace Manina.Windows.Forms
         [Description("Gets or sets the current page of the wizard.")]
         public WizardPage SelectedPage
         {
-            get => pageContainer.SelectedPage;
+            get => (WizardPage)pageContainer.SelectedTab;
             set
             {
-                if (pageContainer.SelectedPage == value)
+                var oldPage = (WizardPage)pageContainer.SelectedTab;
+
+                if (pageContainer.SelectedTab == value)
                     return;
 
-                PageValidatingEventArgs pve = new PageValidatingEventArgs(pageContainer.SelectedPage);
+                PageValidatingEventArgs pve = new PageValidatingEventArgs(oldPage);
                 OnPageValidating(pve);
                 if (pve.Cancel) return;
 
-                OnPageValidated(new PageEventArgs(pageContainer.SelectedPage));
+                OnPageValidated(new PageEventArgs(oldPage));
 
-                PageChangingEventArgs pce = new PageChangingEventArgs(pageContainer.SelectedPage, value);
+                var newPage = (WizardPage)value;
+
+                PageChangingEventArgs pce = new PageChangingEventArgs(oldPage, newPage);
                 OnCurrentPageChanging(pce);
                 if (pce.Cancel) return;
 
-                var oldPage = pageContainer.SelectedPage;
-                pageContainer.SelectedPage = pce.NewPage;
+                pageContainer.SelectedTab = newPage;
 
                 UpdateNavigationControls();
 
-                OnCurrentPageChanged(new PageChangedEventArgs(oldPage, pageContainer.SelectedPage));
+                OnCurrentPageChanged(new PageChangedEventArgs(oldPage, newPage));
 
-                OnPageShown(new PageEventArgs(pageContainer.SelectedPage));
+                OnPageShown(new PageEventArgs(newPage));
             }
         }
 
@@ -176,12 +179,12 @@ namespace Manina.Windows.Forms
         [Description("Gets or sets the zero-based index of the current page of the wizard.")]
         public int SelectedIndex
         {
-            get => Pages.Count == 0 ? -1 : Pages.IndexOf(pageContainer.SelectedPage);
+            get => Pages.Count == 0 ? -1 : Pages.IndexOf(SelectedPage);
             set
             {
                 if (Pages.Count == 0) return;
 
-                if (Pages.IndexOf(pageContainer.SelectedPage) == value)
+                if (Pages.IndexOf(SelectedPage) == value)
                     return;
 
                 SelectedPage = Pages[value];
@@ -359,8 +362,12 @@ namespace Manina.Windows.Forms
         {
             Controls.Clear();
 
-            pageContainer = new PageContainer();
+            pageContainer = new TabControl();
             pageContainer.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
+            pageContainer.Appearance = TabAppearance.FlatButtons;
+            pageContainer.ItemSize = new Size(0, 1);
+            pageContainer.SizeMode = TabSizeMode.Fixed;
+            pageContainer.BackColor = Color.White;
             Controls.Add(pageContainer);
 
             helpButton = new Button();

@@ -10,7 +10,7 @@ namespace Manina.Windows.Forms
     [ToolboxItem(false)]
     [Designer(typeof(WizardPageDesigner))]
     [Docking(DockingBehavior.Never)]
-    public class WizardPage : Control
+    public class WizardPage : TabPage
     {
         #region Properties
         /// <summary>
@@ -92,7 +92,7 @@ namespace Manina.Windows.Forms
             #region Parent/Child Relation
             public override bool CanBeParentedTo(IDesigner parentDesigner)
             {
-                return (parentDesigner != null && parentDesigner.Component is PageContainer);
+                return (parentDesigner != null && parentDesigner.Component is TabControl);
             }
             #endregion
 
