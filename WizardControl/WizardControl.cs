@@ -309,6 +309,16 @@ namespace Manina.Windows.Forms
 
             UpdateNavigationControls();
         }
+
+        /// <summary>
+        /// Navigates to the given page.
+        /// </summary>
+        public void Go(WizardPage page)
+        {
+            SelectedPage = page;
+
+            UpdateNavigationControls();
+        }
         #endregion
 
         #region Helper Methods
