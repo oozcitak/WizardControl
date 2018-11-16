@@ -1,8 +1,6 @@
 ﻿using System;
-using System.CodeDom;
 using System.ComponentModel;
 using System.ComponentModel.Design;
-using System.ComponentModel.Design.Serialization;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Runtime.Serialization;
@@ -122,7 +120,6 @@ namespace Manina.Windows.Forms
 
         #region Member Variables
         private PageContainer pageContainer;
-        private HorizontalLine separator;
         private Button backButton;
         private Button nextButton;
         private Button closeButton;
@@ -141,7 +138,7 @@ namespace Manina.Windows.Forms
         /// Gets or sets the current page of the wizard.
         /// </summary>
         [Editor(typeof(WizardControlUITypeEditor), typeof(UITypeEditor))]
-        [Category("Behavior")]
+        [Category("Behavior"), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Description("Gets or sets the current page of the wizard.")]
         public WizardPage SelectedPage
         {
@@ -366,11 +363,6 @@ namespace Manina.Windows.Forms
             pageContainer.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
             Controls.Add(pageContainer);
 
-            separator = new HorizontalLine();
-            separator.BorderStyle = BorderStyle.FixedSingle;
-            separator.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
-            Controls.Add(separator);
-
             helpButton = new Button();
             helpButton.Text = "Help";
             helpButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
@@ -411,7 +403,6 @@ namespace Manina.Windows.Forms
             int helpButtonLeft = uiBounds.Left + 12;
 
             pageContainer.SetBounds(pageBounds.Left, pageBounds.Top, pageBounds.Width, pageBounds.Height);
-            separator.SetBounds(uiBounds.Left, uiBounds.Top, uiBounds.Width, 2);
             helpButton.SetBounds(helpButtonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
             backButton.SetBounds(buttonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
             nextButton.SetBounds(buttonLeft + buttonWidth, buttonTop, 0, 0, BoundsSpecified.Location);
@@ -458,6 +449,17 @@ namespace Manina.Windows.Forms
             base.OnResize(e);
 
             ResizeControls();
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            using (Pen pen = new Pen(Color.FromArgb(223, 223, 223)))
+            {
+                var uiBounds = UIArea;
+                e.Graphics.DrawLine(pen, uiBounds.Left, uiBounds.Top, uiBounds.Right, uiBounds.Top);
+            }
         }
 
         protected override void Dispose(bool disposing)

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Windows.Forms.Design.Behavior;
@@ -8,15 +7,13 @@ namespace Manina.Windows.Forms
 {
     public partial class WizardControl
     {
-        internal class ButtonGlyph : Glyph
+        internal class LabelGlyph : Glyph
         {
             #region Member Variables
             private readonly BehaviorService behaviorService;
             private readonly WizardControl control;
             private readonly WizardControlDesigner designer;
             private readonly Adorner adorner;
-
-            private bool isHot;
 
             private Point location = new Point(0, 0);
             private Size size = new Size(16, 16);
@@ -59,17 +56,11 @@ namespace Manina.Windows.Forms
                 }
             }
             public AnchorStyles Anchor { get; set; } = AnchorStyles.Left | AnchorStyles.Top;
+            public ContentAlignment Alignment { get; set; } = ContentAlignment.MiddleLeft;
 
-            public bool Enabled { get; set; } = true;
-
-            public PointF[] Path { get; set; } = new PointF[0];
             public string Text { get; set; } = "";
 
-            public Color BackColor { get; set; } = SystemColors.Window;
             public Color ForeColor { get; set; } = SystemColors.WindowText;
-            public Color HotBackColor { get; set; } = Color.FromArgb(205, 229, 247);
-            public Color DisabledBackColor { get; set; } = SystemColors.Control;
-            public Color DisabledForeColor { get; set; } = SystemColors.GrayText;
 
             public override Rectangle Bounds
             {
@@ -86,31 +77,11 @@ namespace Manina.Windows.Forms
             }
 
             public Padding Margins => margins;
-
-            public static PointF[] GetDefaultPath(float size)
-            {
-                return new PointF[]
-                {
-                    new PointF(0, 0),
-                    new PointF(size, 0),
-                    new PointF(size, size),
-                    new PointF(0,size),
-                };
-            }
-            #endregion
-
-            #region Events
-            public event EventHandler Click;
-
-            protected internal virtual void OnClick(EventArgs e)
-            {
-                Click?.Invoke(this, e);
-            }
             #endregion
 
             #region Constructor
-            public ButtonGlyph(BehaviorService behaviorService, WizardControlDesigner designer, Adorner adorner)
-                : base(new ButtonGlyphBehavior())
+            public LabelGlyph(BehaviorService behaviorService, WizardControlDesigner designer, Adorner adorner)
+                : base(new LabelGlyphBehavior())
             {
                 this.behaviorService = behaviorService;
                 this.designer = designer;
@@ -124,56 +95,53 @@ namespace Manina.Windows.Forms
             #region Overriden Methods
             public override Cursor GetHitTest(Point p)
             {
-                if (!Enabled) return null;
-
-                bool newIshot = Bounds.Contains(p);
-                if (isHot != newIshot)
-                {
-                    isHot = newIshot;
-                    adorner.Invalidate();
-                }
-                return isHot ? Cursors.Default : null;
+                return null;
             }
 
             public override void Paint(PaintEventArgs pe)
             {
-                var path = Path;
-                if (path == null) path = GetDefaultPath(Size.Width);
-
                 pe.Graphics.SmoothingMode = SmoothingMode.HighQuality;
 
                 Rectangle bounds = Bounds;
 
-                using (Brush brush = new SolidBrush(!Enabled ? DisabledBackColor : isHot ? HotBackColor : BackColor))
-                using (Pen pen = new Pen(!Enabled ? DisabledForeColor : ForeColor))
+                TextFormatFlags flags = TextFormatFlags.SingleLine;
+                switch(Alignment )
                 {
-                    var oldTrans = pe.Graphics.Transform;
-                    pe.Graphics.TranslateTransform(bounds.Left, bounds.Top);
-                    pe.Graphics.FillPolygon(brush, path);
-                    pe.Graphics.DrawPolygon(pen, path);
-                    pe.Graphics.Transform = oldTrans;
-                    TextRenderer.DrawText(pe.Graphics, Text, control.Font, bounds, (!Enabled ? DisabledForeColor : ForeColor), TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+                    case ContentAlignment.TopLeft:
+                        flags |= TextFormatFlags.Top | TextFormatFlags.Left;
+                        break;
+                    case ContentAlignment.TopCenter:
+                        flags |= TextFormatFlags.Top | TextFormatFlags.HorizontalCenter;
+                        break;
+                    case ContentAlignment.TopRight:
+                        flags |= TextFormatFlags.Top | TextFormatFlags.Right;
+                        break;
+                    case ContentAlignment.MiddleLeft:
+                        flags |= TextFormatFlags.VerticalCenter | TextFormatFlags.Left;
+                        break;
+                    case ContentAlignment.MiddleCenter:
+                        flags |= TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter;
+                        break;
+                    case ContentAlignment.MiddleRight:
+                        flags |= TextFormatFlags.VerticalCenter | TextFormatFlags.Right;
+                        break;
+                    case ContentAlignment.BottomLeft:
+                        flags |= TextFormatFlags.Bottom | TextFormatFlags.Left;
+                        break;
+                    case ContentAlignment.BottomCenter:
+                        flags |= TextFormatFlags.Bottom | TextFormatFlags.HorizontalCenter;
+                        break;
+                    case ContentAlignment.BottomRight:
+                        flags |= TextFormatFlags.Bottom | TextFormatFlags.Right;
+                        break;
                 }
+                TextRenderer.DrawText(pe.Graphics, Text, control.Font, bounds, ForeColor, flags);
             }
             #endregion
 
             #region Behavior
-            internal class ButtonGlyphBehavior : Behavior
+            internal class LabelGlyphBehavior : Behavior
             {
-                public override bool OnMouseDown(Glyph g, MouseButtons button, Point mouseLoc)
-                {
-                    if (g.Bounds.Contains(mouseLoc))
-                    {
-                        ButtonGlyph glyph = (ButtonGlyph)g;
-
-                        if (glyph.Enabled)
-                            glyph.OnClick(new EventArgs());
-
-                        return true;
-                    }
-
-                    return false;
-                }
             }
             #endregion
         }

@@ -26,6 +26,7 @@ namespace Manina.Windows.Forms
             private ButtonGlyph removePageButton;
             private ButtonGlyph navigateBackButton;
             private ButtonGlyph navigateNextButton;
+            private LabelGlyph currentPageLabel;
 
             private Adorner buttonAdorner;
             #endregion
@@ -163,6 +164,13 @@ namespace Manina.Windows.Forms
                 removePageButton.Size = new Size(16, 16);
                 removePageButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
 
+                currentPageLabel = new LabelGlyph(behaviorService, this, buttonAdorner);
+                currentPageLabel.Location = new Point(glyphX + 4 * glyphXOffset, glyphY);
+                currentPageLabel.Size = new Size(75, 16);
+                currentPageLabel.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+                currentPageLabel.Alignment = ContentAlignment.MiddleLeft;
+                currentPageLabel.Text = string.Format("Page {0} of {1}", Control.SelectedIndex + 1, Control.Pages.Count);
+
                 navigateBackButton.Click += NavigateBackButton_Click;
                 navigateNextButton.Click += NavigateNextButton_Click;
                 addPageButton.Click += AddPageButton_Click;
@@ -172,6 +180,7 @@ namespace Manina.Windows.Forms
                 buttonAdorner.Glyphs.Add(navigateNextButton);
                 buttonAdorner.Glyphs.Add(addPageButton);
                 buttonAdorner.Glyphs.Add(removePageButton);
+                buttonAdorner.Glyphs.Add(currentPageLabel);
             }
 
             private void Control_CurrentPageChanged(object sender, WizardControl.PageChangedEventArgs e)
@@ -250,6 +259,7 @@ namespace Manina.Windows.Forms
                 removePageVerb.Enabled = removePageButton.Enabled = (Control.Pages.Count > 1);
                 navigateBackVerb.Enabled = navigateBackButton.Enabled = (Control.SelectedIndex > 0);
                 navigateNextVerb.Enabled = navigateNextButton.Enabled = (Control.SelectedIndex < Control.Pages.Count - 1);
+                currentPageLabel.Text = string.Format("Page {0} of {1}", Control.SelectedIndex + 1, Control.Pages.Count);
 
                 buttonAdorner.Invalidate();
             }
@@ -269,7 +279,7 @@ namespace Manina.Windows.Forms
                     Control.Pages.Add(page);
                     Control.SelectedPage = page;
 
-                    selectionService.SetSelectedComponents(new Component[] { Control });
+                    selectionService.SetSelectedComponents(new Component[] { Control.SelectedPage });
                 }
             }
 
@@ -291,7 +301,7 @@ namespace Manina.Windows.Forms
                             index = Control.Pages.Count - 1;
                         Control.SelectedPage = Control.Pages[index];
 
-                        selectionService.SetSelectedComponents(new Component[] { Control });
+                        selectionService.SetSelectedComponents(new Component[] { Control.SelectedPage });
                     }
                 }
             }
@@ -306,7 +316,7 @@ namespace Manina.Windows.Forms
                 if (control.CanGoBack)
                     control.GoBack();
 
-                selectionService.SetSelectedComponents(new Component[] { Control });
+                selectionService.SetSelectedComponents(new Component[] { Control.SelectedPage });
             }
 
             /// <summary>
@@ -319,7 +329,7 @@ namespace Manina.Windows.Forms
                 if (control.CanGoNext)
                     control.GoNext();
 
-                selectionService.SetSelectedComponents(new Component[] { Control });
+                selectionService.SetSelectedComponents(new Component[] { Control.SelectedPage });
             }
             #endregion
 

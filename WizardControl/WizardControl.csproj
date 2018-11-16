@@ -43,10 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ButtonGlyph.cs">
+    <Compile Include="LabelGlyph.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="HorizontalLine.cs">
+    <Compile Include="ButtonGlyph.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="PageContainer.cs">
