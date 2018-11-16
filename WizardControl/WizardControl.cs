@@ -169,14 +169,14 @@ namespace Manina.Windows.Forms
         /// <summary>
         /// Gets or sets the text of the back button.
         /// </summary>
-        [Category("Appearance"), Localizable(true), DefaultValue("< Back")]
+        [Category("Appearance"), Localizable(true), DefaultValue("Back")]
         [Description("Gets or sets the text of the back button.")]
         public string BackButtonText { get => backButton.Text; set => backButton.Text = value; }
 
         /// <summary>
         /// Gets or sets the text of the next button.
         /// </summary>
-        [Category("Appearance"), Localizable(true), DefaultValue("Next >")]
+        [Category("Appearance"), Localizable(true), DefaultValue("Next")]
         [Description("Gets or sets the text of the next button.")]
         public string NextButtonText { get => nextButton.Text; set => nextButton.Text = value; }
 
@@ -324,17 +324,18 @@ namespace Manina.Windows.Forms
             Controls.Add(pageContainer);
 
             separator = new HorizontalLine();
+            separator.BorderStyle = BorderStyle.FixedSingle;
             separator.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom;
             Controls.Add(separator);
 
             backButton = new Button();
-            backButton.Text = "< Back";
+            backButton.Text = "Back";
             backButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
             backButton.Click += BackButton_Click;
             Controls.Add(backButton);
 
             nextButton = new Button();
-            nextButton.Text = "Next >";
+            nextButton.Text = "Next";
             nextButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom; nextButton.Click += NextButton_Click;
             Controls.Add(nextButton);
 
