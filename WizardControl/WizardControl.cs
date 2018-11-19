@@ -119,7 +119,7 @@ namespace Manina.Windows.Forms
         #endregion
 
         #region Member Variables
-        private TabControl pageContainer;
+        private HeaderlessTabControl pageContainer;
         private Button backButton;
         private Button nextButton;
         private Button closeButton;
@@ -156,7 +156,7 @@ namespace Manina.Windows.Forms
 
                 OnPageValidated(new PageEventArgs(oldPage));
 
-                var newPage = (WizardPage)value;
+                var newPage = value;
 
                 PageChangingEventArgs pce = new PageChangingEventArgs(oldPage, newPage);
                 OnCurrentPageChanging(pce);
@@ -362,12 +362,8 @@ namespace Manina.Windows.Forms
         {
             Controls.Clear();
 
-            pageContainer = new TabControl();
+            pageContainer = new HeaderlessTabControl();
             pageContainer.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            pageContainer.Appearance = TabAppearance.FlatButtons;
-            pageContainer.ItemSize = new Size(0, 1);
-            pageContainer.SizeMode = TabSizeMode.Fixed;
-            pageContainer.BackColor = Color.White;
             Controls.Add(pageContainer);
 
             helpButton = new Button();
@@ -447,6 +443,20 @@ namespace Manina.Windows.Forms
             ButtonClickEventArgs be = new ButtonClickEventArgs();
             OnCloseButtonClicked(be);
             if (!be.Cancel) FindForm().Close();
+        }
+        #endregion
+
+        #region HeaderlessTabControl
+        private class HeaderlessTabControl : TabControl
+        {
+            public HeaderlessTabControl()
+            {
+                Appearance = TabAppearance.FlatButtons;
+                ItemSize = new Size(0, 1);
+                SizeMode = TabSizeMode.Fixed;
+            }
+
+            public override Rectangle DisplayRectangle => new Rectangle(0, 0, Width, Height);
         }
         #endregion
 
