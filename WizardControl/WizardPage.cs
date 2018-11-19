@@ -52,6 +52,15 @@ namespace Manina.Windows.Forms
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new int TabIndex { get => base.TabIndex; set => base.TabIndex = value; }
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new int ImageIndex { get => base.ImageIndex; set => base.ImageIndex = value; }
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new string ImageKey { get => base.ImageKey; set => base.ImageKey = value; }
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new string ToolTipText { get => base.ToolTipText; set => base.ToolTipText = value; }
         #endregion
 
         #region Overriden Methods

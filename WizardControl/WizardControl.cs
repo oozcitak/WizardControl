@@ -179,16 +179,8 @@ namespace Manina.Windows.Forms
         [Description("Gets or sets the zero-based index of the current page of the wizard.")]
         public int SelectedIndex
         {
-            get => Pages.Count == 0 ? -1 : Pages.IndexOf(SelectedPage);
-            set
-            {
-                if (Pages.Count == 0) return;
-
-                if (Pages.IndexOf(SelectedPage) == value)
-                    return;
-
-                SelectedPage = Pages[value];
-            }
+            get => pageContainer.SelectedIndex;
+            set => pageContainer.SelectedIndex = value;
         }
 
         /// <summary>
@@ -295,7 +287,7 @@ namespace Manina.Windows.Forms
         internal int UIAreaHeight => 2 + 12 + 23 + 12;
 
         /// <summary>
-        /// Gets the client rectangle where wizard are located.
+        /// Gets the client rectangle where wizard pages are located.
         /// </summary>
         [Browsable(false)]
         public Rectangle PageArea => new Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height - UIAreaHeight);

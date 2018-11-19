@@ -28,15 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.wizardControl1 = new Manina.Windows.Forms.WizardControl();
             this.SuspendLayout();
-            // 
-            // wizardControl1
-            // 
-            this.wizardControl1.Location = new System.Drawing.Point(0, 0);
-            this.wizardControl1.Name = "wizardControl1";
-            this.wizardControl1.Size = new System.Drawing.Size(0, 0);
-            this.wizardControl1.TabIndex = 0;
             // 
             // TestForm
             // 
@@ -46,12 +38,9 @@
             this.Name = "TestForm";
             this.Text = "Test Form";
             this.ResumeLayout(false);
-
         }
 
         #endregion
-
-        private Manina.Windows.Forms.WizardControl wizardControl1;
     }
 }
 
