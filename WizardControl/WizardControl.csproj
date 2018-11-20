@@ -43,12 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LabelGlyph.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ButtonGlyph.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="BaseGlyph.cs" />
+    <Compile Include="GlyphToolBar.cs" />
+    <Compile Include="SeparatorGlyph.cs" />
+    <Compile Include="LabelGlyph.cs" />
+    <Compile Include="ButtonGlyph.cs" />
     <Compile Include="WizardControlDesigner.cs">
       <SubType>Component</SubType>
     </Compile>

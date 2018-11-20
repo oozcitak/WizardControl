@@ -23,13 +23,14 @@ namespace Manina.Windows.Forms
             private DesignerVerb navigateNextVerb;
             private DesignerVerbCollection verbs;
 
+            private GlyphToolBar toolbar;
             private ButtonGlyph addPageButton;
             private ButtonGlyph removePageButton;
             private ButtonGlyph navigateBackButton;
             private ButtonGlyph navigateNextButton;
             private LabelGlyph currentPageLabel;
 
-            private Adorner buttonAdorner;
+            private Adorner toolbarAdorner;
             #endregion
 
             #region Properties
@@ -129,6 +130,7 @@ namespace Manina.Windows.Forms
                 Control.PageChanged += Control_CurrentPageChanged;
                 Control.ControlAdded += Control_ControlAdded;
                 Control.ControlRemoved += Control_ControlRemoved;
+                Control.Resize += Control_Resize;
             }
 
             public override void InitializeNewComponent(IDictionary defaultValues)
@@ -154,6 +156,7 @@ namespace Manina.Windows.Forms
                     Control.PageChanged -= Control_CurrentPageChanged;
                     Control.ControlAdded -= Control_ControlAdded;
                     Control.ControlRemoved -= Control_ControlRemoved;
+                    Control.Resize -= Control_Resize;
 
                     navigateBackButton.Click -= NavigateBackButton_Click;
                     navigateNextButton.Click -= NavigateNextButton_Click;
@@ -161,7 +164,7 @@ namespace Manina.Windows.Forms
                     removePageButton.Click -= RemovePageButton_Click;
 
                     if (behaviorService != null)
-                        behaviorService.Adorners.Remove(buttonAdorner);
+                        behaviorService.Adorners.Remove(toolbarAdorner);
                 }
                 base.Dispose(disposing);
             }
@@ -173,43 +176,24 @@ namespace Manina.Windows.Forms
             /// </summary>
             private void CreateGlyphs()
             {
-                int glyphSize = 16;
-                int glyphXOffset = glyphSize + 8;
-                int glyphX = 8;
-                int glyphY = Control.UIArea.Top + (Control.UIArea.Height - glyphSize) / 2;
+                toolbarAdorner = new Adorner();
+                behaviorService.Adorners.Add(toolbarAdorner);
 
-                buttonAdorner = new Adorner();
-                behaviorService.Adorners.Add(buttonAdorner);
+                toolbar = new GlyphToolBar(behaviorService, this, toolbarAdorner);
 
-                navigateBackButton = new ButtonGlyph(behaviorService, this, buttonAdorner);
-                navigateBackButton.Path = GetLeftArrowSign(glyphSize);
-                navigateBackButton.Location = new Point(glyphX, glyphY);
-                navigateBackButton.Size = new Size(16, 16);
-                navigateBackButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+                navigateBackButton = new ButtonGlyph();
+                navigateBackButton.Path = GetLeftArrowSign(toolbar.DefaultIconSize.Height);
 
-                navigateNextButton = new ButtonGlyph(behaviorService, this, buttonAdorner);
-                navigateNextButton.Path = GetRightArrowSign(glyphSize);
-                navigateNextButton.Location = new Point(glyphX + glyphXOffset, glyphY);
-                navigateNextButton.Size = new Size(16, 16);
-                navigateNextButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+                navigateNextButton = new ButtonGlyph();
+                navigateNextButton.Path = GetRightArrowSign(toolbar.DefaultIconSize.Height);
 
-                addPageButton = new ButtonGlyph(behaviorService, this, buttonAdorner);
-                addPageButton.Path = GetPlusSign(glyphSize);
-                addPageButton.Location = new Point(glyphX + 2 * glyphXOffset, glyphY);
-                addPageButton.Size = new Size(16, 16);
-                addPageButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+                addPageButton = new ButtonGlyph();
+                addPageButton.Path = GetPlusSign(toolbar.DefaultIconSize.Height);
 
-                removePageButton = new ButtonGlyph(behaviorService, this, buttonAdorner);
-                removePageButton.Path = GetMinusSign(glyphSize);
-                removePageButton.Location = new Point(glyphX + 3 * glyphXOffset, glyphY);
-                removePageButton.Size = new Size(16, 16);
-                removePageButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+                removePageButton = new ButtonGlyph();
+                removePageButton.Path = GetMinusSign(toolbar.DefaultIconSize.Height);
 
-                currentPageLabel = new LabelGlyph(behaviorService, this, buttonAdorner);
-                currentPageLabel.Location = new Point(glyphX + 4 * glyphXOffset, glyphY);
-                currentPageLabel.Size = new Size(75, 16);
-                currentPageLabel.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-                currentPageLabel.Alignment = ContentAlignment.MiddleLeft;
+                currentPageLabel = new LabelGlyph();
                 currentPageLabel.Text = string.Format("Page {0} of {1}", Control.SelectedIndex + 1, Control.Pages.Count);
 
                 navigateBackButton.Click += NavigateBackButton_Click;
@@ -217,11 +201,14 @@ namespace Manina.Windows.Forms
                 addPageButton.Click += AddPageButton_Click;
                 removePageButton.Click += RemovePageButton_Click;
 
-                buttonAdorner.Glyphs.Add(navigateBackButton);
-                buttonAdorner.Glyphs.Add(navigateNextButton);
-                buttonAdorner.Glyphs.Add(addPageButton);
-                buttonAdorner.Glyphs.Add(removePageButton);
-                buttonAdorner.Glyphs.Add(currentPageLabel);
+                toolbar.AddButton(navigateBackButton);
+                toolbar.AddButton(currentPageLabel);
+                toolbar.AddButton(navigateNextButton);
+                toolbar.AddButton(new SeparatorGlyph());
+                toolbar.AddButton(addPageButton);
+                toolbar.AddButton(removePageButton);
+
+                toolbarAdorner.Glyphs.Add(toolbar);
             }
 
             private void Control_CurrentPageChanged(object sender, WizardControl.PageChangedEventArgs e)
@@ -237,6 +224,12 @@ namespace Manina.Windows.Forms
             private void Control_ControlRemoved(object sender, ControlEventArgs e)
             {
                 UpdateGlyphs();
+            }
+
+            private void Control_Resize(object sender, EventArgs e)
+            {
+                toolbar.UpdateLayout();
+                toolbar.Location = new Point(8, Control.UIArea.Top + (Control.UIArea.Height - toolbar.Size.Height) / 2);
             }
 
             private void NavigateBackButton_Click(object sender, EventArgs e)
@@ -285,7 +278,7 @@ namespace Manina.Windows.Forms
                 navigateNextVerb.Enabled = navigateNextButton.Enabled = (Control.SelectedIndex < Control.Pages.Count - 1);
                 currentPageLabel.Text = string.Format("Page {0} of {1}", Control.SelectedIndex + 1, Control.Pages.Count);
 
-                buttonAdorner.Invalidate();
+                toolbarAdorner.Invalidate();
             }
             #endregion
 
@@ -340,7 +333,7 @@ namespace Manina.Windows.Forms
             protected void NavigateBackHandler(object sender, EventArgs e)
             {
                 WizardControl control = Control;
-                
+
                 if (control.CanGoBack)
                     control.GoBack();
 

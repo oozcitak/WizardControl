@@ -8,5 +8,10 @@ namespace WizardControlTest
         {
             InitializeComponent();
         }
+
+        private void wizardControl1_PageChanged(object sender, Manina.Windows.Forms.WizardControl.PageChangedEventArgs e)
+        {
+
+        }
     }
 }

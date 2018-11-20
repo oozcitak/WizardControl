@@ -2,180 +2,65 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using System.Windows.Forms.Design.Behavior;
 
 namespace Manina.Windows.Forms
 {
-    public partial class WizardControl
+    internal class ButtonGlyph : BaseGlyph
     {
-        internal class ButtonGlyph : Glyph
+        public PointF[] Path { get; set; } = new PointF[0];
+        public string Text { get; set; } = "";
+
+        private Size iconSize;
+        private Size textSize;
+
+        public override Size Size
         {
-            #region Member Variables
-            private readonly BehaviorService behaviorService;
-            private readonly WizardControl control;
-            private readonly WizardControlDesigner designer;
-            private readonly Adorner adorner;
-
-            private bool isHot;
-
-            private Point location = new Point(0, 0);
-            private Size size = new Size(16, 16);
-            private Padding margins = new Padding();
-            #endregion
-
-            #region Properties
-            public Point Location
+            get
             {
-                get => location;
-                set
-                {
-                    var oldLocation = location;
-                    location = value;
+                bool hasIcon = (Path != null && Path.Length != 0);
+                bool hasText = !string.IsNullOrEmpty(Text);
 
-                    margins.Left += location.X - oldLocation.X;
-                    margins.Right -= location.X - oldLocation.X;
-                    margins.Top += location.Y - oldLocation.Y;
-                    margins.Bottom -= location.Y - oldLocation.Y;
-                }
+                iconSize = (hasIcon ? Parent.DefaultIconSize : Size.Empty);
+                textSize = (hasText ? TextRenderer.MeasureText(Text, Parent.Control.Font) : Size.Empty);
+
+                return new Size(iconSize.Width + textSize.Width + (hasIcon && hasText ? 2 : 0),
+                    Math.Max(iconSize.Height, textSize.Height)) + Padding + Padding + new Size(2, 2);
             }
-            public Size Size
+        }
+
+        public override void Paint(PaintEventArgs pe)
+        {
+            pe.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+
+            using (Brush backBrush = new SolidBrush(Enabled && IsHot ? Parent.HotButtonBackColor : Parent.ButtonBackColor))
+            using (Pen borderPen = new Pen(IsHot ? Parent.HotButtonBorderColor : Parent.ButtonBorderColor))
+            using (Brush pathBrush = new SolidBrush(IsHot ? Parent.HotButtonFillColor : !Enabled ? Parent.DisabledButtonFillColor : Parent.ButtonFillColor))
+            using (Pen pathPen = new Pen(!Enabled ? Parent.DisabledButtonForeColor : Parent.ButtonForeColor))
             {
-                get => size;
-                set
-                {
-                    var oldSize = size;
-                    size = value;
-
-                    if ((Anchor & AnchorStyles.Left) != AnchorStyles.None)
-                        margins.Right -= size.Width - oldSize.Width;
-                    else
-                        margins.Left -= size.Width - oldSize.Width;
-
-                    if ((Anchor & AnchorStyles.Top) != AnchorStyles.None)
-                        margins.Bottom -= size.Height - oldSize.Height;
-                    else
-                        margins.Top -= size.Height - oldSize.Height;
-
-                }
-            }
-            public AnchorStyles Anchor { get; set; } = AnchorStyles.Left | AnchorStyles.Top;
-
-            public bool Enabled { get; set; } = true;
-
-            public PointF[] Path { get; set; } = new PointF[0];
-            public string Text { get; set; } = "";
-
-            public Color BackColor { get; set; } = SystemColors.Window;
-            public Color ForeColor { get; set; } = SystemColors.WindowText;
-            public Color HotBackColor { get; set; } = Color.FromArgb(205, 229, 247);
-            public Color DisabledBackColor { get; set; } = SystemColors.Control;
-            public Color DisabledForeColor { get; set; } = SystemColors.GrayText;
-
-            public override Rectangle Bounds
-            {
-                get
-                {
-                    Point pt = behaviorService.ControlToAdornerWindow(control);
-
-                    var margins = Margins;
-                    int left = ((Anchor & AnchorStyles.Left) != AnchorStyles.None) ? pt.X + margins.Left : pt.X + control.Width - margins.Right - Size.Width;
-                    int top = ((Anchor & AnchorStyles.Top) != AnchorStyles.None) ? pt.Y + margins.Top : pt.Y + control.Height - margins.Bottom - Size.Height;
-
-                    return new Rectangle(left, top, Size.Width, Size.Height);
-                }
-            }
-
-            public Padding Margins => margins;
-
-            public static PointF[] GetDefaultPath(float size)
-            {
-                return new PointF[]
-                {
-                    new PointF(0, 0),
-                    new PointF(size, 0),
-                    new PointF(size, size),
-                    new PointF(0,size),
-                };
-            }
-            #endregion
-
-            #region Events
-            public event EventHandler Click;
-
-            protected internal virtual void OnClick(EventArgs e)
-            {
-                Click?.Invoke(this, e);
-            }
-            #endregion
-
-            #region Constructor
-            public ButtonGlyph(BehaviorService behaviorService, WizardControlDesigner designer, Adorner adorner)
-                : base(new ButtonGlyphBehavior())
-            {
-                this.behaviorService = behaviorService;
-                this.designer = designer;
-                this.control = (WizardControl)designer.Component;
-                this.adorner = adorner;
-
-                margins = new Padding(Location.X, Location.Y, control.Width - Location.X - Size.Width, control.Height - Location.Y - Size.Height);
-            }
-            #endregion
-
-            #region Overriden Methods
-            public override Cursor GetHitTest(Point p)
-            {
-                if (!Enabled) return null;
-
-                bool newIshot = Bounds.Contains(p);
-                if (isHot != newIshot)
-                {
-                    isHot = newIshot;
-                    adorner.Invalidate();
-                }
-                return isHot ? Cursors.Default : null;
-            }
-
-            public override void Paint(PaintEventArgs pe)
-            {
-                var path = Path;
-                if (path == null) path = GetDefaultPath(Size.Width);
-
-                pe.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-
                 Rectangle bounds = Bounds;
 
-                using (Brush brush = new SolidBrush(!Enabled ? DisabledBackColor : isHot ? HotBackColor : BackColor))
-                using (Pen pen = new Pen(!Enabled ? DisabledForeColor : ForeColor))
+                pe.Graphics.FillRectangle(backBrush, bounds);
+                pe.Graphics.DrawRectangle(borderPen, bounds);
+
+                if (Path != null && Path.Length != 0)
                 {
+                    Rectangle iconBounds = GetCenteredRectangle(iconSize);
+
                     var oldTrans = pe.Graphics.Transform;
-                    pe.Graphics.TranslateTransform(bounds.Left, bounds.Top);
-                    pe.Graphics.FillPolygon(brush, path);
-                    pe.Graphics.DrawPolygon(pen, path);
+                    pe.Graphics.TranslateTransform(iconBounds.Left, iconBounds.Top);
+                    pe.Graphics.FillPolygon(pathBrush, Path);
+                    pe.Graphics.DrawPolygon(pathPen, Path);
                     pe.Graphics.Transform = oldTrans;
-                    TextRenderer.DrawText(pe.Graphics, Text, control.Font, bounds, (!Enabled ? DisabledForeColor : ForeColor), TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
                 }
-            }
-            #endregion
-
-            #region Behavior
-            internal class ButtonGlyphBehavior : Behavior
-            {
-                public override bool OnMouseDown(Glyph g, MouseButtons button, Point mouseLoc)
+                if (!string.IsNullOrEmpty(Text))
                 {
-                    if (g.Bounds.Contains(mouseLoc))
-                    {
-                        ButtonGlyph glyph = (ButtonGlyph)g;
+                    Rectangle textBounds = GetCenteredRectangle(textSize);
 
-                        if (glyph.Enabled)
-                            glyph.OnClick(new EventArgs());
-
-                        return true;
-                    }
-
-                    return false;
+                    TextRenderer.DrawText(pe.Graphics, Text, Parent.Control.Font, textBounds,
+                        (!Enabled ? Parent.DisabledButtonForeColor : Parent.ButtonForeColor),
+                        TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
                 }
             }
-            #endregion
         }
     }
 }
