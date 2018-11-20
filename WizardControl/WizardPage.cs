@@ -10,7 +10,7 @@ namespace Manina.Windows.Forms
     [ToolboxItem(false)]
     [Designer(typeof(WizardPageDesigner))]
     [Docking(DockingBehavior.Never)]
-    public class WizardPage : TabPage
+    public class WizardPage : Control
     {
         #region Properties
         /// <summary>
@@ -52,30 +52,26 @@ namespace Manina.Windows.Forms
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new int TabIndex { get => base.TabIndex; set => base.TabIndex = value; }
-
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new int ImageIndex { get => base.ImageIndex; set => base.ImageIndex = value; }
-
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new string ImageKey { get => base.ImageKey; set => base.ImageKey = value; }
-
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new string ToolTipText { get => base.ToolTipText; set => base.ToolTipText = value; }
         #endregion
 
         #region Overriden Methods
-#if DEBUG
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
+            WizardControl control = (WizardControl)Parent;
 
-            if (DesignMode)
+            if (!control.OwnerDraw)
             {
-                int index = Parent.Controls.IndexOf(this);
-                e.Graphics.DrawString(string.Format("{0}: {1}", index, this.Name), Font, SystemBrushes.GrayText, 5, 5);
+                base.OnPaint(e);
+
+                if (DesignMode)
+                {
+                    int index = control.Pages.IndexOf(this);
+                    e.Graphics.DrawString(string.Format("{0}: {1}", index, Name), Font, SystemBrushes.GrayText, 5, 5);
+                }
             }
+
+            control.OnPagePaint(new WizardControl.PagePaintEventArgs(e.Graphics, this));
         }
-#endif
         #endregion
 
         #region Constructor
@@ -85,9 +81,6 @@ namespace Manina.Windows.Forms
         public WizardPage()
         {
             BackColor = SystemColors.Window;
-
-            Dock = DockStyle.Fill;
-            Location = new Point(0, 0);
         }
         #endregion
 

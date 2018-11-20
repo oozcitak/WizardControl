@@ -17,22 +17,22 @@ namespace Manina.Windows.Forms
             #region Properties
             public WizardPage this[int index]
             {
-                get => (WizardPage)controls[index];
+                get => (WizardPage)controls[index + owner.FirstPageIndex];
                 set
                 {
-                    Insert(index, value);
-                    RemoveAt(index + 1);
+                    Insert(index + owner.FirstPageIndex, value);
+                    RemoveAt(index + owner.FirstPageIndex + 1);
                 }
             }
-            public int Count => controls.Count;
-            public bool IsReadOnly => controls.IsReadOnly;
+            public int Count => owner.PageCount;
+            public bool IsReadOnly => false;
             #endregion
 
             #region Constructor
             public WizardPageCollection(WizardControl control)
             {
                 owner = control;
-                controls = control.pageContainer.Controls;
+                controls = control.Controls;
             }
             #endregion
 
@@ -40,12 +40,20 @@ namespace Manina.Windows.Forms
             public void Add(WizardPage item)
             {
                 controls.Add(item);
+                if (Count == 1) owner.SelectedIndex = 0;
+
                 owner.UpdateNavigationControls();
+                owner.UpdatePages();
             }
 
             public void Clear()
             {
-                controls.Clear();
+                List<Control> toRemove = new List<Control>();
+                for (int i = owner.FirstPageIndex; i < owner.FirstPageIndex + owner.PageCount; i++)
+                    toRemove.Add(controls[i]);
+                foreach (Control control in toRemove)
+                    controls.Remove(control);
+                owner.SelectedIndex = -1;
                 owner.UpdateNavigationControls();
             }
 
@@ -56,39 +64,39 @@ namespace Manina.Windows.Forms
 
             public void CopyTo(WizardPage[] array, int arrayIndex)
             {
-                controls.CopyTo(array, arrayIndex);
+                for (int i = arrayIndex; i < array.Length; i++)
+                    array[i] = (WizardPage)controls[i - arrayIndex + owner.FirstPageIndex];
             }
 
             public IEnumerator<WizardPage> GetEnumerator()
             {
-                var iterator = controls.GetEnumerator();
-                while (iterator.MoveNext())
-                {
-                    yield return (WizardPage)iterator.Current;
-                }
+                for (int i = owner.FirstPageIndex; i < owner.FirstPageIndex + owner.PageCount; i++)
+                    yield return (WizardPage)controls[i];
             }
 
             public int IndexOf(WizardPage item)
             {
-                return controls.IndexOf(item);
+                return controls.IndexOf(item) - owner.FirstPageIndex;
             }
 
             public void Insert(int index, WizardPage item)
             {
-                controls.Add(item);
-
+                index += owner.FirstPageIndex;
                 List<Control> removed = new List<Control>();
-                for (int i = controls.Count - 2; i >= index; i--)
+                for (int i = controls.Count - 1; i >= index; i--)
                 {
                     removed.Add(controls[i]);
                     controls.RemoveAt(i);
                 }
+                controls.Add(item);
                 for (int i = removed.Count - 1; i >= 0; i--)
                 {
                     controls.Add(removed[i]);
                 }
+                if (Count == 1) owner.SelectedIndex = 0;
 
                 owner.UpdateNavigationControls();
+                owner.UpdatePages();
             }
 
             public bool Remove(WizardPage item)
@@ -97,15 +105,28 @@ namespace Manina.Windows.Forms
 
                 controls.Remove(item);
 
+                if (Count == 0)
+                    owner.SelectedIndex = -1;
+                else if (owner.SelectedIndex > Count - 1)
+                    owner.SelectedIndex = 0;
+
                 owner.UpdateNavigationControls();
+                owner.UpdatePages();
 
                 return exists;
             }
 
             public void RemoveAt(int index)
             {
-                controls.RemoveAt(index);
+                controls.RemoveAt(index + owner.FirstPageIndex);
+
+                if (Count == 0)
+                    owner.SelectedIndex = -1;
+                else if (owner.SelectedIndex > Count - 1)
+                    owner.SelectedIndex = 0;
+
                 owner.UpdateNavigationControls();
+                owner.UpdatePages();
             }
             #endregion
 

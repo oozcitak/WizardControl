@@ -101,7 +101,7 @@ namespace Manina.Windows.Forms
             public override void Paint(PaintEventArgs pe)
             {
                 pe.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-
+                pe.Graphics.FillRectangle(Brushes.White, Bounds);
                 Rectangle bounds = Bounds;
 
                 TextFormatFlags flags = TextFormatFlags.SingleLine;

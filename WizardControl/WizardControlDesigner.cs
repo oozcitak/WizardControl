@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
@@ -126,10 +127,50 @@ namespace Manina.Windows.Forms
                 CreateGlyphs();
 
                 Control.PageChanged += Control_CurrentPageChanged;
-                Control.PageAdded += Control_PageAdded;
-                Control.PageRemoved += Control_PageRemoved;
+                Control.ControlAdded += Control_ControlAdded;
+                Control.ControlRemoved += Control_ControlRemoved;
             }
 
+            public override void InitializeNewComponent(IDictionary defaultValues)
+            {
+                base.InitializeNewComponent(defaultValues);
+
+                // add a default page
+                AddPageHandler(this, EventArgs.Empty);
+
+                MemberDescriptor member = TypeDescriptor.GetProperties(Component)["Controls"];
+                RaiseComponentChanging(member);
+                RaiseComponentChanged(member, null, null);
+
+                Control.SelectedIndex = 0;
+
+                UpdateGlyphs();
+            }
+
+            protected override void Dispose(bool disposing)
+            {
+                if (disposing)
+                {
+                    Control.PageChanged -= Control_CurrentPageChanged;
+                    Control.ControlAdded -= Control_ControlAdded;
+                    Control.ControlRemoved -= Control_ControlRemoved;
+
+                    navigateBackButton.Click -= NavigateBackButton_Click;
+                    navigateNextButton.Click -= NavigateNextButton_Click;
+                    addPageButton.Click -= AddPageButton_Click;
+                    removePageButton.Click -= RemovePageButton_Click;
+
+                    if (behaviorService != null)
+                        behaviorService.Adorners.Remove(buttonAdorner);
+                }
+                base.Dispose(disposing);
+            }
+            #endregion
+
+            #region Helper Methods
+            /// <summary>
+            /// Creates the glyphs for navigation and manipulating pages
+            /// </summary>
             private void CreateGlyphs()
             {
                 int glyphSize = 16;
@@ -188,53 +229,36 @@ namespace Manina.Windows.Forms
                 UpdateGlyphs();
             }
 
-            private void Control_PageAdded(object sender, WizardControl.PageEventArgs e)
+            private void Control_ControlAdded(object sender, ControlEventArgs e)
             {
                 UpdateGlyphs();
             }
 
-            private void Control_PageRemoved(object sender, WizardControl.PageEventArgs e)
+            private void Control_ControlRemoved(object sender, ControlEventArgs e)
             {
                 UpdateGlyphs();
             }
 
             private void NavigateBackButton_Click(object sender, EventArgs e)
             {
-                NavigateBackHandler(null, null);
+                NavigateBackHandler(this, EventArgs.Empty);
             }
 
             private void NavigateNextButton_Click(object sender, EventArgs e)
             {
-                NavigateNextHandler(null, null);
+                NavigateNextHandler(this, EventArgs.Empty);
             }
 
             private void AddPageButton_Click(object sender, EventArgs e)
             {
-                AddPageHandler(null, null);
+                AddPageHandler(this, EventArgs.Empty);
             }
 
             private void RemovePageButton_Click(object sender, EventArgs e)
             {
-                RemovePageHandler(null, null);
+                RemovePageHandler(this, EventArgs.Empty);
             }
 
-            protected override void Dispose(bool disposing)
-            {
-                if (disposing)
-                {
-                    navigateBackButton.Click -= NavigateBackButton_Click;
-                    navigateNextButton.Click -= NavigateNextButton_Click;
-                    addPageButton.Click -= AddPageButton_Click;
-                    removePageButton.Click -= RemovePageButton_Click;
-
-                    if (behaviorService != null)
-                        behaviorService.Adorners.Remove(buttonAdorner);
-                }
-                base.Dispose(disposing);
-            }
-            #endregion
-
-            #region Helper Methods
             /// <summary>
             /// Gets the designer of the current page.
             /// </summary>
@@ -295,13 +319,17 @@ namespace Manina.Windows.Forms
                     if (Control.Pages.Count > 1)
                     {
                         WizardPage page = Control.SelectedPage;
-                        int index = Control.SelectedIndex;
-                        host.DestroyComponent(page);
-                        if (index == Control.Pages.Count)
-                            index = Control.Pages.Count - 1;
-                        Control.SelectedPage = Control.Pages[index];
+                        if (page != null)
+                        {
+                            int index = Control.SelectedIndex;
+                            //Control.Pages.Remove(page);
+                            host.DestroyComponent(page);
+                            if (index == Control.Pages.Count)
+                                index = Control.Pages.Count - 1;
+                            Control.SelectedIndex = index;
 
-                        selectionService.SetSelectedComponents(new Component[] { Control.SelectedPage });
+                            selectionService.SetSelectedComponents(new Component[] { Control.SelectedPage });
+                        }
                     }
                 }
             }
@@ -312,7 +340,7 @@ namespace Manina.Windows.Forms
             protected void NavigateBackHandler(object sender, EventArgs e)
             {
                 WizardControl control = Control;
-
+                
                 if (control.CanGoBack)
                     control.GoBack();
 
@@ -333,7 +361,7 @@ namespace Manina.Windows.Forms
             }
             #endregion
 
-            #region Delegate All Drag Events To The PageContainer
+            #region Delegate All Drag Events To The Current Page
             protected override void OnDragEnter(DragEventArgs de)
             {
                 GetCurrentPageDesigner().OnDragEnter(de);

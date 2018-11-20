@@ -3,13 +3,11 @@ using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Runtime.Serialization;
 using System.Windows.Forms;
 
 namespace Manina.Windows.Forms
 {
     [ToolboxBitmap(typeof(WizardControl))]
-    [ToolboxItem(typeof(WizardControlToolboxItem))]
     [Designer(typeof(WizardControlDesigner))]
     [Docking(DockingBehavior.AutoDock)]
     [DefaultEvent("PageChanged")]
@@ -76,11 +74,24 @@ namespace Manina.Windows.Forms
             }
         }
 
+        public class PagePaintEventArgs : EventArgs
+        {
+            public Graphics Graphics { get; private set; }
+            public WizardPage Page { get; private set; }
+
+            public PagePaintEventArgs(Graphics graphics, WizardPage page)
+            {
+                Graphics = graphics;
+                Page = page;
+            }
+        }
+
         public delegate void ButtonClickEventHandler(object sender, ButtonClickEventArgs e);
         public delegate void PageEventHandler(object sender, PageEventArgs e);
         public delegate void PageChangingEventHandler(object sender, PageChangingEventArgs e);
         public delegate void PageChangedEventHandler(object sender, PageChangedEventArgs e);
         public delegate void PageValidatingEventHandler(object sender, PageValidatingEventArgs e);
+        public delegate void PagePaintEventHandler(object sender, PagePaintEventArgs e);
 
         protected internal virtual void OnBackButtonClicked(ButtonClickEventArgs e) { BackButtonClicked?.Invoke(this, e); }
         protected internal virtual void OnNextButtonClicked(ButtonClickEventArgs e) { NextButtonClicked?.Invoke(this, e); }
@@ -93,6 +104,7 @@ namespace Manina.Windows.Forms
         protected internal virtual void OnPageValidating(PageValidatingEventArgs e) { PageValidating?.Invoke(this, e); }
         protected internal virtual void OnPageValidated(PageEventArgs e) { PageValidated?.Invoke(this, e); }
         protected internal virtual void OnPageShown(PageEventArgs e) { PageShown?.Invoke(this, e); }
+        protected internal virtual void OnPagePaint(PagePaintEventArgs e) { PagePaint?.Invoke(this, e); }
 
         [Category("Behavior")]
         public event ButtonClickEventHandler BackButtonClicked;
@@ -116,10 +128,11 @@ namespace Manina.Windows.Forms
         public event PageEventHandler PageValidated;
         [Category("Behavior")]
         public event PageEventHandler PageShown;
+        [Category("Appearance")]
+        public event PagePaintEventHandler PagePaint;
         #endregion
 
         #region Member Variables
-        private HeaderlessTabControl pageContainer;
         private Button backButton;
         private Button nextButton;
         private Button closeButton;
@@ -130,10 +143,21 @@ namespace Manina.Windows.Forms
         private bool closeButtonEnabled = true;
         private bool helpButtonEnabled = true;
 
+        private int selectedIndex;
+        internal bool creatingUIControls;
         private readonly WizardPageCollection pages;
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets the index of the first tab in the controls collection.
+        /// </summary>
+        internal int FirstPageIndex => 4;
+        /// <summary>
+        /// Gets the number of pages.
+        /// </summary>
+        internal int PageCount => Controls.Count - 4;
+
         /// <summary>
         /// Gets or sets the current page of the wizard.
         /// </summary>
@@ -142,12 +166,19 @@ namespace Manina.Windows.Forms
         [Description("Gets or sets the current page of the wizard.")]
         public WizardPage SelectedPage
         {
-            get => (WizardPage)pageContainer.SelectedTab;
+            get
+            {
+                return (selectedIndex == -1 ? null : Pages[selectedIndex]);
+            }
             set
             {
-                var oldPage = (WizardPage)pageContainer.SelectedTab;
+                var oldPage = (selectedIndex == -1 || selectedIndex < 0 || selectedIndex > PageCount - 1 ? null : Pages[selectedIndex]);
+                var newPage = value;
 
-                if (pageContainer.SelectedTab == value)
+                if (newPage != null && !pages.Contains(newPage))
+                    throw new ArgumentException("Page is not found in the page collection.");
+
+                if (oldPage == value)
                     return;
 
                 PageValidatingEventArgs pve = new PageValidatingEventArgs(oldPage);
@@ -156,13 +187,13 @@ namespace Manina.Windows.Forms
 
                 OnPageValidated(new PageEventArgs(oldPage));
 
-                var newPage = value;
-
                 PageChangingEventArgs pce = new PageChangingEventArgs(oldPage, newPage);
                 OnCurrentPageChanging(pce);
                 if (pce.Cancel) return;
 
-                pageContainer.SelectedTab = newPage;
+                selectedIndex = (newPage == null ? -1 : Pages.IndexOf(newPage));
+                if (oldPage != null) oldPage.Visible = false;
+                if (newPage != null) newPage.Visible = true;
 
                 UpdateNavigationControls();
 
@@ -179,8 +210,8 @@ namespace Manina.Windows.Forms
         [Description("Gets or sets the zero-based index of the current page of the wizard.")]
         public int SelectedIndex
         {
-            get => pageContainer.SelectedIndex;
-            set => pageContainer.SelectedIndex = value;
+            get => selectedIndex;
+            set { SelectedPage = (value == -1 ? null : pages[value]); }
         }
 
         /// <summary>
@@ -269,6 +300,14 @@ namespace Manina.Windows.Forms
         public bool HelpButtonVisible { get => helpButton.Visible; set { helpButton.Visible = value; } }
 
         /// <summary>
+        /// Gets or sets the drawing mode for the control.
+        /// </summary>
+        [Category("Behavior"), DefaultValue(false)]
+        [RefreshProperties(RefreshProperties.Repaint)]
+        [Description("Gets or sets the drawing mode for the control.")]
+        public bool OwnerDraw { get; set; }
+
+        /// <summary>
         /// Determines whether the wizard can navigate to the previous page.
         /// </summary>
         [Browsable(false)]
@@ -300,6 +339,9 @@ namespace Manina.Windows.Forms
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public override string Text { get => base.Text; set => base.Text = value; }
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new ControlCollection Controls => base.Controls;
         #endregion
 
         #region Constructor
@@ -308,9 +350,11 @@ namespace Manina.Windows.Forms
         /// </summary>
         public WizardControl()
         {
-            CreateChildControls();
-
+            creatingUIControls = false;
             pages = new WizardPageCollection(this);
+            selectedIndex = -1;
+
+            CreateChildControls();
 
             UpdateNavigationControls();
         }
@@ -352,11 +396,7 @@ namespace Manina.Windows.Forms
         /// </summary>
         private void CreateChildControls()
         {
-            Controls.Clear();
-
-            pageContainer = new HeaderlessTabControl();
-            pageContainer.Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom;
-            Controls.Add(pageContainer);
+            creatingUIControls = true;
 
             helpButton = new Button();
             helpButton.Text = "Help";
@@ -383,9 +423,11 @@ namespace Manina.Windows.Forms
             Controls.Add(closeButton);
 
             ResizeControls();
+
+            creatingUIControls = false;
         }
 
-        private void ResizeControls()
+        internal void ResizeControls()
         {
             var pageBounds = PageArea;
             var uiBounds = UIArea;
@@ -397,11 +439,12 @@ namespace Manina.Windows.Forms
             int buttonTop = uiBounds.Bottom - (buttonHeight + 12);
             int helpButtonLeft = uiBounds.Left + 12;
 
-            pageContainer.SetBounds(pageBounds.Left, pageBounds.Top, pageBounds.Width, pageBounds.Height);
             helpButton.SetBounds(helpButtonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
             backButton.SetBounds(buttonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
             nextButton.SetBounds(buttonLeft + buttonWidth, buttonTop, 0, 0, BoundsSpecified.Location);
             closeButton.SetBounds(buttonLeft + backButton.Width + nextButton.Width + 12, buttonTop, 0, 0, BoundsSpecified.Location);
+
+            UpdatePages();
         }
 
         internal void UpdateNavigationControls()
@@ -409,6 +452,18 @@ namespace Manina.Windows.Forms
             backButton.Enabled = backButtonEnabled && CanGoBack;
             nextButton.Enabled = nextButtonEnabled && CanGoNext;
             closeButton.Enabled = closeButtonEnabled;
+        }
+
+        internal void UpdatePages()
+        {
+            var pageBounds = PageArea;
+
+            for (int i = 0; i < Pages.Count; i++)
+            {
+                WizardPage page = Pages[i];
+                page.SetBounds(pageBounds.Left, pageBounds.Top, pageBounds.Width, pageBounds.Height, BoundsSpecified.All);
+                page.Visible = (i == selectedIndex);
+            }
         }
 
         private void HelpButton_Click(object sender, EventArgs e)
@@ -438,21 +493,12 @@ namespace Manina.Windows.Forms
         }
         #endregion
 
-        #region HeaderlessTabControl
-        private class HeaderlessTabControl : TabControl
-        {
-            public HeaderlessTabControl()
-            {
-                Appearance = TabAppearance.FlatButtons;
-                ItemSize = new Size(0, 1);
-                SizeMode = TabSizeMode.Fixed;
-            }
-
-            public override Rectangle DisplayRectangle => new Rectangle(0, 0, Width, Height);
-        }
-        #endregion
-
         #region Overriden Methods
+        protected override Control.ControlCollection CreateControlsInstance()
+        {
+            return new WizardControlCollection(this);
+        }
+
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
@@ -490,6 +536,80 @@ namespace Manina.Windows.Forms
         }
         #endregion
 
+        #region WizardControlCollection
+        internal class WizardControlCollection : ControlCollection
+        {
+            private readonly WizardControl owner;
+
+            public WizardControlCollection(WizardControl ownerControl) : base(ownerControl)
+            {
+                owner = ownerControl;
+            }
+
+            public override void Add(Control value)
+            {
+                if (owner.creatingUIControls)
+                {
+                    base.Add(value);
+                    return;
+                }
+
+                if (!(value is WizardPage))
+                {
+                    throw new ArgumentException("Only a WizardPage can be hosted in a WizardControl.");
+                }
+
+                base.Add(value);
+                if (owner.PageCount == 1) owner.SelectedIndex = 0;
+
+                owner.UpdateNavigationControls();
+                owner.UpdatePages();
+
+                // site the page
+                ISite site = owner.Site;
+                if (site != null && value.Site == null)
+                {
+                    IContainer container = site.Container;
+                    if (container != null)
+                    {
+                        container.Add(value);
+                    }
+                }
+            }
+
+            public override void Remove(Control value)
+            {
+                if (!base.Contains(value))
+                {
+                    throw new ArgumentException("Control not found in collection.", "value");
+                }
+
+                if (owner.creatingUIControls)
+                {
+                    base.Remove(value);
+                    return;
+                }
+
+                if (!(value is WizardPage))
+                {
+                    throw new ArgumentException("Only a WizardPage can be hosted in a WizardControl.");
+                }
+
+                base.Remove(value);
+
+                if (owner.PageCount == 0)
+                    owner.SelectedIndex = -1;
+                else if (owner.SelectedIndex > owner.PageCount - 1)
+                    owner.SelectedIndex = 0;
+
+                owner.UpdateNavigationControls();
+                owner.UpdatePages();
+            }
+
+            public override Control this[int index] => base[index];
+        }
+        #endregion
+
         #region UITypeEditor
         internal class WizardControlUITypeEditor : ObjectSelectorEditor
         {
@@ -507,29 +627,6 @@ namespace Manina.Windows.Forms
                     if (page == control.SelectedPage)
                         selector.SelectedNode = node;
                 }
-            }
-        }
-        #endregion
-
-        #region ToolboxItem
-        internal class WizardControlToolboxItem : ToolboxItem
-        {
-            public WizardControlToolboxItem() : base(typeof(WizardControl))
-            {
-            }
-
-            public WizardControlToolboxItem(SerializationInfo info, StreamingContext context)
-            {
-                Deserialize(info, context);
-            }
-
-            protected override IComponent[] CreateComponentsCore(IDesignerHost host)
-            {
-                WizardControl control = (WizardControl)host.CreateComponent(typeof(WizardControl));
-                WizardPage page = (WizardPage)host.CreateComponent(typeof(WizardPage));
-                control.Pages.Add(page);
-
-                return new IComponent[] { control };
             }
         }
         #endregion
