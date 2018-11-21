@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 namespace Manina.Windows.Forms
@@ -81,12 +80,14 @@ namespace Manina.Windows.Forms
         {
             base.Paint(pe);
 
+            using (Brush backBrush = new SolidBrush(IsHot ? Parent.HotButtonBackColor : Parent.ButtonBackColor))
             using (Pen borderPen = new Pen(IsHot ? Parent.HotButtonBorderColor : Parent.ButtonBorderColor))
             using (Brush pathBrush = new SolidBrush(IsHot ? Parent.HotButtonFillColor : !Enabled ? Parent.DisabledButtonFillColor : Parent.ButtonFillColor))
             using (Pen pathPen = new Pen(!Enabled ? Parent.DisabledButtonForeColor : Parent.ButtonForeColor))
             {
                 Rectangle bounds = Bounds;
 
+                pe.Graphics.FillRectangle(backBrush, bounds);
                 pe.Graphics.DrawRectangle(borderPen, bounds);
 
                 if (Path != null && Path.Length != 0)

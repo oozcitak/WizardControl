@@ -57,7 +57,7 @@ namespace Manina.Windows.Forms
         /// <summary>
         /// Gets the background color of the toolbar.
         /// </summary>
-        public Color BackColor { get; set; } = Color.White;
+        public Color BackColor { get; set; } = Color.FromArgb(207,214,229);
         /// <summary>
         /// Gets the border color of the toolbar.
         /// </summary>
@@ -66,7 +66,7 @@ namespace Manina.Windows.Forms
         /// <summary>
         /// Gets the background color of toolbar buttons.
         /// </summary>
-        public Color ButtonBackColor { get; set; } = Color.White;
+        public Color ButtonBackColor { get; set; } = Color.FromArgb(207, 214, 229);
         /// <summary>
         /// Gets the background color of hot toolbar buttons.
         /// </summary>
@@ -75,7 +75,7 @@ namespace Manina.Windows.Forms
         /// <summary>
         /// Gets the border color of toolbar buttons.
         /// </summary>
-        public Color ButtonBorderColor { get; set; } = Color.White;
+        public Color ButtonBorderColor { get; set; } = Color.FromArgb(207, 214, 229);
         /// <summary>
         /// Gets the border color of hot toolbar buttons.
         /// </summary>
