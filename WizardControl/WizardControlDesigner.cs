@@ -376,6 +376,18 @@ namespace Manina.Windows.Forms
             }
             #endregion
 
+            #region Parent/Child Relation
+            public override bool CanParent(Control control)
+            {
+                return (control is WizardPage);
+            }
+
+            public override bool CanParent(ControlDesigner controlDesigner)
+            {
+                return (controlDesigner != null && controlDesigner.Component is WizardPage);
+            }
+            #endregion
+
             #region Delegate All Drag Events To The Current Page
             protected override void OnDragEnter(DragEventArgs de)
             {
@@ -386,10 +398,10 @@ namespace Manina.Windows.Forms
             {
                 Point pt = Control.PointToClient(new Point(de.X, de.Y));
 
-                if (!Control.DisplayRectangle.Contains(pt))
-                    de.Effect = DragDropEffects.None;
-                else
+                if (GetCurrentPageDesigner().Control.DisplayRectangle.Contains(pt))
                     GetCurrentPageDesigner().OnDragOver(de);
+                else
+                    de.Effect = DragDropEffects.None;
             }
 
             protected override void OnDragLeave(EventArgs e)
