@@ -227,6 +227,7 @@ namespace Manina.Windows.Forms
         /// <returns></returns>
         public override Cursor GetHitTest(Point p)
         {
+            bool insideToolbar = bounds.Contains(p);
             bool needsPaint = false;
             bool hasHit = false;
             ButtonGlyph currentHotButton = null;
@@ -276,7 +277,7 @@ namespace Manina.Windows.Forms
 
             if (needsPaint) Refresh();
 
-            return hasHit ? Cursors.Default : null;
+            return insideToolbar || hasHit ? Cursors.Default : null;
         }
 
         /// <summary>
@@ -310,7 +311,7 @@ namespace Manina.Windows.Forms
                 {
                     Size toolTipSize = TextRenderer.MeasureText(lastHotButton.ToolTipText, Control.Font);
 
-                    Rectangle toolTipBounds = new Rectangle(lastHotButton.Bounds.Left, lastHotButton.Bounds.Top - toolTipSize.Height - 2 * Padding.Width - 2 + 1, 
+                    Rectangle toolTipBounds = new Rectangle(lastHotButton.Bounds.Left, lastHotButton.Bounds.Top - toolTipSize.Height - 2 * Padding.Width - 2 + 1,
                         toolTipSize.Width + 2 * Padding.Width + 2, toolTipSize.Height + 2 * Padding.Height + 2);
 
                     pe.Graphics.FillRectangle(backBrush, toolTipBounds);
