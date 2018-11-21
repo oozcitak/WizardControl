@@ -96,7 +96,7 @@ namespace Manina.Windows.Forms
         /// <summary>
         /// Gets the fill color of hot toolbar button icons.
         /// </summary>
-        public Color HotButtonFillColor { get; set; } = Color.FromArgb(249, 224, 126);
+        public Color HotButtonFillColor { get; set; } = Color.FromArgb(231, 186, 10);
         /// <summary>
         /// Gets the fill color of disabled toolbar button icons.
         /// </summary>
