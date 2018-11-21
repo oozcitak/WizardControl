@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Windows.Forms.Design.Behavior;
 
 namespace Manina.Windows.Forms
 {
+    /// <summary>
+    /// Represent a toolbar on the designer.
+    /// </summary>
     internal class GlyphToolBar : Glyph
     {
         #region Member Variables
@@ -20,30 +24,87 @@ namespace Manina.Windows.Forms
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets the designed control.
+        /// </summary>
         public Control Control { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the padding around the toolbar buttons and the toolbar border.
+        /// </summary>
         public Size Padding { get; set; } = new Size(2, 2);
+
+        /// <summary>
+        /// Gets the default size of button icons.
+        /// </summary>
         public Size DefaultIconSize = new Size(16, 16);
 
+        /// <summary>
+        /// Gets the location of the toolbar in adorner coordinates.
+        /// </summary>
         public Point Location { get; set; }
+
+        /// <summary>
+        /// Gets the size of the toolbar.
+        /// </summary>
         public Size Size { get; private set; }
+
+        /// <summary>
+        /// Gets the bounding rectangle of the toolbar.
+        /// </summary>
         public override Rectangle Bounds => bounds;
 
+        /// <summary>
+        /// Gets the background color of the toolbar.
+        /// </summary>
         public Color BackColor { get; set; } = Color.White;
+        /// <summary>
+        /// Gets the border color of the toolbar.
+        /// </summary>
         public Color BorderColor { get; set; } = Color.FromArgb(128, 128, 128);
 
+        /// <summary>
+        /// Gets the background color of toolbar buttons.
+        /// </summary>
         public Color ButtonBackColor { get; set; } = Color.White;
+        /// <summary>
+        /// Gets the background color of hot toolbar buttons.
+        /// </summary>
         public Color HotButtonBackColor { get; set; } = Color.FromArgb(253, 244, 191);
 
+        /// <summary>
+        /// Gets the border color of toolbar buttons.
+        /// </summary>
         public Color ButtonBorderColor { get; set; } = Color.White;
+        /// <summary>
+        /// Gets the border color of hot toolbar buttons.
+        /// </summary>
         public Color HotButtonBorderColor { get; set; } = Color.FromArgb(229, 195, 101);
 
+        /// <summary>
+        /// Gets the foreground color of toolbar button texts and icon border.
+        /// </summary>
         public Color ButtonForeColor { get; set; } = Color.Black;
+        /// <summary>
+        /// Gets the foreground color of disabled toolbar button texts and icon border.
+        /// </summary>
         public Color DisabledButtonForeColor { get; set; } = Color.FromArgb(109, 109, 109);
-        public Color ButtonFillColor { get; set; } = Color.FromArgb(249, 224, 126);
-        public Color HotButtonFillColor { get; set; } = Color.FromArgb(231, 186, 10);
+        /// <summary>
+        /// Gets the fill color of toolbar button icons.
+        /// </summary>
+        public Color ButtonFillColor { get; set; } = Color.FromArgb(231, 186, 10);
+        /// <summary>
+        /// Gets the fill color of hot toolbar button icons.
+        /// </summary>
+        public Color HotButtonFillColor { get; set; } = Color.FromArgb(249, 224, 126);
+        /// <summary>
+        /// Gets the fill color of disabled toolbar button icons.
+        /// </summary>
         public Color DisabledButtonFillColor { get; set; } = Color.FromArgb(186, 186, 186);
 
+        /// <summary>
+        /// Gets the color of toolbar separators.
+        /// </summary>
         public Color SeparatorColor { get; set; } = Color.FromArgb(109, 109, 109);
         #endregion
 
@@ -59,6 +120,10 @@ namespace Manina.Windows.Forms
         #endregion
 
         #region Behavior
+        /// <summary>
+        /// Represents the behaviour associated with toolbars.
+        /// The behaviour raises a click event when a button is clicked.
+        /// </summary>
         internal class GlyphToolBarBehavior : Behavior
         {
             public override bool OnMouseDown(Glyph g, MouseButtons mouseButton, Point mouseLoc)
@@ -67,8 +132,9 @@ namespace Manina.Windows.Forms
                 {
                     GlyphToolBar toolbar = (GlyphToolBar)g;
 
-                    foreach (var button in toolbar.buttons)
+                    foreach (var glyph in toolbar.buttons.OfType<ButtonGlyph>())
                     {
+                        var button = glyph;
                         if (button.Enabled && button.Bounds.Contains(mouseLoc))
                         {
                             button.OnClick(EventArgs.Empty);
@@ -84,12 +150,19 @@ namespace Manina.Windows.Forms
         #endregion
 
         #region Instance Methods
+        /// <summary>
+        /// Adds a new toolbar glyph.
+        /// </summary>
+        /// <param name="button"></param>
         public void AddButton(BaseGlyph button)
         {
             button.Parent = this;
             buttons.Add(button);
         }
 
+        /// <summary>
+        /// Recalculates button locations and sizes.
+        /// </summary>
         public void UpdateLayout()
         {
             Point pt = behaviorService.ControlToAdornerWindow(Control);
@@ -121,44 +194,62 @@ namespace Manina.Windows.Forms
                 x += size.Width + 1;
             }
         }
+
+        /// <summary>
+        /// Refreshes the toolbar.
+        /// </summary>
+        public void Refresh()
+        {
+            adorner.Invalidate(bounds);
+        }
         #endregion
 
         #region Overriden Methods
+        /// <summary>
+        /// Determines whether the given point is over a toolbar button.
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public override Cursor GetHitTest(Point p)
         {
             bool needsPaint = false;
             bool hasHit = false;
 
-            foreach (var button in buttons)
+            foreach (var button in buttons.OfType<ButtonGlyph>())
             {
-                if (!button.Enabled)
+                if (!button.Enabled && button.IsHot)
                 {
-                    if (button.IsHot)
+                    button.IsHot = false;
+                    needsPaint = true;
+                }
+                else if (button.Enabled)
+                {
+                    bool newIsHot = button.Bounds.Contains(p);
+                    if (newIsHot) hasHit = true;
+                    if (button.IsHot != newIsHot)
                     {
-                        button.IsHot = false;
+                        button.IsHot = newIsHot;
                         needsPaint = true;
                     }
-                    continue;
-                }
-
-                bool newIsHot = button.Bounds.Contains(p);
-                if (newIsHot) hasHit = true;
-                if (button.IsHot != newIsHot)
-                {
-                    button.IsHot = newIsHot;
-                    needsPaint = true;
                 }
             }
 
-            if (needsPaint) adorner.Invalidate();
+            if (needsPaint) Refresh();
 
             return hasHit ? Cursors.Default : null;
         }
 
+        /// <summary>
+        /// Paints the toolbar.
+        /// </summary>
+        /// <param name="pe">Paint event arguments.</param>
         public override void Paint(PaintEventArgs pe)
         {
             UpdateLayout();
             Rectangle bounds = Bounds;
+
+            if (!pe.ClipRectangle.IntersectsWith(bounds))
+                return;
 
             using (Brush brush = new SolidBrush(BackColor))
             using (Pen pen = new Pen(BorderColor))

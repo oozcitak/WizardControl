@@ -4,12 +4,24 @@ using System.Windows.Forms;
 
 namespace Manina.Windows.Forms
 {
+    /// <summary>
+    /// Represent a toolbar label on the designer.
+    /// </summary>
     internal class LabelGlyph : BaseGlyph
     {
+        #region Member Variables
+        private Size textSize;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Gets or sets the label text.
+        /// </summary>
         public string Text { get; set; } = "";
 
-        private Size textSize;
-
+        /// <summary>
+        /// Gets the size of the label.
+        /// </summary>
         public override Size Size
         {
             get
@@ -21,25 +33,27 @@ namespace Manina.Windows.Forms
                 return textSize + Padding + Padding;
             }
         }
+        #endregion
 
+        #region Overriden Methods
+        /// <summary>
+        /// Paints the glyph. The base class paints the background only.
+        /// </summary>
+        /// <param name="pe">Paint event arguments.</param>
         public override void Paint(PaintEventArgs pe)
         {
-            pe.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+            base.Paint(pe);
 
             using (Brush backBrush = new SolidBrush(Parent.ButtonBackColor))
+            using (Brush textBrush = new SolidBrush(Parent.ButtonForeColor))
             {
-                Rectangle bounds = Bounds;
-
-                pe.Graphics.FillRectangle(backBrush, bounds);
-
                 if (!string.IsNullOrEmpty(Text))
                 {
                     Rectangle textBounds = GetCenteredRectangle(textSize);
-
-                    TextRenderer.DrawText(pe.Graphics, Text, Parent.Control.Font, textBounds, Parent.ButtonForeColor,
-                        TextFormatFlags.Left | TextFormatFlags.Top | TextFormatFlags.SingleLine);
+                    pe.Graphics.DrawString(Text, Parent.Control.Font, textBrush, textBounds);
                 }
             }
         }
+        #endregion
     }
 }

@@ -353,6 +353,7 @@ namespace Manina.Windows.Forms
             creatingUIControls = false;
             pages = new WizardPageCollection(this);
             selectedIndex = -1;
+            SetStyle(ControlStyles.ResizeRedraw, true);
 
             CreateChildControls();
 
@@ -526,13 +527,6 @@ namespace Manina.Windows.Forms
             }
 
             base.Dispose(disposing);
-        }
-
-        protected override void OnSizeChanged(EventArgs e)
-        {
-            base.OnSizeChanged(e);
-
-            Invalidate();
         }
         #endregion
 

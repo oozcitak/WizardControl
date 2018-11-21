@@ -114,17 +114,10 @@ namespace Manina.Windows.Forms
             {
                 base.Initialize(component);
 
-                navigateBackVerb = new DesignerVerb("Previous page", new EventHandler(NavigateBackHandler));
-                navigateNextVerb = new DesignerVerb("Next page", new EventHandler(NavigateNextHandler));
-                addPageVerb = new DesignerVerb("Add page", new EventHandler(AddPageHandler));
-                removePageVerb = new DesignerVerb("Remove page", new EventHandler(RemovePageHandler));
-
-                verbs = new DesignerVerbCollection();
-                verbs.AddRange(new DesignerVerb[] { navigateBackVerb, navigateNextVerb, addPageVerb, removePageVerb });
-
                 behaviorService = (BehaviorService)GetService(typeof(BehaviorService));
                 selectionService = (ISelectionService)GetService(typeof(ISelectionService));
 
+                CreateVerbs();
                 CreateGlyphs();
 
                 Control.PageChanged += Control_CurrentPageChanged;
@@ -172,6 +165,22 @@ namespace Manina.Windows.Forms
 
             #region Helper Methods
             /// <summary>
+            /// Creates the designer verbs.
+            /// </summary>
+            private void CreateVerbs()
+            {
+                navigateBackVerb = new DesignerVerb("Previous page", new EventHandler(NavigateBackHandler));
+                navigateNextVerb = new DesignerVerb("Next page", new EventHandler(NavigateNextHandler));
+                addPageVerb = new DesignerVerb("Add page", new EventHandler(AddPageHandler));
+                removePageVerb = new DesignerVerb("Remove page", new EventHandler(RemovePageHandler));
+
+                verbs = new DesignerVerbCollection();
+                verbs.AddRange(new DesignerVerb[] {
+                    navigateBackVerb, navigateNextVerb, addPageVerb, removePageVerb
+                });
+            }
+
+            /// <summary>
             /// Creates the glyphs for navigation and manipulating pages
             /// </summary>
             private void CreateGlyphs()
@@ -211,45 +220,38 @@ namespace Manina.Windows.Forms
                 toolbarAdorner.Glyphs.Add(toolbar);
             }
 
+            /// <summary>
+            /// Updates verbs and toolbar buttons when the current page is changed.
+            /// </summary>
             private void Control_CurrentPageChanged(object sender, WizardControl.PageChangedEventArgs e)
             {
                 UpdateGlyphs();
             }
 
+            /// <summary>
+            /// Updates verbs and toolbar buttons when a new page is added.
+            /// </summary>
             private void Control_ControlAdded(object sender, ControlEventArgs e)
             {
                 UpdateGlyphs();
             }
 
+            /// <summary>
+            /// Updates verbs and toolbar buttons when a page is removed.
+            /// </summary>
             private void Control_ControlRemoved(object sender, ControlEventArgs e)
             {
                 UpdateGlyphs();
             }
 
+            /// <summary>
+            /// Relocate the toolbar when the control is resized.
+            /// </summary>
             private void Control_Resize(object sender, EventArgs e)
             {
                 toolbar.UpdateLayout();
                 toolbar.Location = new Point(8, Control.UIArea.Top + (Control.UIArea.Height - toolbar.Size.Height) / 2);
-            }
-
-            private void NavigateBackButton_Click(object sender, EventArgs e)
-            {
-                NavigateBackHandler(this, EventArgs.Empty);
-            }
-
-            private void NavigateNextButton_Click(object sender, EventArgs e)
-            {
-                NavigateNextHandler(this, EventArgs.Empty);
-            }
-
-            private void AddPageButton_Click(object sender, EventArgs e)
-            {
-                AddPageHandler(this, EventArgs.Empty);
-            }
-
-            private void RemovePageButton_Click(object sender, EventArgs e)
-            {
-                RemovePageHandler(this, EventArgs.Empty);
+                toolbar.Refresh();
             }
 
             /// <summary>
@@ -278,7 +280,27 @@ namespace Manina.Windows.Forms
                 navigateNextVerb.Enabled = navigateNextButton.Enabled = (Control.SelectedIndex < Control.Pages.Count - 1);
                 currentPageLabel.Text = string.Format("Page {0} of {1}", Control.SelectedIndex + 1, Control.Pages.Count);
 
-                toolbarAdorner.Invalidate();
+                toolbar.Refresh();
+            }
+
+            private void NavigateBackButton_Click(object sender, EventArgs e)
+            {
+                NavigateBackHandler(this, EventArgs.Empty);
+            }
+
+            private void NavigateNextButton_Click(object sender, EventArgs e)
+            {
+                NavigateNextHandler(this, EventArgs.Empty);
+            }
+
+            private void AddPageButton_Click(object sender, EventArgs e)
+            {
+                AddPageHandler(this, EventArgs.Empty);
+            }
+
+            private void RemovePageButton_Click(object sender, EventArgs e)
+            {
+                RemovePageHandler(this, EventArgs.Empty);
             }
             #endregion
 

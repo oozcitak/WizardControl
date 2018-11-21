@@ -5,14 +5,41 @@ using System.Windows.Forms;
 
 namespace Manina.Windows.Forms
 {
+    /// <summary>
+    /// Represent a toolbar button on the designer.
+    /// </summary>
     internal class ButtonGlyph : BaseGlyph
     {
-        public PointF[] Path { get; set; } = new PointF[0];
-        public string Text { get; set; } = "";
-
+        #region Member Variables
         private Size iconSize;
         private Size textSize;
+        #endregion
 
+        #region Properties
+        /// <summary>
+        /// Gets or sets the graphics path representing the button icon.
+        /// </summary>
+        public PointF[] Path { get; set; } = new PointF[0];
+
+        /// <summary>
+        /// Gets or sets the button text.
+        /// </summary>
+        public string Text { get; set; } = "";
+
+        /// <summary>
+        /// Gets or sets whether the button is enabled.
+        /// </summary>
+        public bool Enabled { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets whether the mouse cursor is over the button.
+        /// </summary>
+        public bool IsHot { get; set; } = false;
+
+
+        /// <summary>
+        /// Gets the size of the button.
+        /// </summary>
         public override Size Size
         {
             get
@@ -27,19 +54,39 @@ namespace Manina.Windows.Forms
                     Math.Max(iconSize.Height, textSize.Height)) + Padding + Padding + new Size(2, 2);
             }
         }
+        #endregion
 
+        #region Events
+        /// <summary>
+        /// Occurs when the mouse is clicked when the cursor is over the button.
+        /// </summary>
+        public event EventHandler Click;
+
+        /// <summary>
+        /// Raises the <see cref="Click"/> event.
+        /// </summary>
+        /// <param name="e"></param>
+        protected internal virtual void OnClick(EventArgs e)
+        {
+            Click?.Invoke(this, e);
+        }
+        #endregion
+
+        #region Overriden Methods
+        /// <summary>
+        /// Paints the glyph. The base class paints the background only.
+        /// </summary>
+        /// <param name="pe">Paint event arguments.</param>
         public override void Paint(PaintEventArgs pe)
         {
-            pe.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+            base.Paint(pe);
 
-            using (Brush backBrush = new SolidBrush(Enabled && IsHot ? Parent.HotButtonBackColor : Parent.ButtonBackColor))
             using (Pen borderPen = new Pen(IsHot ? Parent.HotButtonBorderColor : Parent.ButtonBorderColor))
             using (Brush pathBrush = new SolidBrush(IsHot ? Parent.HotButtonFillColor : !Enabled ? Parent.DisabledButtonFillColor : Parent.ButtonFillColor))
             using (Pen pathPen = new Pen(!Enabled ? Parent.DisabledButtonForeColor : Parent.ButtonForeColor))
             {
                 Rectangle bounds = Bounds;
 
-                pe.Graphics.FillRectangle(backBrush, bounds);
                 pe.Graphics.DrawRectangle(borderPen, bounds);
 
                 if (Path != null && Path.Length != 0)
@@ -62,5 +109,6 @@ namespace Manina.Windows.Forms
                 }
             }
         }
+        #endregion
     }
 }

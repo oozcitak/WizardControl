@@ -4,10 +4,19 @@ using System.Windows.Forms;
 
 namespace Manina.Windows.Forms
 {
+    /// <summary>
+    /// Represent a toolbar separator on the designer.
+    /// </summary>
     internal class SeparatorGlyph : BaseGlyph
     {
+        #region Member Variables
         private Size lineSize;
+        #endregion
 
+        #region Properties
+        /// <summary>
+        /// Gets the size of the label.
+        /// </summary>
         public override Size Size
         {
             get
@@ -17,20 +26,23 @@ namespace Manina.Windows.Forms
                 return lineSize + Padding + Padding;
             }
         }
+        #endregion
 
+        #region Overriden Methods
+        /// <summary>
+        /// Paints the glyph. The base class paints the background only.
+        /// </summary>
+        /// <param name="pe">Paint event arguments.</param>
         public override void Paint(PaintEventArgs pe)
         {
-            pe.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+            base.Paint(pe);
 
-            using (Brush backBrush = new SolidBrush(Parent.ButtonBackColor))
             using (Pen linePen = new Pen(Parent.SeparatorColor))
             {
-                Rectangle bounds = Bounds;
-
-                pe.Graphics.FillRectangle(backBrush, bounds);
                 Rectangle lineBounds = GetCenteredRectangle(lineSize);
                 pe.Graphics.DrawLine(linePen, lineBounds.Left, lineBounds.Top, lineBounds.Left, lineBounds.Bottom);
             }
         }
+        #endregion
     }
 }
