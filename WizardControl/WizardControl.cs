@@ -144,6 +144,7 @@ namespace Manina.Windows.Forms
         private bool helpButtonEnabled = true;
 
         private int selectedIndex;
+        private WizardPage lastSelectedPage;
         internal bool creatingUIControls;
         private readonly WizardPageCollection pages;
         #endregion
@@ -172,7 +173,7 @@ namespace Manina.Windows.Forms
             }
             set
             {
-                var oldPage = (selectedIndex == -1 || selectedIndex < 0 || selectedIndex > PageCount - 1 ? null : Pages[selectedIndex]);
+                var oldPage = lastSelectedPage;
                 var newPage = value;
 
                 if (newPage != null && !pages.Contains(newPage))
@@ -194,6 +195,8 @@ namespace Manina.Windows.Forms
                 selectedIndex = (newPage == null ? -1 : Pages.IndexOf(newPage));
                 if (oldPage != null) oldPage.Visible = false;
                 if (newPage != null) newPage.Visible = true;
+
+                lastSelectedPage = newPage;
 
                 UpdateNavigationControls();
 
@@ -353,6 +356,7 @@ namespace Manina.Windows.Forms
             creatingUIControls = false;
             pages = new WizardPageCollection(this);
             selectedIndex = -1;
+            lastSelectedPage = null;
             SetStyle(ControlStyles.ResizeRedraw, true);
 
             CreateChildControls();

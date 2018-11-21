@@ -282,7 +282,7 @@ namespace Manina.Windows.Forms
                 removePageVerb.Enabled = removePageButton.Enabled = (Control.Pages.Count > 1);
                 navigateBackVerb.Enabled = navigateBackButton.Enabled = (Control.SelectedIndex > 0);
                 navigateNextVerb.Enabled = navigateNextButton.Enabled = (Control.SelectedIndex < Control.Pages.Count - 1);
-                currentPageLabel.Text = string.Format("Page {0} of {1}", Control.SelectedIndex + 1, Control.Pages.Count);
+                currentPageLabel.Text = Control.Pages.Count == 0 ? "" : string.Format("Page {0} of {1}", Control.SelectedIndex + 1, Control.Pages.Count);
 
                 toolbar.Refresh();
             }
