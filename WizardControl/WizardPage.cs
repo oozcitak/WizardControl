@@ -7,7 +7,7 @@ using System.Windows.Forms.Design;
 
 namespace Manina.Windows.Forms
 {
-    [ToolboxItem(false)]
+    [ToolboxItem(false), DesignTimeVisible(false)]
     [Designer(typeof(WizardPageDesigner))]
     [Docking(DockingBehavior.Never)]
     public class WizardPage : Control
@@ -55,6 +55,11 @@ namespace Manina.Windows.Forms
         #endregion
 
         #region Overriden Methods
+        protected override ControlCollection CreateControlsInstance()
+        {
+            return new WizardPageControlCollection(this);
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             WizardControl control = (WizardControl)Parent;
@@ -75,6 +80,25 @@ namespace Manina.Windows.Forms
         public WizardPage()
         {
             BackColor = SystemColors.Window;
+        }
+        #endregion
+
+        #region WizardPageControlCollection
+        internal class WizardPageControlCollection : ControlCollection
+        {
+            public WizardPageControlCollection(WizardPage ownerControl) : base(ownerControl)
+            {
+            }
+
+            public override void Add(Control value)
+            {
+                if (value is WizardPage)
+                {
+                    throw new ArgumentException("Cannot add a WizardPage as a child control of another WizardPage.");
+                }
+
+                base.Add(value);
+            }
         }
         #endregion
 

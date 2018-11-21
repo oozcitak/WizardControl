@@ -495,7 +495,7 @@ namespace Manina.Windows.Forms
         #endregion
 
         #region Overriden Methods
-        protected override Control.ControlCollection CreateControlsInstance()
+        protected override ControlCollection CreateControlsInstance()
         {
             return new WizardControlCollection(this);
         }
