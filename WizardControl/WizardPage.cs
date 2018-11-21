@@ -94,7 +94,7 @@ namespace Manina.Windows.Forms
             #region Parent/Child Relation
             public override bool CanBeParentedTo(IDesigner parentDesigner)
             {
-                return (parentDesigner != null && parentDesigner.Component is TabControl);
+                return (parentDesigner != null && parentDesigner.Component is WizardControl);
             }
             #endregion
 
