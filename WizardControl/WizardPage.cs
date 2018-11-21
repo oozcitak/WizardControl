@@ -62,12 +62,6 @@ namespace Manina.Windows.Forms
             if (!control.OwnerDraw)
             {
                 base.OnPaint(e);
-
-                if (DesignMode)
-                {
-                    int index = control.Pages.IndexOf(this);
-                    e.Graphics.DrawString(string.Format("{0}: {1}", index, Name), Font, SystemBrushes.GrayText, 5, 5);
-                }
             }
 
             control.OnPagePaint(new WizardControl.PagePaintEventArgs(e.Graphics, this));
