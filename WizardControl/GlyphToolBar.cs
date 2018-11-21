@@ -21,6 +21,10 @@ namespace Manina.Windows.Forms
         private readonly List<BaseGlyph> buttons = new List<BaseGlyph>();
 
         private Rectangle bounds;
+
+        private readonly Timer tooltipTimer = new Timer();
+        private readonly int tooltipDelay = 750;
+        private ButtonGlyph lastHotButton = null;
         #endregion
 
         #region Properties
@@ -57,7 +61,7 @@ namespace Manina.Windows.Forms
         /// <summary>
         /// Gets the background color of the toolbar.
         /// </summary>
-        public Color BackColor { get; set; } = Color.FromArgb(207,214,229);
+        public Color BackColor { get; set; } = Color.FromArgb(207, 214, 229);
         /// <summary>
         /// Gets the border color of the toolbar.
         /// </summary>
@@ -116,6 +120,17 @@ namespace Manina.Windows.Forms
             this.designer = designer;
             this.Control = (Control)designer.Component;
             this.adorner = adorner;
+
+            tooltipTimer.Interval = tooltipDelay;
+            tooltipTimer.Tick += TooltipTimer_Tick;
+        }
+
+        private void TooltipTimer_Tick(object sender, EventArgs e)
+        {
+            tooltipTimer.Stop();
+            if (lastHotButton != null)
+                lastHotButton.ShowToolTip = true;
+            Refresh();
         }
         #endregion
 
@@ -200,7 +215,7 @@ namespace Manina.Windows.Forms
         /// </summary>
         public void Refresh()
         {
-            adorner.Invalidate(bounds);
+            adorner.Invalidate();
         }
         #endregion
 
@@ -214,6 +229,7 @@ namespace Manina.Windows.Forms
         {
             bool needsPaint = false;
             bool hasHit = false;
+            ButtonGlyph currentHotButton = null;
 
             foreach (var button in buttons.OfType<ButtonGlyph>())
             {
@@ -225,13 +241,37 @@ namespace Manina.Windows.Forms
                 else if (button.Enabled)
                 {
                     bool newIsHot = button.Bounds.Contains(p);
-                    if (newIsHot) hasHit = true;
+
+                    if (newIsHot)
+                    {
+                        hasHit = true;
+                        currentHotButton = button;
+                    }
+
                     if (button.IsHot != newIsHot)
                     {
                         button.IsHot = newIsHot;
                         needsPaint = true;
                     }
                 }
+            }
+
+            if (currentHotButton != lastHotButton)
+            {
+                if (lastHotButton != null && lastHotButton.ShowToolTip)
+                {
+                    lastHotButton.ShowToolTip = false;
+                    needsPaint = true;
+                }
+
+                tooltipTimer.Stop();
+
+                if (currentHotButton != null)
+                {
+                    tooltipTimer.Start();
+                }
+
+                lastHotButton = currentHotButton;
             }
 
             if (needsPaint) Refresh();
@@ -261,6 +301,31 @@ namespace Manina.Windows.Forms
             foreach (var button in buttons)
             {
                 button.Paint(pe);
+            }
+
+            if (lastHotButton != null && lastHotButton.ShowToolTip)
+            {
+                using (Brush backBrush = new SolidBrush(HotButtonBackColor))
+                using (Pen borderPen = new Pen(HotButtonBorderColor))
+                {
+                    Size toolTipSize = TextRenderer.MeasureText(lastHotButton.ToolTipText, Control.Font);
+
+                    Rectangle toolTipBounds = new Rectangle(lastHotButton.Bounds.Left, lastHotButton.Bounds.Top - toolTipSize.Height - 2 * Padding.Width - 2 + 1, 
+                        toolTipSize.Width + 2 * Padding.Width + 2, toolTipSize.Height + 2 * Padding.Height + 2);
+
+                    pe.Graphics.FillRectangle(backBrush, toolTipBounds);
+                    pe.Graphics.DrawLines(borderPen, new Point[] {
+                        new Point(toolTipBounds.Left, toolTipBounds.Bottom),
+                        new Point(toolTipBounds.Left, toolTipBounds.Top),
+                        new Point(toolTipBounds.Right, toolTipBounds.Top),
+                        new Point(toolTipBounds.Right, toolTipBounds.Bottom),
+                        new Point(lastHotButton.Bounds.Right, toolTipBounds.Bottom)
+                    });
+
+                    TextRenderer.DrawText(pe.Graphics, lastHotButton.ToolTipText, Control.Font, toolTipBounds,
+                        ButtonForeColor,
+                        TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine);
+                }
             }
         }
         #endregion

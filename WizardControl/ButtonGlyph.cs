@@ -26,6 +26,11 @@ namespace Manina.Windows.Forms
         public string Text { get; set; } = "";
 
         /// <summary>
+        /// Gets or sets the button tooltip text.
+        /// </summary>
+        public string ToolTipText { get; set; } = "";
+
+        /// <summary>
         /// Gets or sets whether the button is enabled.
         /// </summary>
         public bool Enabled { get; set; } = true;
@@ -33,8 +38,12 @@ namespace Manina.Windows.Forms
         /// <summary>
         /// Gets or sets whether the mouse cursor is over the button.
         /// </summary>
-        public bool IsHot { get; set; } = false;
+        internal bool IsHot { get; set; } = false;
 
+        /// <summary>
+        /// Gets or sets whether the tooltip text should be displayed.
+        /// </summary>
+        internal bool ShowToolTip { get; set; } = false;
 
         /// <summary>
         /// Gets the size of the button.
@@ -100,6 +109,7 @@ namespace Manina.Windows.Forms
                     pe.Graphics.DrawPolygon(pathPen, Path);
                     pe.Graphics.Transform = oldTrans;
                 }
+
                 if (!string.IsNullOrEmpty(Text))
                 {
                     Rectangle textBounds = GetCenteredRectangle(textSize);

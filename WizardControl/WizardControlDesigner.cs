@@ -192,15 +192,19 @@ namespace Manina.Windows.Forms
 
                 navigateBackButton = new ButtonGlyph();
                 navigateBackButton.Path = GetLeftArrowSign(toolbar.DefaultIconSize.Height);
+                navigateBackButton.ToolTipText = "Previous page";
 
                 navigateNextButton = new ButtonGlyph();
                 navigateNextButton.Path = GetRightArrowSign(toolbar.DefaultIconSize.Height);
+                navigateNextButton.ToolTipText = "Next page";
 
                 addPageButton = new ButtonGlyph();
                 addPageButton.Path = GetPlusSign(toolbar.DefaultIconSize.Height);
+                addPageButton.ToolTipText = "Add a new page";
 
                 removePageButton = new ButtonGlyph();
                 removePageButton.Path = GetMinusSign(toolbar.DefaultIconSize.Height);
+                removePageButton.ToolTipText = "Remove current page";
 
                 currentPageLabel = new LabelGlyph();
                 currentPageLabel.Text = string.Format("Page {0} of {1}", Control.SelectedIndex + 1, Control.Pages.Count);
