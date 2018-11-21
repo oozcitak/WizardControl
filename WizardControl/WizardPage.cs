@@ -38,6 +38,7 @@ namespace Manina.Windows.Forms
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override Size MaximumSize { get => new Size(0, 0); set => base.MinimumSize = new Size(0, 0); }
 
+        [Localizable(true)]
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new Size Size { get => base.Size; set => base.Size = value; }
 
