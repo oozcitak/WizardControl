@@ -76,6 +76,7 @@ namespace Manina.Windows.Forms
         /// </summary>
         public WizardPage()
         {
+            SetStyle(ControlStyles.ResizeRedraw, true);
             BackColor = SystemColors.Window;
         }
         #endregion
