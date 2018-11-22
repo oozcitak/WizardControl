@@ -43,14 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseGlyph.cs" />
-    <Compile Include="GlyphToolBar.cs" />
-    <Compile Include="SeparatorGlyph.cs" />
-    <Compile Include="LabelGlyph.cs" />
-    <Compile Include="ButtonGlyph.cs" />
-    <Compile Include="WizardControlDesigner.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Designer\BaseGlyph.cs" />
+    <Compile Include="Designer\GlyphToolBar.cs" />
+    <Compile Include="Designer\SeparatorGlyph.cs" />
+    <Compile Include="Designer\LabelGlyph.cs" />
+    <Compile Include="Designer\ButtonGlyph.cs" />
+    <Compile Include="Designer\WizardControlDesigner.cs" />
     <Compile Include="WizardPage.cs">
       <SubType>Component</SubType>
     </Compile>
