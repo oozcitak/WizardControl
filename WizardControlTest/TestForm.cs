@@ -23,19 +23,20 @@ namespace WizardControlTest
             e.Graphics.Clip = new Region(bounds);
 
             var y = bounds.Top + 6;
-            var fade = 1f;
+            var burn = 0f;
+            var burnStep = 0.9f / (bounds.Height / (e.Graphics.MeasureString("M", e.Page.Font).Height + 4));
             for (int i = messages.Count - 1; i >= 0; i--)
             {
                 var message = messages[i].Item1;
                 var color = messages[i].Item2;
                 var h = (int)e.Graphics.MeasureString(message, e.Page.Font).Height;
-                using (var brush = new SolidBrush(Color.FromArgb((int)(color.R * fade), (int)(color.G * fade), (int)(color.B * fade))))
+                using (var brush = new SolidBrush(Color.FromArgb((int)(color.R + (255 - color.R) * burn), (int)(color.G + (255 - color.G) * burn), (int)(color.B + (255 - color.B) * burn))))
                 {
                     e.Graphics.DrawString(message, e.Page.Font, brush, 20, y);
                 }
                 y += h + 4;
-                fade -= 0.05f;
-                if (fade < 0.2f) fade = 0.2f;
+                burn += burnStep;
+                if (burn > 0.9f) burn = 0.9f;
             }
 
             string currentPageStr = string.Format("Selected page: {0}", (wizardControl1.SelectedPage != null) ? wizardControl1.SelectedPage.Name : "<none>");
