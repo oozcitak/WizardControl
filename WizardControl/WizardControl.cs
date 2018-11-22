@@ -103,6 +103,7 @@ namespace Manina.Windows.Forms
         protected internal virtual void OnCurrentPageChanged(PageChangedEventArgs e) { PageChanged?.Invoke(this, e); }
         protected internal virtual void OnPageValidating(PageValidatingEventArgs e) { PageValidating?.Invoke(this, e); }
         protected internal virtual void OnPageValidated(PageEventArgs e) { PageValidated?.Invoke(this, e); }
+        protected internal virtual void OnPageHidden(PageEventArgs e) { PageHidden?.Invoke(this, e); }
         protected internal virtual void OnPageShown(PageEventArgs e) { PageShown?.Invoke(this, e); }
         protected internal virtual void OnPagePaint(PagePaintEventArgs e) { PagePaint?.Invoke(this, e); }
 
@@ -126,6 +127,8 @@ namespace Manina.Windows.Forms
         public event PageValidatingEventHandler PageValidating;
         [Category("Behavior")]
         public event PageEventHandler PageValidated;
+        [Category("Behavior")]
+        public event PageEventHandler PageHidden;
         [Category("Behavior")]
         public event PageEventHandler PageShown;
         [Category("Appearance")]
@@ -206,11 +209,14 @@ namespace Manina.Windows.Forms
 
                 UpdateNavigationControls();
 
-                if (oldPage != null && newPage != null)
-                    OnCurrentPageChanged(new PageChangedEventArgs(oldPage, newPage));
+                if (oldPage != null)
+                    OnPageHidden(new PageEventArgs(oldPage));
 
                 if (newPage != null)
                     OnPageShown(new PageEventArgs(newPage));
+
+                if (oldPage != null && newPage != null)
+                    OnCurrentPageChanged(new PageChangedEventArgs(oldPage, newPage));
             }
         }
 

@@ -64,6 +64,7 @@
             this.wizardControl1.PageChanged += new Manina.Windows.Forms.WizardControl.PageChangedEventHandler(this.wizardControl1_PageChanged);
             this.wizardControl1.PageValidating += new Manina.Windows.Forms.WizardControl.PageValidatingEventHandler(this.wizardControl1_PageValidating);
             this.wizardControl1.PageValidated += new Manina.Windows.Forms.WizardControl.PageEventHandler(this.wizardControl1_PageValidated);
+            this.wizardControl1.PageHidden += new Manina.Windows.Forms.WizardControl.PageEventHandler(this.wizardControl1_PageHidden);
             this.wizardControl1.PageShown += new Manina.Windows.Forms.WizardControl.PageEventHandler(this.wizardControl1_PageShown);
             this.wizardControl1.PagePaint += new Manina.Windows.Forms.WizardControl.PagePaintEventHandler(this.wizardControl1_PagePaint);
             // 
@@ -72,30 +73,30 @@
             this.wizardPage1.Name = "wizardPage1";
             this.wizardPage1.Size = new System.Drawing.Size(773, 374);
             // 
-            // wizardPage6
+            // wizardPage2
             // 
-            this.wizardPage6.Name = "wizardPage6";
-            this.wizardPage6.Size = new System.Drawing.Size(773, 374);
-            // 
-            // wizardPage5
-            // 
-            this.wizardPage5.Name = "wizardPage5";
-            this.wizardPage5.Size = new System.Drawing.Size(773, 374);
+            this.wizardPage2.Name = "wizardPage2";
+            this.wizardPage2.Size = new System.Drawing.Size(773, 374);
             // 
             // wizardPage3
             // 
             this.wizardPage3.Name = "wizardPage3";
             this.wizardPage3.Size = new System.Drawing.Size(773, 374);
             // 
-            // wizardPage2
-            // 
-            this.wizardPage2.Name = "wizardPage2";
-            this.wizardPage2.Size = new System.Drawing.Size(773, 374);
-            // 
             // wizardPage4
             // 
             this.wizardPage4.Name = "wizardPage4";
             this.wizardPage4.Size = new System.Drawing.Size(773, 374);
+            // 
+            // wizardPage5
+            // 
+            this.wizardPage5.Name = "wizardPage5";
+            this.wizardPage5.Size = new System.Drawing.Size(773, 374);
+            // 
+            // wizardPage6
+            // 
+            this.wizardPage6.Name = "wizardPage6";
+            this.wizardPage6.Size = new System.Drawing.Size(773, 374);
             // 
             // wizardPage7
             // 

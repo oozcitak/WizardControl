@@ -105,6 +105,11 @@ namespace WizardControlTest
             AddMessage(string.Format("Page validated: {0}", e.Page.Name));
         }
 
+        private void wizardControl1_PageHidden(object sender, Manina.Windows.Forms.WizardControl.PageEventArgs e)
+        {
+            AddMessage(string.Format("Page hidden: {0}", e.Page.Name));
+        }
+
         private void wizardControl1_PageShown(object sender, Manina.Windows.Forms.WizardControl.PageEventArgs e)
         {
             AddMessage(string.Format("Page shown: {0}", e.Page.Name));
