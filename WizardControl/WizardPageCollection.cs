@@ -53,6 +53,7 @@ namespace Manina.Windows.Forms
                     toRemove.Add(controls[i]);
                 foreach (Control control in toRemove)
                     controls.Remove(control);
+
                 owner.SelectedIndex = -1;
                 owner.UpdateNavigationControls();
             }
