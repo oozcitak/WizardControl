@@ -24,19 +24,19 @@ namespace Manina.Windows.Forms
         public override string Text { get => base.Text; set => base.Text = value; }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override DockStyle Dock { get => base.Dock; set => base.Dock = value; }
+        public override DockStyle Dock { get => DockStyle.None; set { } }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new Point Location { get { return base.Location; } set { base.Location = value; } }
+        public new Point Location { get => new Point(0, 0); set { } }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override AnchorStyles Anchor { get => base.Anchor; set => base.Anchor = value; }
+        public override AnchorStyles Anchor { get => AnchorStyles.None; set { } }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override Size MinimumSize { get => new Size(0, 0); set => base.MinimumSize = new Size(0, 0); }
+        public override Size MinimumSize { get => new Size(0, 0); set { } }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public override Size MaximumSize { get => new Size(0, 0); set => base.MinimumSize = new Size(0, 0); }
+        public override Size MaximumSize { get => new Size(0, 0); set { } }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new bool Visible { get => base.Visible; set => base.Visible = value; }
@@ -45,10 +45,16 @@ namespace Manina.Windows.Forms
         public new bool Enabled { get => base.Enabled; set => base.Enabled = value; }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new bool TabStop { get => base.TabStop; set => base.TabStop = value; }
+        public new bool TabStop { get => true; set => base.TabStop = true; }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public new int TabIndex { get => base.TabIndex; set => base.TabIndex = value; }
+        public new int TabIndex { get => 0; set => base.TabIndex = 0; }
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public new Padding Margin { get => base.Margin; set { } }
+
+        [Browsable(false), Category("Layout"), Localizable(true)]
+        public new Size Size { get => base.Size; set { } }
         #endregion
 
         #region Overriden Methods
