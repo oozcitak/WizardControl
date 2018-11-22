@@ -182,15 +182,21 @@ namespace Manina.Windows.Forms
                 if (oldPage == value)
                     return;
 
-                PageValidatingEventArgs pve = new PageValidatingEventArgs(oldPage);
-                OnPageValidating(pve);
-                if (pve.Cancel) return;
+                if (oldPage != null && oldPage.CausesValidation)
+                {
+                    PageValidatingEventArgs pve = new PageValidatingEventArgs(oldPage);
+                    OnPageValidating(pve);
+                    if (pve.Cancel) return;
 
-                OnPageValidated(new PageEventArgs(oldPage));
+                    OnPageValidated(new PageEventArgs(oldPage));
+                }
 
-                PageChangingEventArgs pce = new PageChangingEventArgs(oldPage, newPage);
-                OnCurrentPageChanging(pce);
-                if (pce.Cancel) return;
+                if (oldPage != null && newPage != null)
+                {
+                    PageChangingEventArgs pce = new PageChangingEventArgs(oldPage, newPage);
+                    OnCurrentPageChanging(pce);
+                    if (pce.Cancel) return;
+                }
 
                 selectedIndex = (newPage == null ? -1 : Pages.IndexOf(newPage));
                 if (oldPage != null) oldPage.Visible = false;
@@ -200,9 +206,11 @@ namespace Manina.Windows.Forms
 
                 UpdateNavigationControls();
 
-                OnCurrentPageChanged(new PageChangedEventArgs(oldPage, newPage));
+                if (oldPage != null && newPage != null)
+                    OnCurrentPageChanged(new PageChangedEventArgs(oldPage, newPage));
 
-                OnPageShown(new PageEventArgs(newPage));
+                if (newPage != null)
+                    OnPageShown(new PageEventArgs(newPage));
             }
         }
 
