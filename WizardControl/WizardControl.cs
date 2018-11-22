@@ -15,18 +15,25 @@ namespace Manina.Windows.Forms
     public partial class WizardControl : Control
     {
         #region Events
-        public class ButtonClickEventArgs : EventArgs
+        /// <summary>
+        /// Contains event data for button events.
+        /// </summary>
+        public class ButtonClickEventArgs : CancelEventArgs
         {
-            public bool Cancel { get; set; }
-
-            public ButtonClickEventArgs()
+            public ButtonClickEventArgs() : base(false)
             {
-                Cancel = false;
+
             }
         }
 
+        /// <summary>
+        /// Contains event data for events related to a singe page.
+        /// </summary>
         public class PageEventArgs : EventArgs
         {
+            /// <summary>
+            /// The page causing the event.
+            /// </summary>
             public WizardPage Page { get; private set; }
 
             public PageEventArgs(WizardPage page)
@@ -35,24 +42,39 @@ namespace Manina.Windows.Forms
             }
         }
 
-        public class PageChangingEventArgs : EventArgs
+        /// <summary>
+        /// Contains event data for the <see cref="PageChanging"/> event.
+        /// </summary>
+        public class PageChangingEventArgs : CancelEventArgs
         {
+            /// <summary>
+            /// Current page.
+            /// </summary>
             public WizardPage CurrentPage { get; private set; }
+            /// <summary>
+            /// The page that will become the current page after the event.
+            /// </summary>
             public WizardPage NewPage { get; set; }
-            public bool Cancel { get; set; }
 
-            public PageChangingEventArgs(WizardPage currentPage, WizardPage newPage)
+            public PageChangingEventArgs(WizardPage currentPage, WizardPage newPage) : base(false)
             {
                 CurrentPage = currentPage;
                 NewPage = newPage;
-
-                Cancel = false;
             }
         }
 
+        /// <summary>
+        /// Contains event data for the <see cref="PageChanged"/> event.
+        /// </summary>
         public class PageChangedEventArgs : EventArgs
         {
+            /// <summary>
+            /// The page that was the current page before the event.
+            /// </summary>
             public WizardPage OldPage { get; private set; }
+            /// <summary>
+            /// Current page.
+            /// </summary>
             public WizardPage CurrentPage { get; private set; }
 
             public PageChangedEventArgs(WizardPage oldPage, WizardPage currentPage)
@@ -62,27 +84,35 @@ namespace Manina.Windows.Forms
             }
         }
 
-        public class PageValidatingEventArgs : EventArgs
+        /// <summary>
+        /// Contains event data for the <see cref="PageValidating"/> event.
+        /// </summary>
+        public class PageValidatingEventArgs : CancelEventArgs
         {
+            /// <summary>
+            /// The page causing the event.
+            /// </summary>
             public WizardPage Page { get; private set; }
-            public bool Cancel { get; set; }
 
-            public PageValidatingEventArgs(WizardPage page)
+            public PageValidatingEventArgs(WizardPage page) : base(false)
             {
                 Page = page;
-                Cancel = false;
             }
         }
 
-        public class PagePaintEventArgs : EventArgs
+        /// <summary>
+        /// Contains event data for the <see cref="PagePaint"/> event.
+        /// </summary>
+        public class PagePaintEventArgs : PageEventArgs
         {
+            /// <summary>
+            /// Gets the graphics used to paint.
+            /// </summary>
             public Graphics Graphics { get; private set; }
-            public WizardPage Page { get; private set; }
 
-            public PagePaintEventArgs(Graphics graphics, WizardPage page)
+            public PagePaintEventArgs(Graphics graphics, WizardPage page) : base(page)
             {
                 Graphics = graphics;
-                Page = page;
             }
         }
 
@@ -107,31 +137,70 @@ namespace Manina.Windows.Forms
         protected internal virtual void OnPageShown(PageEventArgs e) { PageShown?.Invoke(this, e); }
         protected internal virtual void OnPagePaint(PagePaintEventArgs e) { PagePaint?.Invoke(this, e); }
 
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs when the back button is clicked.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs when the back button is clicked.")]
         public event ButtonClickEventHandler BackButtonClicked;
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs when the next button is clicked.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs when the next button is clicked.")]
         public event ButtonClickEventHandler NextButtonClicked;
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs when the close button is clicked.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs when the close button is clicked.")]
         public event ButtonClickEventHandler CloseButtonClicked;
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs when the help button is clicked.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs when the help button is clicked.")]
         public event EventHandler HelpButtonClicked;
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs when a new page is added.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs when a new page is added.")]
         public event PageEventHandler PageAdded;
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs when a page is removed.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs when a page is removed.")]
         public event PageEventHandler PageRemoved;
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs before the current page is changed.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs before the current page is changed.")]
         public event PageChangingEventHandler PageChanging;
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs after the current page is changed.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs after the current page is changed.")]
         public event PageChangedEventHandler PageChanged;
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs when the current page is validating.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs when the current page is validating.")]
         public event PageValidatingEventHandler PageValidating;
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs after the current page is successfully validated.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs after the current page is successfully validated.")]
         public event PageEventHandler PageValidated;
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs while the current page is changing and the previous current page is hidden.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs when the current page is changing and the previous current page is hidden.")]
         public event PageEventHandler PageHidden;
-        [Category("Behavior")]
+        /// <summary>
+        /// Occurs while the current page is changing and the new current page is shown.
+        /// </summary>
+        [Category("Behavior"), Description("Occurs while the current page is changing and the new current page is shown.")]
         public event PageEventHandler PageShown;
-        [Category("Appearance")]
+        /// <summary>
+        /// Occurs when a page is painted.
+        /// </summary>
+        [Category("Appearance"), Description("Occurs when a page is painted.")]
         public event PagePaintEventHandler PagePaint;
         #endregion
 
@@ -149,12 +218,11 @@ namespace Manina.Windows.Forms
         private int selectedIndex;
         private WizardPage lastSelectedPage;
         internal bool creatingUIControls;
-        private readonly WizardPageCollection pages;
         #endregion
 
         #region Properties
         /// <summary>
-        /// Gets the index of the first tab in the controls collection.
+        /// Gets the index of the first page in the controls collection.
         /// </summary>
         internal int FirstPageIndex => 4;
         /// <summary>
@@ -179,7 +247,7 @@ namespace Manina.Windows.Forms
                 var oldPage = lastSelectedPage;
                 var newPage = value;
 
-                if (newPage != null && !pages.Contains(newPage))
+                if (newPage != null && !Pages.Contains(newPage))
                     throw new ArgumentException("Page is not found in the page collection.");
 
                 if (oldPage == value)
@@ -228,7 +296,7 @@ namespace Manina.Windows.Forms
         public int SelectedIndex
         {
             get => selectedIndex;
-            set { SelectedPage = (value == -1 ? null : pages[value]); }
+            set { SelectedPage = (value == -1 ? null : Pages[value]); }
         }
 
         /// <summary>
@@ -237,7 +305,7 @@ namespace Manina.Windows.Forms
         [Category("Behavior")]
         [Description("Gets or sets the collection pages in the wizard.")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public WizardPageCollection Pages => pages;
+        public WizardPageCollection Pages { get; }
 
         /// <summary>
         /// Gets or sets the text of the back button.
@@ -368,7 +436,7 @@ namespace Manina.Windows.Forms
         public WizardControl()
         {
             creatingUIControls = false;
-            pages = new WizardPageCollection(this);
+            Pages = new WizardPageCollection(this);
             selectedIndex = -1;
             lastSelectedPage = null;
             SetStyle(ControlStyles.ResizeRedraw, true);
