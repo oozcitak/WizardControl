@@ -72,30 +72,30 @@
             this.wizardPage1.Name = "wizardPage1";
             this.wizardPage1.Size = new System.Drawing.Size(773, 374);
             // 
-            // wizardPage2
+            // wizardPage6
             // 
-            this.wizardPage2.Name = "wizardPage2";
-            this.wizardPage2.Size = new System.Drawing.Size(773, 374);
-            // 
-            // wizardPage3
-            // 
-            this.wizardPage3.Name = "wizardPage3";
-            this.wizardPage3.Size = new System.Drawing.Size(773, 374);
-            // 
-            // wizardPage4
-            // 
-            this.wizardPage4.Name = "wizardPage4";
-            this.wizardPage4.Size = new System.Drawing.Size(773, 374);
+            this.wizardPage6.Name = "wizardPage6";
+            this.wizardPage6.Size = new System.Drawing.Size(773, 374);
             // 
             // wizardPage5
             // 
             this.wizardPage5.Name = "wizardPage5";
             this.wizardPage5.Size = new System.Drawing.Size(773, 374);
             // 
-            // wizardPage6
+            // wizardPage3
             // 
-            this.wizardPage6.Name = "wizardPage6";
-            this.wizardPage6.Size = new System.Drawing.Size(773, 374);
+            this.wizardPage3.Name = "wizardPage3";
+            this.wizardPage3.Size = new System.Drawing.Size(773, 374);
+            // 
+            // wizardPage2
+            // 
+            this.wizardPage2.Name = "wizardPage2";
+            this.wizardPage2.Size = new System.Drawing.Size(773, 374);
+            // 
+            // wizardPage4
+            // 
+            this.wizardPage4.Name = "wizardPage4";
+            this.wizardPage4.Size = new System.Drawing.Size(773, 374);
             // 
             // wizardPage7
             // 
