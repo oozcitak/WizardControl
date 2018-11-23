@@ -19,6 +19,9 @@ namespace Manina.Windows.Forms
         [Category("Appearance"), DefaultValue(typeof(Color), "Window")]
         [Description("Gets or sets the background color for the control.")]
         public override Color BackColor { get => base.BackColor; set => base.BackColor = value; }
+
+        [Browsable(false)]
+        public int Index => ((WizardControl)Parent).Pages.Contains(this) ? ((WizardControl)Parent).Pages.IndexOf(this) : -1;
         #endregion
 
         #region Unused Methods - Hide From User
@@ -107,7 +110,7 @@ namespace Manina.Windows.Forms
                 base.OnPaint(e);
             }
 
-            control.OnPagePaint(new WizardControl.PagePaintEventArgs(e.Graphics, this));
+            control.OnPagePaint(new WizardControl.PagePaintEventArgs(e.Graphics, this, Index));
         }
         #endregion
 

@@ -57,12 +57,12 @@ namespace WizardControlTest
 
         private void wizardControl1_PageChanging(object sender, Manina.Windows.Forms.WizardControl.PageChangingEventArgs e)
         {
-            AddMessage(string.Format("Page changing: {0} -> {1}", e.CurrentPage.Name, e.NewPage.Name), Color.Green);
+            AddMessage(string.Format("Page changing: {2}: {0} -> {3}: {1}", e.CurrentPage.Name, e.NewPage.Name, e.CurrentPageIndex, e.NewPageIndex), Color.Green);
         }
 
         private void wizardControl1_PageChanged(object sender, Manina.Windows.Forms.WizardControl.PageChangedEventArgs e)
         {
-            AddMessage(string.Format("Page changed: {0} -> {1}", e.OldPage.Name, e.CurrentPage.Name), Color.Green);
+            AddMessage(string.Format("Page changed: {2}: {0} -> {3}: {1}", e.OldPage.Name, e.CurrentPage.Name, e.OldPageIndex, e.CurrentPageIndex), Color.Green);
         }
 
         private void wizardControl1_NextButtonClicked(object sender, Manina.Windows.Forms.WizardControl.ButtonClickEventArgs e)

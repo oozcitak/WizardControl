@@ -27,7 +27,7 @@ namespace Manina.Windows.Forms
         }
 
         /// <summary>
-        /// Contains event data for events related to a singe page.
+        /// Contains event data for events related to a single page.
         /// </summary>
         public class PageEventArgs : EventArgs
         {
@@ -35,10 +35,15 @@ namespace Manina.Windows.Forms
             /// The page causing the event.
             /// </summary>
             public WizardPage Page { get; private set; }
+            /// <summary>
+            /// The index of the page causing the event.
+            /// </summary>
+            public int PageIndex { get; private set; }
 
-            public PageEventArgs(WizardPage page)
+            public PageEventArgs(WizardPage page, int index)
             {
                 Page = page;
+                PageIndex = index;
             }
         }
 
@@ -55,11 +60,21 @@ namespace Manina.Windows.Forms
             /// The page that will become the current page after the event.
             /// </summary>
             public WizardPage NewPage { get; set; }
+            /// <summary>
+            /// The index of the current page.
+            /// </summary>
+            public int CurrentPageIndex { get; private set; }
+            /// <summary>
+            /// The index of the new page.
+            /// </summary>
+            public int NewPageIndex { get; private set; }
 
-            public PageChangingEventArgs(WizardPage currentPage, WizardPage newPage) : base(false)
+            public PageChangingEventArgs(WizardPage currentPage, int currentPageIndex, WizardPage newPage, int newPageIndex) : base(false)
             {
                 CurrentPage = currentPage;
+                CurrentPageIndex = currentPageIndex;
                 NewPage = newPage;
+                NewPageIndex = newPageIndex;
             }
         }
 
@@ -76,11 +91,21 @@ namespace Manina.Windows.Forms
             /// Current page.
             /// </summary>
             public WizardPage CurrentPage { get; private set; }
+            /// <summary>
+            /// The index of the old page.
+            /// </summary>
+            public int OldPageIndex { get; private set; }
+            /// <summary>
+            /// The index of the current page.
+            /// </summary>
+            public int CurrentPageIndex { get; private set; }
 
-            public PageChangedEventArgs(WizardPage oldPage, WizardPage currentPage)
+            public PageChangedEventArgs(WizardPage oldPage, int oldPageIndex, WizardPage currentPage, int currentPageIndex)
             {
                 OldPage = oldPage;
+                OldPageIndex = oldPageIndex;
                 CurrentPage = currentPage;
+                CurrentPageIndex = currentPageIndex;
             }
         }
 
@@ -93,10 +118,15 @@ namespace Manina.Windows.Forms
             /// The page causing the event.
             /// </summary>
             public WizardPage Page { get; private set; }
+            /// <summary>
+            /// The index of the page causing the event.
+            /// </summary>
+            public int PageIndex { get; private set; }
 
-            public PageValidatingEventArgs(WizardPage page) : base(false)
+            public PageValidatingEventArgs(WizardPage page, int index)
             {
                 Page = page;
+                PageIndex = index;
             }
         }
 
@@ -110,7 +140,7 @@ namespace Manina.Windows.Forms
             /// </summary>
             public Graphics Graphics { get; private set; }
 
-            public PagePaintEventArgs(Graphics graphics, WizardPage page) : base(page)
+            public PagePaintEventArgs(Graphics graphics, WizardPage page, int index) : base(page, index)
             {
                 Graphics = graphics;
             }
@@ -246,6 +276,8 @@ namespace Manina.Windows.Forms
             {
                 var oldPage = lastSelectedPage;
                 var newPage = value;
+                int oldSelectedIndex = selectedIndex;
+                int newSelectedIndex = (newPage == null ? -1 : Pages.IndexOf(newPage));
 
                 if (newPage != null && !Pages.Contains(newPage))
                     throw new ArgumentException("Page is not found in the page collection.");
@@ -255,36 +287,36 @@ namespace Manina.Windows.Forms
 
                 if (oldPage != null && oldPage.CausesValidation)
                 {
-                    PageValidatingEventArgs pve = new PageValidatingEventArgs(oldPage);
+                    PageValidatingEventArgs pve = new PageValidatingEventArgs(oldPage, oldSelectedIndex);
                     OnPageValidating(pve);
                     if (pve.Cancel) return;
 
-                    OnPageValidated(new PageEventArgs(oldPage));
+                    OnPageValidated(new PageEventArgs(oldPage, oldSelectedIndex));
                 }
 
                 if (oldPage != null && newPage != null)
                 {
-                    PageChangingEventArgs pce = new PageChangingEventArgs(oldPage, newPage);
+                    PageChangingEventArgs pce = new PageChangingEventArgs(oldPage, oldSelectedIndex, newPage, newSelectedIndex);
                     OnCurrentPageChanging(pce);
                     if (pce.Cancel) return;
                 }
 
-                selectedIndex = (newPage == null ? -1 : Pages.IndexOf(newPage));
                 if (oldPage != null) oldPage.Visible = false;
                 if (newPage != null) newPage.Visible = true;
 
                 lastSelectedPage = newPage;
+                selectedIndex = newSelectedIndex;
 
                 UpdateNavigationControls();
 
                 if (oldPage != null)
-                    OnPageHidden(new PageEventArgs(oldPage));
+                    OnPageHidden(new PageEventArgs(oldPage, oldSelectedIndex));
 
                 if (newPage != null)
-                    OnPageShown(new PageEventArgs(newPage));
+                    OnPageShown(new PageEventArgs(newPage, newSelectedIndex));
 
                 if (oldPage != null && newPage != null)
-                    OnCurrentPageChanged(new PageChangedEventArgs(oldPage, newPage));
+                    OnCurrentPageChanged(new PageChangedEventArgs(oldPage, oldSelectedIndex, newPage, newSelectedIndex));
             }
         }
 
@@ -437,7 +469,7 @@ namespace Manina.Windows.Forms
 
 #pragma warning disable CS0067
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        new public event EventHandler TextChanged;
+        public new event EventHandler TextChanged;
 #pragma warning restore CS0067
         #endregion
 
