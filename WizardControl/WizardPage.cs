@@ -19,7 +19,9 @@ namespace Manina.Windows.Forms
         [Category("Appearance"), DefaultValue(typeof(Color), "Window")]
         [Description("Gets or sets the background color for the control.")]
         public override Color BackColor { get => base.BackColor; set => base.BackColor = value; }
+        #endregion
 
+        #region Unused Methods - Hide From User
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public override string Text { get => base.Text; set => base.Text = value; }
 
@@ -55,6 +57,29 @@ namespace Manina.Windows.Forms
 
         [Browsable(false), Category("Layout"), Localizable(true)]
         public new Size Size { get => base.Size; set { } }
+
+#pragma warning disable CS0067
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler DockChanged;
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler TextChanged;
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler TabIndexChanged;
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler TabStopChanged;
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler PaddingChanged;
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler MarginChanged;
+
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public new event EventHandler Move;
+#pragma warning restore CS0067
         #endregion
 
         #region Overriden Methods

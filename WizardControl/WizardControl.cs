@@ -426,12 +426,19 @@ namespace Manina.Windows.Forms
         /// </summary>
         [Browsable(false)]
         public Rectangle UIArea => new Rectangle(ClientRectangle.Left, ClientRectangle.Height - UIAreaHeight, ClientRectangle.Width, UIAreaHeight);
+        #endregion
 
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        #region Unused Methods - Hide From User
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), Bindable(false)]
         public override string Text { get => base.Text; set => base.Text = value; }
 
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new ControlCollection Controls => base.Controls;
+
+#pragma warning disable CS0067
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        new public event EventHandler TextChanged;
+#pragma warning restore CS0067
         #endregion
 
         #region Constructor
