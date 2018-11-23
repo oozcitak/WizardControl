@@ -393,6 +393,11 @@ namespace Manina.Windows.Forms
         public bool OwnerDraw { get; set; }
 
         /// <summary>
+        /// Gets the size of the control when it is initially created.
+        /// </summary>
+        protected override Size DefaultSize => new Size(300, 200);
+
+        /// <summary>
         /// Determines whether the wizard can navigate to the previous page.
         /// </summary>
         [Browsable(false)]
