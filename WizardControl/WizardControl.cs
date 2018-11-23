@@ -419,7 +419,7 @@ namespace Manina.Windows.Forms
         /// Gets the client rectangle where wizard pages are located.
         /// </summary>
         [Browsable(false)]
-        public Rectangle PageArea => new Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height - UIAreaHeight);
+        public override Rectangle DisplayRectangle => new Rectangle(ClientRectangle.Left, ClientRectangle.Top, ClientRectangle.Width, ClientRectangle.Height - UIAreaHeight);
 
         /// <summary>
         /// Gets the client rectangle where user interface controls are located.
@@ -521,7 +521,7 @@ namespace Manina.Windows.Forms
 
         internal void ResizeControls()
         {
-            var pageBounds = PageArea;
+            var pageBounds = DisplayRectangle;
             var uiBounds = UIArea;
 
             int buttonWidth = 75;
@@ -548,7 +548,7 @@ namespace Manina.Windows.Forms
 
         internal void UpdatePages()
         {
-            var pageBounds = PageArea;
+            var pageBounds = DisplayRectangle;
 
             for (int i = 0; i < Pages.Count; i++)
             {
