@@ -63,6 +63,16 @@ namespace Manina.Windows.Forms
             return new WizardPageControlCollection(this);
         }
 
+        protected override void OnPaintBackground(PaintEventArgs pevent)
+        {
+            WizardControl control = (WizardControl)Parent;
+
+            if (!control.OwnerDraw)
+            {
+                base.OnPaintBackground(pevent);
+            }
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             WizardControl control = (WizardControl)Parent;
