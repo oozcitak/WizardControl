@@ -14,7 +14,7 @@ namespace WizardControlTest
             InitializeComponent();
         }
 
-        private void wizardControl1_PagePaint(object sender, Manina.Windows.Forms.WizardControl.PagePaintEventArgs e)
+        private void wizardControl1_PagePaint(object sender, Manina.Windows.Forms.PagedControl.PagePaintEventArgs e)
         {
             var bounds = e.Page.DisplayRectangle;
             bounds.Inflate(-10, -10);

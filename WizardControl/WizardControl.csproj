@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PagedControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedControl.1.0.0\lib\net35\PagedControl.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Design" />
@@ -43,25 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Designer\BaseGlyph.cs" />
-    <Compile Include="Designer\GlyphToolBar.cs" />
-    <Compile Include="Designer\SeparatorGlyph.cs" />
-    <Compile Include="Designer\LabelGlyph.cs" />
-    <Compile Include="Designer\ButtonGlyph.cs" />
-    <Compile Include="Designer\WizardControlDesigner.cs" />
-    <Compile Include="WizardPage.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="WizardControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WizardPageCollection.cs">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="WizardControl.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

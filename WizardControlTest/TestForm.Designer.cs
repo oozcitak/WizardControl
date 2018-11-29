@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.wizardControl1 = new Manina.Windows.Forms.WizardControl();
-            this.wizardPage1 = new Manina.Windows.Forms.WizardPage();
-            this.wizardPage2 = new Manina.Windows.Forms.WizardPage();
-            this.wizardPage3 = new Manina.Windows.Forms.WizardPage();
-            this.wizardPage4 = new Manina.Windows.Forms.WizardPage();
-            this.wizardPage5 = new Manina.Windows.Forms.WizardPage();
-            this.wizardPage6 = new Manina.Windows.Forms.WizardPage();
-            this.wizardPage7 = new Manina.Windows.Forms.WizardPage();
+            this.wizardPage1 = new Manina.Windows.Forms.Page();
+            this.wizardPage2 = new Manina.Windows.Forms.Page();
+            this.wizardPage3 = new Manina.Windows.Forms.Page();
+            this.wizardPage4 = new Manina.Windows.Forms.Page();
+            this.wizardPage5 = new Manina.Windows.Forms.Page();
+            this.wizardPage6 = new Manina.Windows.Forms.Page();
+            this.wizardPage7 = new Manina.Windows.Forms.Page();
             this.wizardControl1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,13 +119,13 @@
         #endregion
 
         private Manina.Windows.Forms.WizardControl wizardControl1;
-        private Manina.Windows.Forms.WizardPage wizardPage1;
-        private Manina.Windows.Forms.WizardPage wizardPage2;
-        private Manina.Windows.Forms.WizardPage wizardPage3;
-        private Manina.Windows.Forms.WizardPage wizardPage4;
-        private Manina.Windows.Forms.WizardPage wizardPage5;
-        private Manina.Windows.Forms.WizardPage wizardPage6;
-        private Manina.Windows.Forms.WizardPage wizardPage7;
+        private Manina.Windows.Forms.Page wizardPage1;
+        private Manina.Windows.Forms.Page wizardPage2;
+        private Manina.Windows.Forms.Page wizardPage3;
+        private Manina.Windows.Forms.Page wizardPage4;
+        private Manina.Windows.Forms.Page wizardPage5;
+        private Manina.Windows.Forms.Page wizardPage6;
+        private Manina.Windows.Forms.Page wizardPage7;
     }
 }
 
