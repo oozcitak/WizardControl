@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.wizardControl1 = new Manina.Windows.Forms.WizardControl();
-            this.wizardPage1 = new Manina.Windows.Forms.Page();
-            this.wizardPage2 = new Manina.Windows.Forms.Page();
-            this.wizardPage3 = new Manina.Windows.Forms.Page();
-            this.wizardPage4 = new Manina.Windows.Forms.Page();
-            this.wizardPage5 = new Manina.Windows.Forms.Page();
-            this.wizardPage6 = new Manina.Windows.Forms.Page();
-            this.wizardPage7 = new Manina.Windows.Forms.Page();
+            this.page1 = new Manina.Windows.Forms.Page();
+            this.page2 = new Manina.Windows.Forms.Page();
+            this.page3 = new Manina.Windows.Forms.Page();
+            this.page4 = new Manina.Windows.Forms.Page();
+            this.page5 = new Manina.Windows.Forms.Page();
+            this.page6 = new Manina.Windows.Forms.Page();
+            this.page7 = new Manina.Windows.Forms.Page();
             this.wizardControl1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,63 +45,63 @@
             this.wizardControl1.HelpButtonVisible = true;
             this.wizardControl1.Location = new System.Drawing.Point(0, 0);
             this.wizardControl1.Name = "wizardControl1";
-            this.wizardControl1.Pages.Add(this.wizardPage1);
-            this.wizardControl1.Pages.Add(this.wizardPage2);
-            this.wizardControl1.Pages.Add(this.wizardPage3);
-            this.wizardControl1.Pages.Add(this.wizardPage4);
-            this.wizardControl1.Pages.Add(this.wizardPage5);
-            this.wizardControl1.Pages.Add(this.wizardPage6);
-            this.wizardControl1.Pages.Add(this.wizardPage7);
+            this.wizardControl1.Pages.Add(this.page1);
+            this.wizardControl1.Pages.Add(this.page2);
+            this.wizardControl1.Pages.Add(this.page3);
+            this.wizardControl1.Pages.Add(this.page4);
+            this.wizardControl1.Pages.Add(this.page5);
+            this.wizardControl1.Pages.Add(this.page6);
+            this.wizardControl1.Pages.Add(this.page7);
             this.wizardControl1.Size = new System.Drawing.Size(773, 423);
             this.wizardControl1.TabIndex = 0;
             this.wizardControl1.BackButtonClicked += new Manina.Windows.Forms.WizardControl.ButtonClickEventHandler(this.wizardControl1_BackButtonClicked);
             this.wizardControl1.NextButtonClicked += new Manina.Windows.Forms.WizardControl.ButtonClickEventHandler(this.wizardControl1_NextButtonClicked);
             this.wizardControl1.CloseButtonClicked += new Manina.Windows.Forms.WizardControl.ButtonClickEventHandler(this.wizardControl1_CloseButtonClicked);
             this.wizardControl1.HelpButtonClicked += new System.EventHandler(this.wizardControl1_HelpButtonClicked);
-            this.wizardControl1.PageAdded += new Manina.Windows.Forms.WizardControl.PageEventHandler(this.wizardControl1_PageAdded);
-            this.wizardControl1.PageRemoved += new Manina.Windows.Forms.WizardControl.PageEventHandler(this.wizardControl1_PageRemoved);
-            this.wizardControl1.PageChanging += new Manina.Windows.Forms.WizardControl.PageChangingEventHandler(this.wizardControl1_PageChanging);
-            this.wizardControl1.PageChanged += new Manina.Windows.Forms.WizardControl.PageChangedEventHandler(this.wizardControl1_PageChanged);
-            this.wizardControl1.PageValidating += new Manina.Windows.Forms.WizardControl.PageValidatingEventHandler(this.wizardControl1_PageValidating);
-            this.wizardControl1.PageValidated += new Manina.Windows.Forms.WizardControl.PageEventHandler(this.wizardControl1_PageValidated);
-            this.wizardControl1.PageHidden += new Manina.Windows.Forms.WizardControl.PageEventHandler(this.wizardControl1_PageHidden);
-            this.wizardControl1.PageShown += new Manina.Windows.Forms.WizardControl.PageEventHandler(this.wizardControl1_PageShown);
-            this.wizardControl1.PagePaint += new Manina.Windows.Forms.WizardControl.PagePaintEventHandler(this.wizardControl1_PagePaint);
+            this.wizardControl1.PageAdded += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageAdded);
+            this.wizardControl1.PageRemoved += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageRemoved);
+            this.wizardControl1.PageChanging += new Manina.Windows.Forms.PagedControl.PageChangingEventHandler(this.wizardControl1_PageChanging);
+            this.wizardControl1.PageChanged += new Manina.Windows.Forms.PagedControl.PageChangedEventHandler(this.wizardControl1_PageChanged);
+            this.wizardControl1.PageValidating += new Manina.Windows.Forms.PagedControl.PageValidatingEventHandler(this.wizardControl1_PageValidating);
+            this.wizardControl1.PageValidated += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageValidated);
+            this.wizardControl1.PageHidden += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageHidden);
+            this.wizardControl1.PageShown += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageShown);
+            this.wizardControl1.PagePaint += new Manina.Windows.Forms.PagedControl.PagePaintEventHandler(this.wizardControl1_PagePaint);
             // 
-            // wizardPage1
+            // page1
             // 
-            this.wizardPage1.Name = "wizardPage1";
-            this.wizardPage1.Size = new System.Drawing.Size(773, 374);
+            this.page1.Name = "page1";
+            this.page1.Size = new System.Drawing.Size(771, 371);
             // 
-            // wizardPage2
+            // page2
             // 
-            this.wizardPage2.Name = "wizardPage2";
-            this.wizardPage2.Size = new System.Drawing.Size(773, 374);
+            this.page2.Name = "page2";
+            this.page2.Size = new System.Drawing.Size(771, 371);
             // 
-            // wizardPage3
+            // page3
             // 
-            this.wizardPage3.Name = "wizardPage3";
-            this.wizardPage3.Size = new System.Drawing.Size(773, 374);
+            this.page3.Name = "page3";
+            this.page3.Size = new System.Drawing.Size(771, 371);
             // 
-            // wizardPage4
+            // page4
             // 
-            this.wizardPage4.Name = "wizardPage4";
-            this.wizardPage4.Size = new System.Drawing.Size(773, 374);
+            this.page4.Name = "page4";
+            this.page4.Size = new System.Drawing.Size(771, 371);
             // 
-            // wizardPage5
+            // page5
             // 
-            this.wizardPage5.Name = "wizardPage5";
-            this.wizardPage5.Size = new System.Drawing.Size(773, 374);
+            this.page5.Name = "page5";
+            this.page5.Size = new System.Drawing.Size(771, 371);
             // 
-            // wizardPage6
+            // page6
             // 
-            this.wizardPage6.Name = "wizardPage6";
-            this.wizardPage6.Size = new System.Drawing.Size(773, 374);
+            this.page6.Name = "page6";
+            this.page6.Size = new System.Drawing.Size(771, 371);
             // 
-            // wizardPage7
+            // page7
             // 
-            this.wizardPage7.Name = "wizardPage7";
-            this.wizardPage7.Size = new System.Drawing.Size(773, 374);
+            this.page7.Name = "page7";
+            this.page7.Size = new System.Drawing.Size(771, 371);
             // 
             // TestForm
             // 
@@ -119,13 +119,13 @@
         #endregion
 
         private Manina.Windows.Forms.WizardControl wizardControl1;
-        private Manina.Windows.Forms.Page wizardPage1;
-        private Manina.Windows.Forms.Page wizardPage2;
-        private Manina.Windows.Forms.Page wizardPage3;
-        private Manina.Windows.Forms.Page wizardPage4;
-        private Manina.Windows.Forms.Page wizardPage5;
-        private Manina.Windows.Forms.Page wizardPage6;
-        private Manina.Windows.Forms.Page wizardPage7;
+        private Manina.Windows.Forms.Page page1;
+        private Manina.Windows.Forms.Page page2;
+        private Manina.Windows.Forms.Page page3;
+        private Manina.Windows.Forms.Page page4;
+        private Manina.Windows.Forms.Page page5;
+        private Manina.Windows.Forms.Page page6;
+        private Manina.Windows.Forms.Page page7;
     }
 }
 
