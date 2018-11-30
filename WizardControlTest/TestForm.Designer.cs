@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.wizardControl1 = new Manina.Windows.Forms.WizardControl();
+            this.wizardControl1 = new DemoWizardControl();
             this.page1 = new Manina.Windows.Forms.Page();
             this.page2 = new Manina.Windows.Forms.Page();
             this.page3 = new Manina.Windows.Forms.Page();
@@ -118,7 +118,7 @@
 
         #endregion
 
-        private Manina.Windows.Forms.WizardControl wizardControl1;
+        private DemoWizardControl wizardControl1;
         private Manina.Windows.Forms.Page page1;
         private Manina.Windows.Forms.Page page2;
         private Manina.Windows.Forms.Page page3;
