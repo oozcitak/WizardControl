@@ -10,22 +10,11 @@ namespace Manina.Windows.Forms
     public class WizardControl : PagedControl
     {
         #region Events
-        /// <summary>
-        /// Contains event data for button events.
-        /// </summary>
-        public class ButtonClickEventArgs : CancelEventArgs
-        {
-            public ButtonClickEventArgs() : base(false)
-            {
+        public delegate void ButtonClickEventHandler(object sender, CancelEventArgs e);
 
-            }
-        }
-
-        public delegate void ButtonClickEventHandler(object sender, ButtonClickEventArgs e);
-
-        protected internal virtual void OnBackButtonClicked(ButtonClickEventArgs e) { BackButtonClicked?.Invoke(this, e); }
-        protected internal virtual void OnNextButtonClicked(ButtonClickEventArgs e) { NextButtonClicked?.Invoke(this, e); }
-        protected internal virtual void OnCloseButtonClicked(ButtonClickEventArgs e) { CloseButtonClicked?.Invoke(this, e); }
+        protected internal virtual void OnBackButtonClicked(CancelEventArgs e) { BackButtonClicked?.Invoke(this, e); }
+        protected internal virtual void OnNextButtonClicked(CancelEventArgs e) { NextButtonClicked?.Invoke(this, e); }
+        protected internal virtual void OnCloseButtonClicked(CancelEventArgs e) { CloseButtonClicked?.Invoke(this, e); }
         protected internal virtual void OnHelpButtonClicked(EventArgs e) { HelpButtonClicked?.Invoke(this, e); }
 
         /// <summary>
@@ -224,21 +213,21 @@ namespace Manina.Windows.Forms
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            ButtonClickEventArgs be = new ButtonClickEventArgs();
+            CancelEventArgs be = new CancelEventArgs();
             OnBackButtonClicked(be);
             if (!be.Cancel) GoBack();
         }
 
         private void NextButton_Click(object sender, EventArgs e)
         {
-            ButtonClickEventArgs be = new ButtonClickEventArgs();
+            CancelEventArgs be = new CancelEventArgs();
             OnNextButtonClicked(be);
             if (!be.Cancel) GoNext();
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            ButtonClickEventArgs be = new ButtonClickEventArgs();
+            CancelEventArgs be = new CancelEventArgs();
             OnCloseButtonClicked(be);
             if (!be.Cancel) FindForm().Close();
         }

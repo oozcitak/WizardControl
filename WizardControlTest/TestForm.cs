@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -65,22 +66,22 @@ namespace WizardControlTest
             AddMessage(string.Format("Page changed: {2}: {0} -> {3}: {1}", e.OldPage.Name, e.CurrentPage.Name, e.OldPageIndex, e.CurrentPageIndex), Color.Green);
         }
 
-        private void wizardControl1_NextButtonClicked(object sender, Manina.Windows.Forms.WizardControl.ButtonClickEventArgs e)
+        private void wizardControl1_NextButtonClicked(object sender, CancelEventArgs e)
         {
             AddMessage("Next button clicked", Color.Blue);
         }
 
-        private void wizardControl1_BackButtonClicked(object sender, Manina.Windows.Forms.WizardControl.ButtonClickEventArgs e)
+        private void wizardControl1_BackButtonClicked(object sender, CancelEventArgs e)
         {
             AddMessage("Back button clicked", Color.Blue);
         }
 
-        private void wizardControl1_HelpButtonClicked(object sender, System.EventArgs e)
+        private void wizardControl1_HelpButtonClicked(object sender, EventArgs e)
         {
             AddMessage("Help button clicked", Color.Blue);
         }
 
-        private void wizardControl1_CloseButtonClicked(object sender, Manina.Windows.Forms.WizardControl.ButtonClickEventArgs e)
+        private void wizardControl1_CloseButtonClicked(object sender, CancelEventArgs e)
         {
             AddMessage("Close button clicked", Color.Blue);
             e.Cancel = true;
