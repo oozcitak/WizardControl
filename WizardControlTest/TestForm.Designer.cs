@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.wizardControl1 = new DemoWizardControl();
+            this.wizardControl1 = new WizardControlTest.TestForm.DemoWizardControl();
             this.page1 = new Manina.Windows.Forms.Page();
             this.page2 = new Manina.Windows.Forms.Page();
             this.page3 = new Manina.Windows.Forms.Page();
@@ -41,17 +41,17 @@
             // 
             // wizardControl1
             // 
+            this.wizardControl1.Controls.Add(this.page1);
+            this.wizardControl1.Controls.Add(this.page2);
+            this.wizardControl1.Controls.Add(this.page3);
+            this.wizardControl1.Controls.Add(this.page4);
+            this.wizardControl1.Controls.Add(this.page5);
+            this.wizardControl1.Controls.Add(this.page6);
+            this.wizardControl1.Controls.Add(this.page7);
             this.wizardControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.wizardControl1.HelpButtonVisible = true;
             this.wizardControl1.Location = new System.Drawing.Point(0, 0);
             this.wizardControl1.Name = "wizardControl1";
-            this.wizardControl1.Pages.Add(this.page1);
-            this.wizardControl1.Pages.Add(this.page2);
-            this.wizardControl1.Pages.Add(this.page3);
-            this.wizardControl1.Pages.Add(this.page4);
-            this.wizardControl1.Pages.Add(this.page5);
-            this.wizardControl1.Pages.Add(this.page6);
-            this.wizardControl1.Pages.Add(this.page7);
             this.wizardControl1.Size = new System.Drawing.Size(773, 423);
             this.wizardControl1.TabIndex = 0;
             this.wizardControl1.BackButtonClicked += new Manina.Windows.Forms.WizardControl.ButtonClickEventHandler(this.wizardControl1_BackButtonClicked);
@@ -70,36 +70,43 @@
             // 
             // page1
             // 
+            this.page1.Location = new System.Drawing.Point(1, 1);
             this.page1.Name = "page1";
             this.page1.Size = new System.Drawing.Size(771, 371);
             // 
             // page2
             // 
+            this.page2.Location = new System.Drawing.Point(1, 1);
             this.page2.Name = "page2";
             this.page2.Size = new System.Drawing.Size(771, 371);
             // 
             // page3
             // 
+            this.page3.Location = new System.Drawing.Point(1, 1);
             this.page3.Name = "page3";
             this.page3.Size = new System.Drawing.Size(771, 371);
             // 
             // page4
             // 
+            this.page4.Location = new System.Drawing.Point(1, 1);
             this.page4.Name = "page4";
             this.page4.Size = new System.Drawing.Size(771, 371);
             // 
             // page5
             // 
+            this.page5.Location = new System.Drawing.Point(1, 1);
             this.page5.Name = "page5";
             this.page5.Size = new System.Drawing.Size(771, 371);
             // 
             // page6
             // 
+            this.page6.Location = new System.Drawing.Point(1, 1);
             this.page6.Name = "page6";
             this.page6.Size = new System.Drawing.Size(771, 371);
             // 
             // page7
             // 
+            this.page7.Location = new System.Drawing.Point(1, 1);
             this.page7.Name = "page7";
             this.page7.Size = new System.Drawing.Size(771, 371);
             // 
