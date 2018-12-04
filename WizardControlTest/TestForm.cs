@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Manina.Windows.Forms;
 
@@ -76,7 +77,16 @@ namespace WizardControlTest
 
         private void WizardControl1_AddButtonClick(object sender, EventArgs e)
         {
-            wizardControl1.Pages.Add(new Page());
+            Page page = new Page();
+            int i = 1;
+            string name = "page1";
+            while (wizardControl1.Pages.Any(p => p.Name == name))
+            {
+                i++;
+                name = "page" + i.ToString();
+            }
+            page.Name = name;
+            wizardControl1.Pages.Add(page);
         }
 
         private void WizardControl1_RemoveButtonClick(object sender, EventArgs e)
@@ -118,8 +128,7 @@ namespace WizardControlTest
         private void AddMessage(string message, Color color)
         {
             messages.Add(Tuple.Create(message, color));
-            if (wizardControl1.SelectedPage != null)
-                wizardControl1.SelectedPage?.Refresh();
+            wizardControl1.Invalidate(true);
         }
 
         private void AddMessage(string message)

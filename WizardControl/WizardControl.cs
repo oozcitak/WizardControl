@@ -55,13 +55,6 @@ namespace Manina.Windows.Forms
 
         #region Properties
         /// <summary>
-        /// Gets or sets the background color of the control.
-        /// </summary>
-        [Category("Appearance"), DefaultValue(typeof(Color), "Control")]
-        [Description("Gets or sets the background color of the control.")]
-        public override Color BackColor { get => base.BackColor; set => base.BackColor = value; }
-
-        /// <summary>
         /// Gets or sets the text of the back button.
         /// </summary>
         [Category("Appearance"), Localizable(true), DefaultValue("Back")]
@@ -200,8 +193,7 @@ namespace Manina.Windows.Forms
         /// </summary>
         public WizardControl()
         {
-            SetStyle(ControlStyles.ResizeRedraw, true);
-            BackColor = SystemColors.Control;
+            
         }
         #endregion
 
@@ -241,6 +233,7 @@ namespace Manina.Windows.Forms
             backButton.Enabled = backButtonEnabled && CanGoBack;
             nextButton.Enabled = nextButtonEnabled && CanGoNext;
             closeButton.Enabled = closeButtonEnabled;
+            helpButton.Enabled = helpButtonEnabled;
         }
 
         protected override void OnResize(EventArgs e)
@@ -264,12 +257,11 @@ namespace Manina.Windows.Forms
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
-            using (Brush backBrush = new SolidBrush(BackColor))
+            e.Graphics.Clear(BackColor);
+
             using (Pen separatorPen = new Pen(Color.FromArgb(223, 223, 223)))
             {
                 var uiBounds = UIArea;
-                e.Graphics.FillRectangle(backBrush, UIArea);
                 e.Graphics.DrawLine(separatorPen, uiBounds.Left + 2, uiBounds.Top, uiBounds.Right - 2, uiBounds.Top);
             }
         }
