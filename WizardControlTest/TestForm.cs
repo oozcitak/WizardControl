@@ -97,23 +97,30 @@ namespace WizardControlTest
 
         private void wizardControl1_PagePaint(object sender, PagedControl.PagePaintEventArgs e)
         {
-            var bounds = e.Page.DisplayRectangle;
-            bounds.Inflate(-10, -10);
-            e.Graphics.DrawRectangle(Pens.Red, bounds);
+            PaintInfo(e.Graphics, e.Page.ClientRectangle, Color.White);
+        }
+
+        private void wizardControl1_Paint(object sender, PaintEventArgs e)
+        {
+            PaintInfo(e.Graphics, wizardControl1.DisplayRectangle, SystemColors.Control);
+        }
+
+        private void PaintInfo(Graphics g, Rectangle bounds, Color backColor)
+        {
             bounds.Inflate(-4, -4);
-            e.Graphics.Clip = new Region(bounds);
+            g.Clip = new Region(bounds);
 
             var y = bounds.Top + 6;
             var burn = 0f;
-            var burnStep = 0.9f / (bounds.Height / (e.Graphics.MeasureString("M", e.Page.Font).Height + 4));
+            var burnStep = 0.9f / (bounds.Height / (g.MeasureString("M", Font).Height + 4));
             for (int i = messages.Count - 1; i >= 0; i--)
             {
                 var message = messages[i].Item1;
                 var color = messages[i].Item2;
-                var h = (int)e.Graphics.MeasureString(message, e.Page.Font).Height;
+                var h = (int)g.MeasureString(message, Font).Height;
                 using (var brush = new SolidBrush(Color.FromArgb((int)(color.R + (255 - color.R) * burn), (int)(color.G + (255 - color.G) * burn), (int)(color.B + (255 - color.B) * burn))))
                 {
-                    e.Graphics.DrawString(message, e.Page.Font, brush, 20, y);
+                    g.DrawString(message, Font, brush, 20, y);
                 }
                 y += h + 4;
                 burn += burnStep;
@@ -121,8 +128,15 @@ namespace WizardControlTest
             }
 
             string currentPageStr = string.Format("Selected page: {0}", (wizardControl1.SelectedPage != null) ? wizardControl1.SelectedPage.Name : "<none>");
-            var size = e.Graphics.MeasureString(currentPageStr, e.Page.Font);
-            e.Graphics.DrawString(currentPageStr, e.Page.Font, Brushes.Red, bounds.Right - 6 - size.Width, bounds.Top + 6);
+            string currentIndexStr = string.Format("Selected index: {0}", wizardControl1.SelectedIndex);
+            string pageCountStr = string.Format("Page count: {0}", wizardControl1.Pages.Count);
+            var size1 = g.MeasureString(currentPageStr, Font);
+            var size2 = g.MeasureString(currentIndexStr, Font);
+            var size3 = g.MeasureString(pageCountStr, Font);
+            float maxWidth = Math.Max(size1.Width, Math.Max(size2.Width, size3.Width));
+            g.DrawString(currentPageStr, Font, Brushes.Red, bounds.Right - 6 - maxWidth, bounds.Top + 6);
+            g.DrawString(currentIndexStr, Font, Brushes.Red, bounds.Right - 6 - maxWidth, bounds.Top + 22);
+            g.DrawString(pageCountStr, Font, Brushes.Red, bounds.Right - 6 - maxWidth, bounds.Top + 38);
         }
 
         private void AddMessage(string message, Color color)
@@ -136,14 +150,16 @@ namespace WizardControlTest
             AddMessage(message, Color.Black);
         }
 
+        private string PageName(int index, Page page) => string.Format("[{0}]: {1}", index, page?.Name ?? "<none>");
+
         private void wizardControl1_PageChanging(object sender, PagedControl.PageChangingEventArgs e)
         {
-            AddMessage(string.Format("Page changing: {2}: {0} -> {3}: {1}", e.CurrentPage.Name, e.NewPage.Name, e.CurrentPageIndex, e.NewPageIndex), Color.Green);
+            AddMessage(string.Format("Page changing: {0} -> {1}", PageName(e.CurrentPageIndex, e.CurrentPage), PageName(e.NewPageIndex, e.NewPage)), Color.Green);
         }
 
         private void wizardControl1_PageChanged(object sender, PagedControl.PageChangedEventArgs e)
         {
-            AddMessage(string.Format("Page changed: {2}: {0} -> {3}: {1}", e.OldPage.Name, e.CurrentPage.Name, e.OldPageIndex, e.CurrentPageIndex), Color.Green);
+            AddMessage(string.Format("Page changed: {0} -> {1}", PageName(e.OldPageIndex, e.OldPage), PageName(e.CurrentPageIndex, e.CurrentPage)), Color.Green);
         }
 
         private void wizardControl1_NextButtonClicked(object sender, CancelEventArgs e)
@@ -169,32 +185,32 @@ namespace WizardControlTest
 
         private void wizardControl1_PageAdded(object sender, PagedControl.PageEventArgs e)
         {
-            AddMessage(string.Format("Page added: {0}", e.Page.Name), Color.DarkRed);
+            AddMessage(string.Format("Page added: {0}", PageName(e.PageIndex, e.Page)), Color.DarkRed);
         }
 
         private void wizardControl1_PageRemoved(object sender, PagedControl.PageEventArgs e)
         {
-            AddMessage(string.Format("Page removed: {0}", e.Page.Name), Color.DarkRed);
+            AddMessage(string.Format("Page removed: {0}", PageName(e.PageIndex, e.Page)), Color.DarkRed);
         }
 
         private void wizardControl1_PageValidating(object sender, PagedControl.PageValidatingEventArgs e)
         {
-            AddMessage(string.Format("Page validating: {0}", e.Page.Name));
+            AddMessage(string.Format("Page validating: {0}", PageName(e.PageIndex, e.Page)));
         }
 
         private void wizardControl1_PageValidated(object sender, PagedControl.PageEventArgs e)
         {
-            AddMessage(string.Format("Page validated: {0}", e.Page.Name));
+            AddMessage(string.Format("Page validated: {0}", PageName(e.PageIndex, e.Page)));
         }
 
         private void wizardControl1_PageHidden(object sender, PagedControl.PageEventArgs e)
         {
-            AddMessage(string.Format("Page hidden: {0}", e.Page.Name));
+            AddMessage(string.Format("Page hidden: {0}", PageName(e.PageIndex, e.Page)));
         }
 
         private void wizardControl1_PageShown(object sender, PagedControl.PageEventArgs e)
         {
-            AddMessage(string.Format("Page shown: {0}", e.Page.Name));
+            AddMessage(string.Format("Page shown: {0}", PageName(e.PageIndex, e.Page)));
         }
     }
 }

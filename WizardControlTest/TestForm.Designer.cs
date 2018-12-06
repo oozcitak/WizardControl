@@ -67,6 +67,7 @@
             this.wizardControl1.PageHidden += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageHidden);
             this.wizardControl1.PageShown += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageShown);
             this.wizardControl1.PagePaint += new Manina.Windows.Forms.PagedControl.PagePaintEventHandler(this.wizardControl1_PagePaint);
+            this.wizardControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.wizardControl1_Paint);
             // 
             // page1
             // 
