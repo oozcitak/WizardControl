@@ -107,6 +107,8 @@ namespace WizardControlTest
 
         private void PaintInfo(Graphics g, Rectangle bounds, Color backColor)
         {
+            g.Clear(backColor);
+
             bounds.Inflate(-4, -4);
             g.Clip = new Region(bounds);
 
