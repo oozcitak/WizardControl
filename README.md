@@ -5,7 +5,7 @@ WizardControl is a .NET control with multiple pages for a wizard user interface.
 
 ![WizardControl in Designer](https://raw.githubusercontent.com/wiki/oozcitak/WizardControl/WizardControl.designer.png)
 
-The control has full designer support for adding/removing pages and dragging child controls. It is also possible to programatically add/remove wizard pages by using the `Pages` property of the control.
+The control has full designer support for adding/removing pages and dragging child controls. It is also possible to programmatically add/remove wizard pages by using the `Pages` property of the control.
 
 ![WizardControl in Use](https://raw.githubusercontent.com/wiki/oozcitak/WizardControl/WizardControl.in_use.png)
 
@@ -48,8 +48,8 @@ Following public methods are available.
 
 |Name|Description|
 |----|-----------|
-|void GoBack()|Navigates to the previous page if possible.|
-|void GoNext()|Navigates to the next page if possible.|
+|GoBack()|Navigates to the previous page if possible.|
+|GoNext()|Navigates to the next page if possible.|
 
 # Events #
 
