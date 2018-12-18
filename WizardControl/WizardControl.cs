@@ -257,13 +257,18 @@ namespace Manina.Windows.Forms
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            e.Graphics.Clear(BackColor);
+            base.OnPaint(e);
+            
+            var oldClip = e.Graphics.Clip;
+            e.Graphics.ResetClip();
 
             using (Pen separatorPen = new Pen(Color.FromArgb(223, 223, 223)))
             {
                 var uiBounds = UIArea;
                 e.Graphics.DrawLine(separatorPen, uiBounds.Left + 2, uiBounds.Top, uiBounds.Right - 2, uiBounds.Top);
             }
+
+            e.Graphics.Clip = oldClip;
         }
 
         protected override void Dispose(bool disposing)

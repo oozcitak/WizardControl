@@ -152,16 +152,16 @@ namespace WizardControlTest
             AddMessage(message, Color.Black);
         }
 
-        private string PageName(int index, Page page) => string.Format("[{0}]: {1}", index, page?.Name ?? "<none>");
+        private string PageName(Page page) => (page?.Name ?? "<none>");
 
         private void wizardControl1_PageChanging(object sender, PagedControl.PageChangingEventArgs e)
         {
-            AddMessage(string.Format("Page changing: {0} -> {1}", PageName(e.CurrentPageIndex, e.CurrentPage), PageName(e.NewPageIndex, e.NewPage)), Color.Green);
+            AddMessage(string.Format("Page changing: {0} -> {1}", PageName(e.CurrentPage), PageName(e.NewPage)), Color.Green);
         }
 
         private void wizardControl1_PageChanged(object sender, PagedControl.PageChangedEventArgs e)
         {
-            AddMessage(string.Format("Page changed: {0} -> {1}", PageName(e.OldPageIndex, e.OldPage), PageName(e.CurrentPageIndex, e.CurrentPage)), Color.Green);
+            AddMessage(string.Format("Page changed: {0} -> {1}", PageName(e.OldPage), PageName(e.CurrentPage)), Color.Green);
         }
 
         private void wizardControl1_NextButtonClicked(object sender, CancelEventArgs e)
@@ -187,32 +187,32 @@ namespace WizardControlTest
 
         private void wizardControl1_PageAdded(object sender, PagedControl.PageEventArgs e)
         {
-            AddMessage(string.Format("Page added: {0}", PageName(e.PageIndex, e.Page)), Color.DarkRed);
+            AddMessage(string.Format("Page added: {0}", PageName(e.Page)), Color.DarkRed);
         }
 
         private void wizardControl1_PageRemoved(object sender, PagedControl.PageEventArgs e)
         {
-            AddMessage(string.Format("Page removed: {0}", PageName(e.PageIndex, e.Page)), Color.DarkRed);
+            AddMessage(string.Format("Page removed: {0}", PageName(e.Page)), Color.DarkRed);
         }
 
         private void wizardControl1_PageValidating(object sender, PagedControl.PageValidatingEventArgs e)
         {
-            AddMessage(string.Format("Page validating: {0}", PageName(e.PageIndex, e.Page)));
+            AddMessage(string.Format("Page validating: {0}", PageName(e.Page)));
         }
 
         private void wizardControl1_PageValidated(object sender, PagedControl.PageEventArgs e)
         {
-            AddMessage(string.Format("Page validated: {0}", PageName(e.PageIndex, e.Page)));
+            AddMessage(string.Format("Page validated: {0}", PageName(e.Page)));
         }
 
         private void wizardControl1_PageHidden(object sender, PagedControl.PageEventArgs e)
         {
-            AddMessage(string.Format("Page hidden: {0}", PageName(e.PageIndex, e.Page)));
+            AddMessage(string.Format("Page hidden: {0}", PageName(e.Page)));
         }
 
         private void wizardControl1_PageShown(object sender, PagedControl.PageEventArgs e)
         {
-            AddMessage(string.Format("Page shown: {0}", PageName(e.PageIndex, e.Page)));
+            AddMessage(string.Format("Page shown: {0}", PageName(e.Page)));
         }
     }
 }
