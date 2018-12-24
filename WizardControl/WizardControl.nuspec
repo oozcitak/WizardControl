@@ -6,9 +6,9 @@
     <title>$title$</title>
     <authors>$author$</authors>
     <owners>$author$</owners>
-    <licenseUrl>https://opensource.org/licenses/MIT</licenseUrl>
+    <license type="expression">MIT</license>
     <projectUrl>https://github.com/oozcitak/WizardControl</projectUrl>
-	<iconUrl>https://raw.githubusercontent.com/wiki/oozcitak/WizardControl/WizardControl_64.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/wiki/oozcitak/WizardControl/WizardControl_64.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>$copyright$</copyright>
