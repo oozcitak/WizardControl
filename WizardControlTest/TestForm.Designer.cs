@@ -19,7 +19,7 @@
             }
             base.Dispose(disposing);
         }
-        
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.wizardControl1 = new WizardControlTest.TestForm.DemoWizardControl();
+            this.wizardControl1 = new WizardControlTest();
             this.page1 = new Manina.Windows.Forms.Page();
             this.page2 = new Manina.Windows.Forms.Page();
             this.page3 = new Manina.Windows.Forms.Page();
@@ -54,20 +54,6 @@
             this.wizardControl1.Name = "wizardControl1";
             this.wizardControl1.Size = new System.Drawing.Size(773, 423);
             this.wizardControl1.TabIndex = 0;
-            this.wizardControl1.BackButtonClicked += new Manina.Windows.Forms.WizardControl.ButtonClickEventHandler(this.wizardControl1_BackButtonClicked);
-            this.wizardControl1.NextButtonClicked += new Manina.Windows.Forms.WizardControl.ButtonClickEventHandler(this.wizardControl1_NextButtonClicked);
-            this.wizardControl1.CloseButtonClicked += new Manina.Windows.Forms.WizardControl.ButtonClickEventHandler(this.wizardControl1_CloseButtonClicked);
-            this.wizardControl1.HelpButtonClicked += new System.EventHandler(this.wizardControl1_HelpButtonClicked);
-            this.wizardControl1.PageAdded += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageAdded);
-            this.wizardControl1.PageRemoved += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageRemoved);
-            this.wizardControl1.PageChanging += new Manina.Windows.Forms.PagedControl.PageChangingEventHandler(this.wizardControl1_PageChanging);
-            this.wizardControl1.PageChanged += new Manina.Windows.Forms.PagedControl.PageChangedEventHandler(this.wizardControl1_PageChanged);
-            this.wizardControl1.PageValidating += new Manina.Windows.Forms.PagedControl.PageValidatingEventHandler(this.wizardControl1_PageValidating);
-            this.wizardControl1.PageValidated += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageValidated);
-            this.wizardControl1.PageHidden += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageHidden);
-            this.wizardControl1.PageShown += new Manina.Windows.Forms.PagedControl.PageEventHandler(this.wizardControl1_PageShown);
-            this.wizardControl1.PagePaint += new Manina.Windows.Forms.PagedControl.PagePaintEventHandler(this.wizardControl1_PagePaint);
-            this.wizardControl1.Paint += new System.Windows.Forms.PaintEventHandler(this.wizardControl1_Paint);
             // 
             // page1
             // 
@@ -123,10 +109,9 @@
             this.ResumeLayout(false);
 
         }
-
         #endregion
 
-        private DemoWizardControl wizardControl1;
+        private WizardControlTest wizardControl1;
         private Manina.Windows.Forms.Page page1;
         private Manina.Windows.Forms.Page page2;
         private Manina.Windows.Forms.Page page3;

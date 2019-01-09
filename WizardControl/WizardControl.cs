@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -40,40 +41,54 @@ namespace Manina.Windows.Forms
         #endregion
 
         #region Member Variables
-        private Button backButton;
-        private Button nextButton;
-        private Button closeButton;
-        private Button helpButton;
-
         private bool backButtonEnabled = true;
         private bool nextButtonEnabled = true;
         private bool closeButtonEnabled = true;
         private bool helpButtonEnabled = true;
-
-        private Control[] uiControls = new Control[0];
         #endregion
 
         #region Properties
+        /// <summary>
+        /// Gets the "Back" button.
+        /// </summary>
+        [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        protected Button BackButton { get; private set; }
+        /// <summary>
+        /// Gets the "Next" button.
+        /// </summary>
+        [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        protected Button NextButton { get; private set; }
+        /// <summary>
+        /// Gets the "Close" button.
+        /// </summary>
+        [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        protected Button CloseButton { get; private set; }
+        /// <summary>
+        /// Gets the "Help" button.
+        /// </summary>
+        [Browsable(false), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        protected Button HelpButton { get; private set; }
+
         /// <summary>
         /// Gets or sets the text of the back button.
         /// </summary>
         [Category("Appearance"), Localizable(true), DefaultValue("Back")]
         [Description("Gets or sets the text of the back button.")]
-        public string BackButtonText { get => backButton.Text; set => backButton.Text = value; }
+        public string BackButtonText { get => BackButton.Text; set => BackButton.Text = value; }
 
         /// <summary>
         /// Gets or sets the text of the next button.
         /// </summary>
         [Category("Appearance"), Localizable(true), DefaultValue("Next")]
         [Description("Gets or sets the text of the next button.")]
-        public string NextButtonText { get => nextButton.Text; set => nextButton.Text = value; }
+        public string NextButtonText { get => NextButton.Text; set => NextButton.Text = value; }
 
         /// <summary>
         /// Gets or sets the text of the close button.
         /// </summary>
         [Category("Appearance"), Localizable(true), DefaultValue("Close")]
         [Description("Gets or sets the text of the close button.")]
-        public string CloseButtonText { get => closeButton.Text; set => closeButton.Text = value; }
+        public string CloseButtonText { get => CloseButton.Text; set => CloseButton.Text = value; }
 
         /// <summary>
         /// Gets or sets whether the back button is enabled by user code.
@@ -108,28 +123,28 @@ namespace Manina.Windows.Forms
         /// </summary>
         [Category("Appearance"), DefaultValue(true)]
         [Description("Gets or sets whether the back button is visible.")]
-        public bool BackButtonVisible { get => backButton.Visible; set { backButton.Visible = value; } }
+        public bool BackButtonVisible { get => BackButton.Visible; set { BackButton.Visible = value; } }
 
         /// <summary>
         /// Gets or sets whether the next button is visible.
         /// </summary>
         [Category("Appearance"), DefaultValue(true)]
         [Description("Gets or sets whether the next button is visible.")]
-        public bool NextButtonVisible { get => nextButton.Visible; set { nextButton.Visible = value; } }
+        public bool NextButtonVisible { get => NextButton.Visible; set { NextButton.Visible = value; } }
 
         /// <summary>
         /// Gets or sets whether the close button is visible.
         /// </summary>
         [Category("Appearance"), DefaultValue(true)]
         [Description("Gets or sets whether the close button is visible.")]
-        public bool CloseButtonVisible { get => closeButton.Visible; set { closeButton.Visible = value; } }
+        public bool CloseButtonVisible { get => CloseButton.Visible; set { CloseButton.Visible = value; } }
 
         /// <summary>
         /// Gets or sets whether the help button is visible.
         /// </summary>
         [Category("Appearance"), DefaultValue(false)]
         [Description("Gets or sets whether the help button is visible.")]
-        public bool HelpButtonVisible { get => helpButton.Visible; set { helpButton.Visible = value; } }
+        public bool HelpButtonVisible { get => HelpButton.Visible; set { HelpButton.Visible = value; } }
 
         /// <summary>
         /// Gets the height of the area where user interface controls are located.
@@ -148,43 +163,6 @@ namespace Manina.Windows.Forms
         /// </summary>
         [Browsable(false)]
         public Rectangle UIArea => new Rectangle(ClientRectangle.Left, ClientRectangle.Height - UIAreaHeight, ClientRectangle.Width, UIAreaHeight);
-
-        /// <summary>
-        /// Gets the array of user interface controls.
-        /// </summary>
-        public override Control[] UIControls
-        {
-            get
-            {
-                if (uiControls == null || uiControls.Length == 0)
-                {
-                    helpButton = new Button();
-                    helpButton.Text = "Help";
-                    helpButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
-                    helpButton.Click += HelpButton_Click;
-                    helpButton.Visible = false;
-
-                    backButton = new Button();
-                    backButton.Text = "Back";
-                    backButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-                    backButton.Click += BackButton_Click;
-
-                    nextButton = new Button();
-                    nextButton.Text = "Next";
-                    nextButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-                    nextButton.Click += NextButton_Click;
-
-                    closeButton = new Button();
-                    closeButton.Text = "Close";
-                    closeButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-                    closeButton.Click += CloseButton_Click;
-
-                    uiControls = new Control[] { helpButton, backButton, nextButton, closeButton };
-                }
-                    
-                return uiControls;
-            }
-        }
         #endregion
 
         #region Constructor
@@ -193,7 +171,26 @@ namespace Manina.Windows.Forms
         /// </summary>
         public WizardControl()
         {
-            
+            HelpButton = new Button();
+            HelpButton.Text = "Help";
+            HelpButton.Anchor = AnchorStyles.Left | AnchorStyles.Bottom;
+            HelpButton.Click += HelpButton_Click;
+            HelpButton.Visible = false;
+
+            BackButton = new Button();
+            BackButton.Text = "Back";
+            BackButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            BackButton.Click += BackButton_Click;
+
+            NextButton = new Button();
+            NextButton.Text = "Next";
+            NextButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            NextButton.Click += NextButton_Click;
+
+            CloseButton = new Button();
+            CloseButton.Text = "Close";
+            CloseButton.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+            CloseButton.Click += CloseButton_Click;
         }
         #endregion
 
@@ -226,14 +223,21 @@ namespace Manina.Windows.Forms
         #endregion
 
         #region Overriden Methods
+        protected override void OnCreateUIControls(CreateUIControlsEventArgs e)
+        {
+            e.Controls = new List<Control>(e.Controls) { HelpButton, BackButton, NextButton, CloseButton }.ToArray();
+
+            base.OnCreateUIControls(e);
+        }
+
         protected override void OnUpdateUIControls(EventArgs e)
         {
             base.OnUpdateUIControls(e);
 
-            backButton.Enabled = backButtonEnabled && CanGoBack;
-            nextButton.Enabled = nextButtonEnabled && CanGoNext;
-            closeButton.Enabled = closeButtonEnabled;
-            helpButton.Enabled = helpButtonEnabled;
+            BackButton.Enabled = backButtonEnabled && CanGoBack;
+            NextButton.Enabled = nextButtonEnabled && CanGoNext;
+            CloseButton.Enabled = closeButtonEnabled;
+            HelpButton.Enabled = helpButtonEnabled;
         }
 
         protected override void OnResize(EventArgs e)
@@ -249,16 +253,16 @@ namespace Manina.Windows.Forms
             int buttonTop = uiBounds.Bottom - (buttonHeight + 12);
             int helpButtonLeft = uiBounds.Left + 12;
 
-            helpButton.SetBounds(helpButtonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
-            backButton.SetBounds(buttonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
-            nextButton.SetBounds(buttonLeft + buttonWidth, buttonTop, 0, 0, BoundsSpecified.Location);
-            closeButton.SetBounds(buttonLeft + backButton.Width + nextButton.Width + 12, buttonTop, 0, 0, BoundsSpecified.Location);
+            HelpButton.SetBounds(helpButtonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
+            BackButton.SetBounds(buttonLeft, buttonTop, 0, 0, BoundsSpecified.Location);
+            NextButton.SetBounds(buttonLeft + buttonWidth, buttonTop, 0, 0, BoundsSpecified.Location);
+            CloseButton.SetBounds(buttonLeft + BackButton.Width + NextButton.Width + 12, buttonTop, 0, 0, BoundsSpecified.Location);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            
+
             var oldClip = e.Graphics.Clip;
             e.Graphics.ResetClip();
 
@@ -275,10 +279,10 @@ namespace Manina.Windows.Forms
         {
             if (disposing)
             {
-                helpButton.Click -= HelpButtonClicked;
-                backButton.Click -= BackButton_Click;
-                nextButton.Click -= NextButton_Click;
-                closeButton.Click -= CloseButton_Click;
+                HelpButton.Click -= HelpButtonClicked;
+                BackButton.Click -= BackButton_Click;
+                NextButton.Click -= NextButton_Click;
+                CloseButton.Click -= CloseButton_Click;
             }
 
             base.Dispose(disposing);
