@@ -1,0 +1,1195 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class WizardControl
+   | WizardControl </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class WizardControl
+   | WizardControl ">
+    <meta name="generator" content="docfx 2.40.4.0">
+    
+    <link rel="shortcut icon" href="../../resources/icons/favicon.ico">
+    <link rel="stylesheet" href="../../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../../styles/docfx.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <meta property="docfx:navrel" content="../../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../../index.html">
+                <img id="logo" class="svg" src="../../resources/icons/logo.png" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-12">
+            <article class="content wrap" id="_content" data-uid="Manina.Windows.Forms.WizardControl">
+  
+  
+  <h1 id="Manina_Windows_Forms_WizardControl" data-uid="Manina.Windows.Forms.WizardControl" class="text-break">Class WizardControl
+  </h1>
+  <div class="markdown level0 summary"></div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">System.MarshalByRefObject</span></div>
+    <div class="level2"><span class="xref">System.ComponentModel.Component</span></div>
+    <div class="level3"><span class="xref">System.Windows.Forms.Control</span></div>
+    <div class="level4"><span class="xref">Manina.Windows.Forms.PagedControl</span></div>
+    <div class="level5"><span class="xref">WizardControl</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.OnPageAdded(Manina.Windows.Forms.PageEventArgs)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.OnPageRemoved(Manina.Windows.Forms.PageEventArgs)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.OnPageChanging(Manina.Windows.Forms.PageChangingEventArgs)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.OnPageChanged(Manina.Windows.Forms.PageChangedEventArgs)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.OnPageValidating(Manina.Windows.Forms.PageValidatingEventArgs)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.OnPageValidated(Manina.Windows.Forms.PageEventArgs)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.OnPageHidden(Manina.Windows.Forms.PageEventArgs)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.OnPageShown(Manina.Windows.Forms.PageEventArgs)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.OnPagePaint(Manina.Windows.Forms.PagePaintEventArgs)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.GoBack()</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.GoNext()</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.UpdatePages()</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.ChangePage(Manina.Windows.Forms.Page, System.Boolean)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.OnHandleCreated(System.EventArgs)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.CreateControlsInstance()</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.OnInvalidated(System.Windows.Forms.InvalidateEventArgs)</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.SelectedPage</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.SelectedIndex</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.Pages</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.ClientRectangle</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.BorderStyle</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.DefaultSize</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.CanGoBack</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.CanGoNext</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.PageAdded</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.PageRemoved</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.PageChanging</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.PageChanged</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.PageValidating</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.PageValidated</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.PageHidden</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.PageShown</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.PagePaint</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.CreateUIControls</span>
+    </div>
+    <div>
+      <span class="xref">Manina.Windows.Forms.PagedControl.UpdateUIControls</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="Manina.Windows.Forms.html">Manina.Windows.Forms</a></h6>
+  <h6><strong>Assembly</strong>: WizardControl.dll</h6>
+  <h5 id="Manina_Windows_Forms_WizardControl_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[ToolboxBitmap(typeof(WizardControl))]
+[Docking(DockingBehavior.AutoDock)]
+public class WizardControl : PagedControl, UnsafeNativeMethods.IOleControl, UnsafeNativeMethods.IOleObject, UnsafeNativeMethods.IOleInPlaceObject, UnsafeNativeMethods.IOleInPlaceActiveObject, UnsafeNativeMethods.IOleWindow, UnsafeNativeMethods.IViewObject, UnsafeNativeMethods.IViewObject2, UnsafeNativeMethods.IPersist, UnsafeNativeMethods.IPersistStreamInit, UnsafeNativeMethods.IPersistPropertyBag, UnsafeNativeMethods.IPersistStorage, UnsafeNativeMethods.IQuickActivate, ISupportOleDropSource, IDropTarget, ISynchronizeInvoke, IWin32Window, IArrangedElement, IBindableComponent, IComponent, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl__ctor.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.%23ctor%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L172">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl__ctor_" data-uid="Manina.Windows.Forms.WizardControl.#ctor*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl__ctor" data-uid="Manina.Windows.Forms.WizardControl.#ctor">WizardControl()</h4>
+  <div class="markdown level1 summary"><p>Initializes a new instance of the <a class="xref" href="Manina.Windows.Forms.WizardControl.html">WizardControl</a> class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public WizardControl()</code></pre>
+  </div>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_BackButton.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.BackButton%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L54">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_BackButton_" data-uid="Manina.Windows.Forms.WizardControl.BackButton*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_BackButton" data-uid="Manina.Windows.Forms.WizardControl.BackButton">BackButton</h4>
+  <div class="markdown level1 summary"><p>Gets the &quot;Back&quot; button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+protected Button BackButton { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Windows.Forms.Button</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_BackButtonEnabled.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.BackButtonEnabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L96">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_BackButtonEnabled_" data-uid="Manina.Windows.Forms.WizardControl.BackButtonEnabled*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_BackButtonEnabled" data-uid="Manina.Windows.Forms.WizardControl.BackButtonEnabled">BackButtonEnabled</h4>
+  <div class="markdown level1 summary"><p>Gets or sets whether the back button is enabled by user code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool BackButtonEnabled { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_BackButtonText.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.BackButtonText%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L75">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_BackButtonText_" data-uid="Manina.Windows.Forms.WizardControl.BackButtonText*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_BackButtonText" data-uid="Manina.Windows.Forms.WizardControl.BackButtonText">BackButtonText</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the text of the back button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string BackButtonText { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_BackButtonVisible.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.BackButtonVisible%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L124">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_BackButtonVisible_" data-uid="Manina.Windows.Forms.WizardControl.BackButtonVisible*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_BackButtonVisible" data-uid="Manina.Windows.Forms.WizardControl.BackButtonVisible">BackButtonVisible</h4>
+  <div class="markdown level1 summary"><p>Gets or sets whether the back button is visible.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool BackButtonVisible { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_CloseButton.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.CloseButton%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L64">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_CloseButton_" data-uid="Manina.Windows.Forms.WizardControl.CloseButton*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_CloseButton" data-uid="Manina.Windows.Forms.WizardControl.CloseButton">CloseButton</h4>
+  <div class="markdown level1 summary"><p>Gets the &quot;Close&quot; button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+protected Button CloseButton { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Windows.Forms.Button</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_CloseButtonEnabled.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.CloseButtonEnabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L110">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_CloseButtonEnabled_" data-uid="Manina.Windows.Forms.WizardControl.CloseButtonEnabled*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_CloseButtonEnabled" data-uid="Manina.Windows.Forms.WizardControl.CloseButtonEnabled">CloseButtonEnabled</h4>
+  <div class="markdown level1 summary"><p>Gets or sets whether the close button is enabled by user code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CloseButtonEnabled { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_CloseButtonText.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.CloseButtonText%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L89">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_CloseButtonText_" data-uid="Manina.Windows.Forms.WizardControl.CloseButtonText*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_CloseButtonText" data-uid="Manina.Windows.Forms.WizardControl.CloseButtonText">CloseButtonText</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the text of the close button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string CloseButtonText { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_CloseButtonVisible.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.CloseButtonVisible%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L138">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_CloseButtonVisible_" data-uid="Manina.Windows.Forms.WizardControl.CloseButtonVisible*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_CloseButtonVisible" data-uid="Manina.Windows.Forms.WizardControl.CloseButtonVisible">CloseButtonVisible</h4>
+  <div class="markdown level1 summary"><p>Gets or sets whether the close button is visible.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool CloseButtonVisible { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_DisplayRectangle.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.DisplayRectangle%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L158">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_DisplayRectangle_" data-uid="Manina.Windows.Forms.WizardControl.DisplayRectangle*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_DisplayRectangle" data-uid="Manina.Windows.Forms.WizardControl.DisplayRectangle">DisplayRectangle</h4>
+  <div class="markdown level1 summary"><p>Gets the client rectangle where wizard pages are located.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public override Rectangle DisplayRectangle { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Rectangle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Manina.Windows.Forms.PagedControl.DisplayRectangle</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_HelpButton.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.HelpButton%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L69">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_HelpButton_" data-uid="Manina.Windows.Forms.WizardControl.HelpButton*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_HelpButton" data-uid="Manina.Windows.Forms.WizardControl.HelpButton">HelpButton</h4>
+  <div class="markdown level1 summary"><p>Gets the &quot;Help&quot; button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+protected Button HelpButton { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Windows.Forms.Button</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_HelpButtonEnabled.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.HelpButtonEnabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L117">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_HelpButtonEnabled_" data-uid="Manina.Windows.Forms.WizardControl.HelpButtonEnabled*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_HelpButtonEnabled" data-uid="Manina.Windows.Forms.WizardControl.HelpButtonEnabled">HelpButtonEnabled</h4>
+  <div class="markdown level1 summary"><p>Gets or sets whether the help button is enabled by user code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HelpButtonEnabled { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_HelpButtonVisible.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.HelpButtonVisible%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L145">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_HelpButtonVisible_" data-uid="Manina.Windows.Forms.WizardControl.HelpButtonVisible*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_HelpButtonVisible" data-uid="Manina.Windows.Forms.WizardControl.HelpButtonVisible">HelpButtonVisible</h4>
+  <div class="markdown level1 summary"><p>Gets or sets whether the help button is visible.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool HelpButtonVisible { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_NextButton.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.NextButton%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L59">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_NextButton_" data-uid="Manina.Windows.Forms.WizardControl.NextButton*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_NextButton" data-uid="Manina.Windows.Forms.WizardControl.NextButton">NextButton</h4>
+  <div class="markdown level1 summary"><p>Gets the &quot;Next&quot; button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+protected Button NextButton { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Windows.Forms.Button</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_NextButtonEnabled.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.NextButtonEnabled%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L103">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_NextButtonEnabled_" data-uid="Manina.Windows.Forms.WizardControl.NextButtonEnabled*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_NextButtonEnabled" data-uid="Manina.Windows.Forms.WizardControl.NextButtonEnabled">NextButtonEnabled</h4>
+  <div class="markdown level1 summary"><p>Gets or sets whether the next button is enabled by user code.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool NextButtonEnabled { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_NextButtonText.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.NextButtonText%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L82">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_NextButtonText_" data-uid="Manina.Windows.Forms.WizardControl.NextButtonText*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_NextButtonText" data-uid="Manina.Windows.Forms.WizardControl.NextButtonText">NextButtonText</h4>
+  <div class="markdown level1 summary"><p>Gets or sets the text of the next button.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string NextButtonText { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_NextButtonVisible.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.NextButtonVisible%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L131">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_NextButtonVisible_" data-uid="Manina.Windows.Forms.WizardControl.NextButtonVisible*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_NextButtonVisible" data-uid="Manina.Windows.Forms.WizardControl.NextButtonVisible">NextButtonVisible</h4>
+  <div class="markdown level1 summary"><p>Gets or sets whether the next button is visible.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool NextButtonVisible { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_UIArea.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.UIArea%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L164">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_UIArea_" data-uid="Manina.Windows.Forms.WizardControl.UIArea*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_UIArea" data-uid="Manina.Windows.Forms.WizardControl.UIArea">UIArea</h4>
+  <div class="markdown level1 summary"><p>Gets the client rectangle where user interface controls are located.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[Browsable(false)]
+public Rectangle UIArea { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Drawing.Rectangle</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_Dispose_System_Boolean_.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.Dispose(System.Boolean)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L278">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_Dispose_" data-uid="Manina.Windows.Forms.WizardControl.Dispose*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_Dispose_System_Boolean_" data-uid="Manina.Windows.Forms.WizardControl.Dispose(System.Boolean)">Dispose(Boolean)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void Dispose(bool disposing)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td><span class="parametername">disposing</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">System.Windows.Forms.Control.Dispose(System.Boolean)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_OnBackButtonClicked_System_ComponentModel_CancelEventArgs_.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.OnBackButtonClicked(System.ComponentModel.CancelEventArgs)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L16">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_OnBackButtonClicked_" data-uid="Manina.Windows.Forms.WizardControl.OnBackButtonClicked*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_OnBackButtonClicked_System_ComponentModel_CancelEventArgs_" data-uid="Manina.Windows.Forms.WizardControl.OnBackButtonClicked(System.ComponentModel.CancelEventArgs)">OnBackButtonClicked(CancelEventArgs)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnBackButtonClicked(CancelEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ComponentModel.CancelEventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_OnCloseButtonClicked_System_ComponentModel_CancelEventArgs_.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.OnCloseButtonClicked(System.ComponentModel.CancelEventArgs)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L18">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_OnCloseButtonClicked_" data-uid="Manina.Windows.Forms.WizardControl.OnCloseButtonClicked*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_OnCloseButtonClicked_System_ComponentModel_CancelEventArgs_" data-uid="Manina.Windows.Forms.WizardControl.OnCloseButtonClicked(System.ComponentModel.CancelEventArgs)">OnCloseButtonClicked(CancelEventArgs)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnCloseButtonClicked(CancelEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ComponentModel.CancelEventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_OnCreateUIControls_Manina_Windows_Forms_CreateUIControlsEventArgs_.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.OnCreateUIControls(Manina.Windows.Forms.CreateUIControlsEventArgs)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L226">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_OnCreateUIControls_" data-uid="Manina.Windows.Forms.WizardControl.OnCreateUIControls*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_OnCreateUIControls_Manina_Windows_Forms_CreateUIControlsEventArgs_" data-uid="Manina.Windows.Forms.WizardControl.OnCreateUIControls(Manina.Windows.Forms.CreateUIControlsEventArgs)">OnCreateUIControls(CreateUIControlsEventArgs)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnCreateUIControls(CreateUIControlsEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Manina.Windows.Forms.CreateUIControlsEventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Manina.Windows.Forms.PagedControl.OnCreateUIControls(Manina.Windows.Forms.CreateUIControlsEventArgs)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_OnHelpButtonClicked_System_EventArgs_.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.OnHelpButtonClicked(System.EventArgs)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L19">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_OnHelpButtonClicked_" data-uid="Manina.Windows.Forms.WizardControl.OnHelpButtonClicked*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_OnHelpButtonClicked_System_EventArgs_" data-uid="Manina.Windows.Forms.WizardControl.OnHelpButtonClicked(System.EventArgs)">OnHelpButtonClicked(EventArgs)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnHelpButtonClicked(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_OnNextButtonClicked_System_ComponentModel_CancelEventArgs_.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.OnNextButtonClicked(System.ComponentModel.CancelEventArgs)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L17">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_OnNextButtonClicked_" data-uid="Manina.Windows.Forms.WizardControl.OnNextButtonClicked*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_OnNextButtonClicked_System_ComponentModel_CancelEventArgs_" data-uid="Manina.Windows.Forms.WizardControl.OnNextButtonClicked(System.ComponentModel.CancelEventArgs)">OnNextButtonClicked(CancelEventArgs)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnNextButtonClicked(CancelEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ComponentModel.CancelEventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_OnPaint_System_Windows_Forms_PaintEventArgs_.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.OnPaint(System.Windows.Forms.PaintEventArgs)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L262">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_OnPaint_" data-uid="Manina.Windows.Forms.WizardControl.OnPaint*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_OnPaint_System_Windows_Forms_PaintEventArgs_" data-uid="Manina.Windows.Forms.WizardControl.OnPaint(System.Windows.Forms.PaintEventArgs)">OnPaint(PaintEventArgs)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnPaint(PaintEventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Windows.Forms.PaintEventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Manina.Windows.Forms.PagedControl.OnPaint(System.Windows.Forms.PaintEventArgs)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_OnResize_System_EventArgs_.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.OnResize(System.EventArgs)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L243">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_OnResize_" data-uid="Manina.Windows.Forms.WizardControl.OnResize*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_OnResize_System_EventArgs_" data-uid="Manina.Windows.Forms.WizardControl.OnResize(System.EventArgs)">OnResize(EventArgs)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnResize(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Manina.Windows.Forms.PagedControl.OnResize(System.EventArgs)</span></div>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_OnUpdateUIControls_System_EventArgs_.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.OnUpdateUIControls(System.EventArgs)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L233">View Source</a>
+  </span>
+  <a id="Manina_Windows_Forms_WizardControl_OnUpdateUIControls_" data-uid="Manina.Windows.Forms.WizardControl.OnUpdateUIControls*"></a>
+  <h4 id="Manina_Windows_Forms_WizardControl_OnUpdateUIControls_System_EventArgs_" data-uid="Manina.Windows.Forms.WizardControl.OnUpdateUIControls(System.EventArgs)">OnUpdateUIControls(EventArgs)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override void OnUpdateUIControls(EventArgs e)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventArgs</span></td>
+        <td><span class="parametername">e</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="overrides">Overrides</h5>
+  <div><span class="xref">Manina.Windows.Forms.PagedControl.OnUpdateUIControls(System.EventArgs)</span></div>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_BackButtonClicked.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.BackButtonClicked%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L25">View Source</a>
+  </span>
+  <h4 id="Manina_Windows_Forms_WizardControl_BackButtonClicked" data-uid="Manina.Windows.Forms.WizardControl.BackButtonClicked">BackButtonClicked</h4>
+  <div class="markdown level1 summary"><p>Occurs when the back button is clicked.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event WizardControl.ButtonClickEventHandler BackButtonClicked</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Manina.Windows.Forms.WizardControl.ButtonClickEventHandler.html">WizardControl.ButtonClickEventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_CloseButtonClicked.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.CloseButtonClicked%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L35">View Source</a>
+  </span>
+  <h4 id="Manina_Windows_Forms_WizardControl_CloseButtonClicked" data-uid="Manina.Windows.Forms.WizardControl.CloseButtonClicked">CloseButtonClicked</h4>
+  <div class="markdown level1 summary"><p>Occurs when the close button is clicked.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event WizardControl.ButtonClickEventHandler CloseButtonClicked</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Manina.Windows.Forms.WizardControl.ButtonClickEventHandler.html">WizardControl.ButtonClickEventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_HelpButtonClicked.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.HelpButtonClicked%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L40">View Source</a>
+  </span>
+  <h4 id="Manina_Windows_Forms_WizardControl_HelpButtonClicked" data-uid="Manina.Windows.Forms.WizardControl.HelpButtonClicked">HelpButtonClicked</h4>
+  <div class="markdown level1 summary"><p>Occurs when the help button is clicked.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event EventHandler HelpButtonClicked</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.EventHandler</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/oozcitak/WizardControl/new/master/apiSpec/new?filename=Manina_Windows_Forms_WizardControl_NextButtonClicked.md&amp;value=---%0Auid%3A%20Manina.Windows.Forms.WizardControl.NextButtonClicked%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/oozcitak/WizardControl/blob/master/WizardControl/WizardControl.cs/#L30">View Source</a>
+  </span>
+  <h4 id="Manina_Windows_Forms_WizardControl_NextButtonClicked" data-uid="Manina.Windows.Forms.WizardControl.NextButtonClicked">NextButtonClicked</h4>
+  <div class="markdown level1 summary"><p>Occurs when the next button is clicked.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event WizardControl.ButtonClickEventHandler NextButtonClicked</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="Manina.Windows.Forms.WizardControl.ButtonClickEventHandler.html">WizardControl.ButtonClickEventHandler</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright © 2018 Özgür Özçıtak
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../../styles/docfx.js"></script>
+    <script type="text/javascript" src="../../styles/main.js"></script>
+  </body>
+</html>
