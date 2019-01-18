@@ -10,29 +10,29 @@ namespace Manina.Windows.Forms
     [Docking(DockingBehavior.AutoDock)]
     public class WizardControl : PagedControl
     {
-        #region Events
-        public delegate void ButtonClickEventHandler(object sender, CancelEventArgs e);
-
+        #region Virtual Functions for Events
         protected internal virtual void OnBackButtonClicked(CancelEventArgs e) { BackButtonClicked?.Invoke(this, e); }
         protected internal virtual void OnNextButtonClicked(CancelEventArgs e) { NextButtonClicked?.Invoke(this, e); }
         protected internal virtual void OnCloseButtonClicked(CancelEventArgs e) { CloseButtonClicked?.Invoke(this, e); }
         protected internal virtual void OnHelpButtonClicked(EventArgs e) { HelpButtonClicked?.Invoke(this, e); }
+        #endregion
 
+        #region Events
         /// <summary>
         /// Occurs when the back button is clicked.
         /// </summary>
         [Category("Behavior"), Description("Occurs when the back button is clicked.")]
-        public event ButtonClickEventHandler BackButtonClicked;
+        public event EventHandler<CancelEventArgs> BackButtonClicked;
         /// <summary>
         /// Occurs when the next button is clicked.
         /// </summary>
         [Category("Behavior"), Description("Occurs when the next button is clicked.")]
-        public event ButtonClickEventHandler NextButtonClicked;
+        public event EventHandler<CancelEventArgs> NextButtonClicked;
         /// <summary>
         /// Occurs when the close button is clicked.
         /// </summary>
         [Category("Behavior"), Description("Occurs when the close button is clicked.")]
-        public event ButtonClickEventHandler CloseButtonClicked;
+        public event EventHandler<CancelEventArgs> CloseButtonClicked;
         /// <summary>
         /// Occurs when the help button is clicked.
         /// </summary>
