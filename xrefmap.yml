@@ -87,12 +87,6 @@ references:
   isSpec: "True"
   fullName: Manina.Windows.Forms.WizardControl.BackButtonVisible
   nameWithType: WizardControl.BackButtonVisible
-- uid: Manina.Windows.Forms.WizardControl.ButtonClickEventHandler
-  name: WizardControl.ButtonClickEventHandler
-  href: obj/api/Manina.Windows.Forms.WizardControl.ButtonClickEventHandler.html
-  commentId: T:Manina.Windows.Forms.WizardControl.ButtonClickEventHandler
-  fullName: Manina.Windows.Forms.WizardControl.ButtonClickEventHandler
-  nameWithType: WizardControl.ButtonClickEventHandler
 - uid: Manina.Windows.Forms.WizardControl.CloseButton
   name: CloseButton
   href: obj/api/Manina.Windows.Forms.WizardControl.html#Manina_Windows_Forms_WizardControl_CloseButton
